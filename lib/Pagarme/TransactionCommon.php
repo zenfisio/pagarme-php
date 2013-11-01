@@ -46,7 +46,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 				return new PagarMe_Error(array('message' => " Nome do portador do cartão inválido", 'parameter_name' => 'card_holder_name', 'type' => "invalid_parameter"));
 			}
 
-			else if($this->card_expiration_month <= 0 || $this->card_expiration_year > 12) {
+			else if($this->card_expiration_month <= 0 || $this->card_expiration_month > 12) {
 				return new PagarMe_Error(array('message' => "Mês de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 

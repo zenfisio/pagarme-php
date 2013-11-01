@@ -8,28 +8,28 @@ if (!function_exists('json_decode')) {
 }
 
 
-function __autoload($class){
+// function __autoload($class){
+// 
+// 	$dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "Pagarme" . DIRECTORY_SEPARATOR;
+// 	
+// 	$file = $dir . ((strstr($class, "PagarMe_")) ? str_replace("PagarMe_", "", $class) : $class) . ".php";
+// 
+// 	if (file_exists($file)){
+// 		require_once($file);
+// 		return;
+// 	}else{
+// 		throw new Exception("Unable to load" .$class);
+// 	}
+// }
 
-	$dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR . "Pagarme" . DIRECTORY_SEPARATOR;
-	
-	$file = $dir . ((strstr($class, "PagarMe_")) ? str_replace("PagarMe_", "", $class) : $class) . ".php";
 
-	if (file_exists($file)){
-		require_once($file);
-		return;
-	}else{
-		throw new Exception("Unable to load" .$class);
-	}
-}
-
-/*
 require(dirname(__FILE__) . '/lib/Pagarme/Pagarme.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Error.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Exception.php');
 require(dirname(__FILE__) . '/lib/Pagarme/ApiException.php');
 require(dirname(__FILE__) . '/lib/Pagarme/RestClient.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Request.php');
-require(dirname(__FILE__) . '/lib/Pagarme/model.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Model.php');
 require(dirname(__FILE__) . '/lib/Pagarme/TransactionCommon.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Transaction.php');
 require(dirname(__FILE__). '/lib/Pagarme/Plan.php');
@@ -37,6 +37,5 @@ require(dirname(__FILE__) . '/lib/Pagarme/Subscription.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Customer.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Address.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Phone.php');
-*/
 
 ?>

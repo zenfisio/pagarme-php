@@ -13,7 +13,13 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$request = new PagarMe_Request('/transactions/card_hash_key','GET');
 		$response = $request->run();
 		$key = openssl_get_publickey($response['public_key']);
-		openssl_public_encrypt(http_build_query($this->cardDataParameters()), $encrypt, $key);
+		$params = $this->cardDataParameters();
+		$str = "";
+		foreach($params as $k => $v) {
+			$str .= $k . "=" . $v . "&";	
+		}
+		$str = substr($str, 0, -1);
+		openssl_public_encrypt($str,$encrypt, $key);
 		return $response['id'].'_'.base64_encode($encrypt);
 	}
 

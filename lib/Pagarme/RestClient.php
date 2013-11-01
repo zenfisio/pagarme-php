@@ -37,8 +37,8 @@ class RestClient
 				$this->method = $params["method"];
 			}
 
-			$this->parameters = str_replace('+', '%20', http_build_query($this->parameters));
-
+			$params =  self::_encodeObjects($this->parameters);
+			$this->parameters = self::encode($params);
 
 			if ($this->method){
 				switch($this->method) {
@@ -78,6 +78,56 @@ class RestClient
 			throw new Exception($e->message);
 		}
 
+	}
+
+
+	public static function _encodeObjects($d)
+	{
+		if ($d === true) {
+			return 'true';
+		} else if ($d === false) {
+			return 'false';
+		} else if (is_array($d)) {
+			$res = array();
+			foreach ($d as $k => $v)
+				$res[$k] = self::_encodeObjects($v);
+			return $res;
+		} else {
+			return self::utf8($d);
+		}
+	}
+
+	public static function utf8($value)
+	{
+		if (is_string($value) && mb_detect_encoding($value, "UTF-8", TRUE) != "UTF-8")
+			return utf8_encode($value);
+		else
+			return $value;
+	}
+
+	public static function encode($arr, $prefix=null)
+	{
+		if (!is_array($arr))
+			return $arr;
+
+		$r = array();
+		foreach ($arr as $k => $v) {
+			if (is_null($v))
+				continue;
+
+			if ($prefix && $k && !is_int($k))
+				$k = $prefix."[".$k."]";
+			else if ($prefix)
+				$k = $prefix."[]";
+
+			if (is_array($v)) {
+				$r[] = self::encode($v, $k, true);
+			} else {
+				$r[] = rawurlencode($k)."=".rawurlencode($v);
+			}
+		}
+
+		return implode("&", $r);
 	}
 
 

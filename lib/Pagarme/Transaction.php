@@ -11,7 +11,7 @@ class PagarMe_Transaction extends PagarMe_TransactionCommon {
 
 		$this->installments = 1;
 
-		$this->amount = $this->card_number = $this->card_expicary_month = $this->card_expiracy_year = $this->card_cvv = "";
+		$this->amount = $this->card_number = $this->card_expiration_month = $this->card_expiration_year = $this->card_cvv = "";
 
 		$this->postback_url = null;
 

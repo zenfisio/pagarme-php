@@ -30,8 +30,8 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction = new PagarMe_Transaction(array(
 			'card_number' => '4111111111111111', 
 			'card_holder_name' => "Jose da silva", 
-			'card_expiracy_month' => 11, 
-			'card_expiracy_year' => "2013", 
+			'card_expiration_month' => 11, 
+			'card_expiration_year' => "2013", 
 			'card_cvv' => 356, 
 			'customer' => array(
 				'name' => "Jose da Silva",  
@@ -71,6 +71,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertTrue($transaction->getCustomer()->getPhones());
 		$this->assertTrue($transaction->getCustomer()->getAddresses());
 
+		$this->assertEqual($transaction->getCustomer()->getName(), 'Jose da Silva');
 		$this->assertTrue($transaction->getCustomer()->getName());
 		$this->assertTrue($transaction->getCustomer()->getDocumentNumber());
 		$this->assertTrue($transaction->getCustomer()->getDocumentType());

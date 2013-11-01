@@ -20,8 +20,8 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			"amount" => 'R$ 10,00',
 			"card_number" => "4111111111111111",
 			"card_holder_name" => "Jose da Silva",
-			"card_expiracy_month" => 12,
-			"card_expiracy_year" => 15,
+			"card_expiration_month" => 12,
+			"card_expiration_year" => 15,
 			"card_cvv" => "123",
 		));
 	}
@@ -47,8 +47,8 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			'postback_url' => 'http://testepagarme.com',
 			'card_number' => '4111111111111111',
 			'card_holder_name' => "Jose da Silva",
-			'card_expiracy_month' => "12",
-			'card_expiracy_year' => '15',
+			'card_expiration_month' => "12",
+			'card_expiration_year' => '15',
 			'card_cvv' => "123"
 		));
 	}

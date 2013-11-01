@@ -1,7 +1,7 @@
 <?php
 class PagarMe_TransactionCommon extends PagarMe_Model 
 {
-	protected $id, $amount, $card_number, $card_holder_name, $card_expiracy_month, $card_expiracy_year, $card_cvv, $card_hash, $postback_url, $payment_method, $status, $date_created;
+	protected $id, $amount, $card_number, $card_holder_name, $card_expiration_month, $card_expiration_year, $card_cvv, $card_hash, $postback_url, $payment_method, $status, $date_created;
 	protected $name, $document_number, $document_type, $email, $sex, $born_at, $customer; 
 	protected $street, $city, $state, $neighborhood, $zipcode, $complementary, $street_number, $country;
 	protected $type, $ddi, $ddd, $number, $phone_id;
@@ -46,16 +46,16 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 				return new PagarMe_Error(array('message' => " Nome do portador do cartão inválido", 'parameter_name' => 'card_holder_name', 'type' => "invalid_parameter"));
 			}
 
-			else if($this->card_expiracy_month <= 0 || $this->card_expiracy_month > 12) {
-				return new PagarMe_Error(array('message' => "Mês de expiração do cartão inválido", 'parameter_name' => 'card_expiracy_date', 'type' => "invalid_parameter"));
+			else if($this->card_expiration_month <= 0 || $this->card_expiration_year > 12) {
+				return new PagarMe_Error(array('message' => "Mês de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
-			else if($this->card_expiracy_year <= 0) {
-				return new PagarMe_Error(array('message' => "Ano de expiração do cartão inválido", 'parameter_name' => 'card_expiracy_date', 'type' => "invalid_parameter"));
+			else if($this->card_expiration_year <= 0) {
+				return new PagarMe_Error(array('message' => "Ano de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
-			else if($this->card_expiracy_year < substr(date('Y'),-2)) {
-				return new PagarMe_Error(array('message' => "Cartão expirado", 'parameter_name' => 'card_expiracy_date', 'type' => "invalid_parameter"));
+			else if($this->card_expiration_year < substr(date('Y'),-2)) {
+				return new PagarMe_Error(array('message' => "Cartão expirado", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
 			else if(strlen($this->card_cvv) < 3  || strlen($this->card_cvv) > 4) {
@@ -117,10 +117,10 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 			if(!$first_parameter['card_hash']) { 
 				$this->card_number = ($first_parameter["card_number"]) ? $first_parameter['card_number']  : null;
 				$this->card_holder_name = ($first_parameter["card_holder_name"]) ? $first_parameter['card_holder_name'] : '';
-				$this->card_expiracy_month = ($first_parameter["card_expiracy_month"]) ? $first_parameter['card_expiracy_month'] : '';
-				$this->card_expiracy_year = ($first_parameter["card_expiracy_year"]) ? $first_parameter['card_expiracy_year'] : '';
-				if(strlen($this->card_expiracy_year) >= '4') {
-					$this->card_expiracy_year = $this->card_expiracy_year[2] . $this->card_expiracy_year[3];
+				$this->card_expiration_month = ($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : '';
+				$this->card_expiration_year = ($first_parameter["card_expiration_year"]) ? $first_parameter['card_expiration_year'] : '';
+				if(strlen($this->card_expiration_year) >= '4') {
+					$this->card_expiration_year = $this->card_expiration_year[2] . $this->card_expiration_year[3];
 				}
 				$this->card_cvv = $first_parameter["card_cvv"] ? $first_parameter['card_cvv'] : '';
 				$this->postback_url = ($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
@@ -160,7 +160,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		return array(
 			"card_number" => $this->card_number,
 			"card_holder_name" => $this->card_holder_name,
-			"card_expiracy_date" => $this->card_expiracy_month . $this->card_expiracy_year,
+			"card_expiration_date" => $this->card_expiration_month . $this->card_expiration_year,
 			"card_cvv" => $this->card_cvv
 		);
 	}
@@ -181,10 +181,10 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	function getCardNumber() { return $this->card_number; }
 	function setCardHolderName($card_holder_name) { $this->card_holder_name = $card_holder_name; }
 	function getCardHolderName() { return $this->card_holder_name; }
-	function setCardExpiracyMonth($card_expiracy_month) { $this->card_expiracy_month = $card_expiracy_month; }
-	function getCardExpiracyMonth() { return $this->card_expiracy_month; }
-	function setCardExpiracyYear($card_expiracy_year) { $this->card_expiracy_year = $card_expiracy_year; }
-	function getCardExpiracyYear() { return $this->card_expiracy_year; }
+	function setCardExpirationMonth($card_expiration_month) { $this->card_expiration_month = $card_expiration_month; }
+	function getCardExpirationMonth() { return $this->card_expiration_month; }
+	function setCardExpirationYear($card_expiration_year) { $this->card_expiration_year = $card_expiration_year; }
+	function getCardExpirationYear() { return $this->card_expiration_year; }
 	function setCardCvv($card_cvv) { $this->card_cvv = $card_cvv; }
 	function getCardCvv() { return $this->card_cvv; }
 	function setLive($live) { $this->live = $live; }

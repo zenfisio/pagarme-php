@@ -121,44 +121,44 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$this->setCustomer($first_parameter['customer']);
 		if($first_parameter['payment_method'] != 'boleto') { 
 			if(!$first_parameter['card_hash']) { 
-				$this->card_number = ($first_parameter["card_number"]) ? $first_parameter['card_number']  : null;
-				$this->card_holder_name = ($first_parameter["card_holder_name"]) ? $first_parameter['card_holder_name'] : '';
-				$this->card_expiration_month = ($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : '';
-				$this->card_expiration_year = ($first_parameter["card_expiration_year"]) ? $first_parameter['card_expiration_year'] : '';
+				$this->card_number = (isset($first_parameter["card_number"])) ? $first_parameter['card_number']  : null;
+				$this->card_holder_name = (isset($first_parameter["card_holder_name"])) ? $first_parameter['card_holder_name'] : '';
+				$this->card_expiration_month = isset($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : '';
+				$this->card_expiration_year = isset($first_parameter["card_expiration_year"]) ? $first_parameter['card_expiration_year'] : '';
 				if(strlen($this->card_expiration_year) >= '4') {
 					$this->card_expiration_year = $this->card_expiration_year[2] . $this->card_expiration_year[3];
 				}
-				$this->card_cvv = $first_parameter["card_cvv"] ? $first_parameter['card_cvv'] : '';
-				$this->postback_url = ($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
-			} elseif($first_parameter['card_hash']) {
+				$this->card_cvv = isset($first_parameter["card_cvv"]) ? $first_parameter['card_cvv'] : '';
+				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
+			} elseif(isset($first_parameter['card_hash'])) {
 				$this->card_hash = $first_parameter['card_hash'];
 			}
 		}
 
-		$this->installments = ($first_parameter['installments']) ? $first_parameter["installments"] : '';
-		$this->payment_method = ($first_parameter['payment_method']) ? $first_parameter['payment_method'] : 'credit_card';
-		$this->refuse_reason = ($first_parameter['refuse_reason']) ? $first_parameter['refuse_reason'] : '';
-		$this->street = ($first_parameter['customer']['address']['street']) ? $first_parameter['customer']['address']['street'] : 0;
-		$this->city = ($first_parameter['customer']['address']['city']) ? $first_parameter['customer']['address']['city'] : '';
-		$this->state = ($first_parameter['customer']['address']['state']) ? $first_parameter['customer']['address']['state'] : '';
-		$this->neighborhood = ($first_parameter['customer']['address']['neighborhood']) ? $first_parameter['customer']['address']['neighborhood'] : '';
-		$this->zipcode = ($first_parameter['customer']['address']['zipcode']) ? $first_parameter['customer']['address']['zipcode'] : '';
-		$this->complementary = ($first_parameter['customer']['address']['complementary']) ? $first_parameter['customer']['address']['complementary'] : '';
-		$this->street_number = ($first_parameter['customer']['address']['street_number']) ? $first_parameter['customer']['address']['street_number'] : '';
-		$this->country = ($first_parameter['customer']['address']['country']) ? $first_parameter['customer']['address']['country'] : '';
-		$this->type = ($first_parameter['customer']['phone']['type']) ? $first_parameter['customer']['phone']['type'] : '';
-		$this->ddi = ($first_parameter['customer']['phone']['ddi']) ? $first_parameter['customer']['phone']['ddi'] : '';
-		$this->ddd = ($first_parameter['customer']['phone']['ddd']) ? $first_parameter['customer']['phone']['ddd'] : '';
-		$this->number = ($first_parameter['customer']['phone']['number']) ? $first_parameter['customer']['phone']['number'] : '';
-		$this->id = ($first_parameter['id']) ? $first_parameter['id'] : '';
-		$this->name = ($first_parameter['customer']['name']) ? $first_parameter['customer']['name'] : '';
-		$this->document_type = ($first_parameter['customer']['document_type']) ? $first_parameter['customer']['document_type'] : '';
-		$this->document_number = ($first_parameter['customer']['document_number']) ? $first_parameter['customer']['document_number'] : '';
-		$this->email = ($first_parameter['customer']['email']) ? $first_parameter['customer']['email'] : '';
-		$this->born_at = ($first_parameter['customer']['born_at']) ? $first_parameter['customer']['born_at'] : '';
-		$this->sex = ($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : '';
-		$this->card_brand = ($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
-		$this->boleto_url = ($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
+		$this->installments = isset($first_parameter['installments']) ? $first_parameter["installments"] : '';
+		$this->payment_method = isset($first_parameter['payment_method']) ? $first_parameter['payment_method'] : 'credit_card';
+		$this->refuse_reason = isset($first_parameter['refuse_reason']) ? $first_parameter['refuse_reason'] : '';
+		$this->street = isset($first_parameter['customer']['address']['street']) ? $first_parameter['customer']['address']['street'] : 0;
+		$this->city = isset($first_parameter['customer']['address']['city']) ? $first_parameter['customer']['address']['city'] : '';
+		$this->state = isset($first_parameter['customer']['address']['state']) ? $first_parameter['customer']['address']['state'] : '';
+		$this->neighborhood = isset($first_parameter['customer']['address']['neighborhood']) ? $first_parameter['customer']['address']['neighborhood'] : '';
+		$this->zipcode = isset($first_parameter['customer']['address']['zipcode']) ? $first_parameter['customer']['address']['zipcode'] : '';
+		$this->complementary = isset($first_parameter['customer']['address']['complementary']) ? $first_parameter['customer']['address']['complementary'] : '';
+		$this->street_number = isset($first_parameter['customer']['address']['street_number']) ? $first_parameter['customer']['address']['street_number'] : '';
+		$this->country = isset($first_parameter['customer']['address']['country']) ? $first_parameter['customer']['address']['country'] : '';
+		$this->type = isset($first_parameter['customer']['phone']['type']) ? $first_parameter['customer']['phone']['type'] : '';
+		$this->ddi = isset($first_parameter['customer']['phone']['ddi']) ? $first_parameter['customer']['phone']['ddi'] : '';
+		$this->ddd = isset($first_parameter['customer']['phone']['ddd']) ? $first_parameter['customer']['phone']['ddd'] : '';
+		$this->number = isset($first_parameter['customer']['phone']['number']) ? $first_parameter['customer']['phone']['number'] : '';
+		$this->id = isset($first_parameter['id']) ? $first_parameter['id'] : '';
+		$this->name = isset($first_parameter['customer']['name']) ? $first_parameter['customer']['name'] : '';
+		$this->document_type = isset($first_parameter['customer']['document_type']) ? $first_parameter['customer']['document_type'] : '';
+		$this->document_number = isset($first_parameter['customer']['document_number']) ? $first_parameter['customer']['document_number'] : '';
+		$this->email = isset($first_parameter['customer']['email']) ? $first_parameter['customer']['email'] : '';
+		$this->born_at = isset($first_parameter['customer']['born_at']) ? $first_parameter['customer']['born_at'] : '';
+		$this->sex = isset($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : '';
+		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
+		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
 	}
 
 	protected function cardDataParameters() 

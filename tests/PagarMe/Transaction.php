@@ -97,6 +97,17 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual($transaction->getPaymentMethod(), 'credit_card');
 	} 
 
+	public function testMetadata() {
+		$transaction = self::createTestTransaction();
+		$transaction->setMetadata(array('event' => array('name' => "Evento irado", 'quando'=> 'amanha')));
+		$transaction->charge();
+		$this->assertTrue($transaction->getId());
+
+		$transaction2 = PagarMe_Transaction::findById($transaction->getId());
+		$metadata = $transaction2->getMetadata();
+		$this->assertEqual($metadata['event']['name'], "Evento irado");
+	}
+
 	public function testValidation() {
 		$transaction = new PagarMe_Transaction();
 		$transaction->setCardNumber("123");

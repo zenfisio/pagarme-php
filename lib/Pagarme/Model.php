@@ -1,5 +1,5 @@
 <?php
-abstract class PagarMe_Model extends Pagarme 
+class PagarMe_Model extends Pagarme 
 {	
 	protected static $root_url;
 
@@ -34,6 +34,5 @@ abstract class PagarMe_Model extends Pagarme
 
 		return $return_array;
 	}
-
 }
 ?>

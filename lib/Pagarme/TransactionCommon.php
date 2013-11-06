@@ -7,6 +7,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected $type, $ddi, $ddd, $number, $phone_id;
 	protected $resfuse_reason, $antifraud_score, $boleto_url, $boleto_barcode;
 	protected $card_brand;
+	protected $metadata;
 
 	protected function generateCardHash() 
 	{
@@ -159,6 +160,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$this->sex = isset($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : '';
 		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
 		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
+		$this->metadata = isset($first_parameter['metadata']) ? $first_parameter['metadata'] : '';
 	}
 
 	protected function cardDataParameters() 
@@ -209,6 +211,8 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	function setId($id) {$this->id = $id;}
 	function getCardBrand() { return $this->card_brand; }
 	function setCardBrand($card_brand) {$this->card_brand = $card_brand;}
+	function getMetadata() { return $this->metadata;}
+	function setMetadata($metadata) { $this->metadata = $metadata; } 
 
 	//Address Info
 	public function getStreet() { return $this->street;}

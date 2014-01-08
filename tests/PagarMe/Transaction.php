@@ -11,6 +11,71 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 	}
 
+	public function testAntifraudTransaction() {
+		$t = new PagarMe_Transaction(array(
+			'card_number' => '4901720080344448', 
+			'amount' => '16000',
+			'card_holder_name' => "Jose da silva", 
+			'card_expiration_month' => 11, 
+			'card_expiration_year' => "15", 
+			'card_cvv' => 356, 
+			'customer' => array(
+				'name' => "Jose da Silva",  
+				'document_number' => "36433809847", 
+				'email' => "henrique@pagar.me", 
+				'address' => array(
+					'street' => "Av Faria Lima",
+					'neighborhood' => 'Jardim Europa',
+					'zipcode' => '12460000', 
+					'street_number' => 295, 
+				),
+				'phone' => array(
+					'type' => "cellphone",
+					'ddd' => 12, 
+					'number' => '981433533', 
+				),
+				'sex' => 'M', 
+				'born_at' => '1995-10-11')
+			));
+
+
+
+		$t->charge();
+
+		$this->assertTrue($t->getStatus() == 'refused');
+		$this->assertTrue($t->getRefuseReason() == 'antifraud');
+	}
+
+	public function testChargeWithCardHash() {
+		$t = self::createTestTransaction();
+		$card_hash = $t->generateCardHash();
+
+		$transaction = new PagarMe_Transaction(array( 
+			'payment_method' => 'credit_card',
+			'amount' => '16000',
+			'card_hash' => $card_hash,
+			'customer' => array(
+				'name' => "Jose da Silva",  
+				'document_number' => "36433809847", 
+				'email' => "henrique@pagar.me", 
+				'address' => array(
+					'street' => "Av Faria Lima",
+					'neighborhood' => 'Jardim Europa',
+					'zipcode' => '12460000', 
+					'street_number' => 295, 
+				),
+				'phone' => array(
+					'type' => "cellphone",
+					'ddd' => 12, 
+					'number' => '981433533', 
+				)
+			)
+		));
+
+		$transaction->charge();
+		$this->assertTrue($transaction->getId());
+	}
+
 	public function testTransactionWithBoleto() {
 		authorizeFromEnv();
 		$transaction = new PagarMe_Transaction(array(
@@ -32,7 +97,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			'card_number' => '4111111111111111', 
 			'card_holder_name' => "Jose da silva", 
 			'card_expiration_month' => 11, 
-			'card_expiration_year' => "2013", 
+			'card_expiration_year' => "2014", 
 			'card_cvv' => 356, 
 			'customer' => array(
 				'name' => "Jose da Silva",  

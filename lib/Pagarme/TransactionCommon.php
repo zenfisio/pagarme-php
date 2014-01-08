@@ -9,7 +9,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected $card_brand;
 	protected $metadata;
 
-	protected function generateCardHash() 
+	public function generateCardHash() 
 	{
 		$request = new PagarMe_Request('/transactions/card_hash_key','GET');
 		$response = $request->run();
@@ -45,7 +45,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected function errorInTransaction() 
 	{
 		if($this->payment_method == 'credit_card') { 
-			if(strlen($this->card_number) < 16 || strlen($this->card_number) > 20 || !$this->validateCreditCard($this->card_number)) {
+			if(strlen($this->card_number) > 20 || !$this->validateCreditCard($this->card_number)) {
 				return new PagarMe_Error(array('message' => "Número de cartão inválido.", 'parameter_name' => 'card_number', 'type' => "invalid_parameter"));
 			}
 

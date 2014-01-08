@@ -11,7 +11,7 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 		try {
 			$validation_error = $this->card_hash ? null : $this->errorInTransaction();
 			if($validation_error) {
-				throw new Exception($validation_error);
+				throw new Exception($validation_error->getMessage());
 			}
 
 			if($this->id) {

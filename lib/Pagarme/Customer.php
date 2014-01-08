@@ -1,7 +1,7 @@
 <?php
 
 class PagarMe_Customer extends PagarMe_Model {
-	private $id, $name, $document_number, $document_type, $email, $addresses, $sex, $born_at, $phones;
+	private $id, $name, $document_number, $document_type, $email, $addresses, $sex, $gender, $born_at, $phones;
 
 
 	public function __construct($customer = 0) {
@@ -17,6 +17,7 @@ class PagarMe_Customer extends PagarMe_Model {
 			$this->email = ($serverResponse['email']) ? $serverResponse['email'] : 0;
 			$this->setAddresses($serverResponse['addresses']);
 			$this->sex = ($serverResponse['sex']) ? $serverResponse['sex'] : 0;
+			$this->gender = ($serverResponse['gender']) ? $serverResponse['gender'] : 0;
 			$this->born_at = ($serverResponse['born_at']) ? $serverResponse['born_at'] : 0;
 			$this->setPhones($serverResponse['phones']);
 	}
@@ -54,6 +55,9 @@ class PagarMe_Customer extends PagarMe_Model {
 
 	public function getSex() { return $this->sex;}
 	public function setSex($sex) { $this->sex = $sex; }
+
+	public function getGender() { return $this->gender;}
+	public function setGender($gender) { $this->gender = $gender; }
 
 	public function getId() { return $this->id;}
 

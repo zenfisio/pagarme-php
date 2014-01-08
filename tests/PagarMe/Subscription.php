@@ -16,7 +16,7 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 			'card_number' => '4901720080344448', 
 			'card_holder_name' => "Jose da silva", 
 			'card_expiration_month' => 11, 
-			'card_expiration_year' => "13", 
+			'card_expiration_year' => "15", 
 			'card_cvv' => 356, 
 			'customer' => array(
 				'name' => "Jose da Silva",  
@@ -54,7 +54,7 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$this->assertTrue($subscription->getCustomer()->getDocumentNumber());
 		$this->assertTrue($subscription->getCustomer()->getDocumentType());
 		$this->assertTrue($subscription->getCustomer()->getEmail());
-		$this->assertTrue($subscription->getCustomer()->getSex());
+		$this->assertTrue($subscription->getCustomer()->getGender());
 		$this->assertTrue($subscription->getCustomer()->getId());
 
 
@@ -68,7 +68,7 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 			'card_number' => '4901720080344448', 
 			'card_holder_name' => "Jose da silva", 
 			'card_expiration_month' => 11, 
-			'card_expiration_year' => "13", 
+			'card_expiration_year' => "15", 
 			'card_cvv' => 356, 
 			'customer' => array(
 				'name' => "Jose da Silva",  

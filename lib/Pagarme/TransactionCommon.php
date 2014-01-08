@@ -4,7 +4,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected $id, $amount, $card_number, $card_holder_name, $card_expiration_month, $card_expiration_year, $card_cvv, $card_hash, $postback_url, $payment_method, $status, $date_created;
 	protected $name, $document_number, $document_type, $email, $sex, $born_at, $customer; 
 	protected $street, $city, $state, $neighborhood, $zipcode, $complementary, $street_number, $country;
-	protected $type, $ddi, $ddd, $number, $phone_id;
+	protected $type, $ddi, $ddd, $number, $phone_id, $gender;
 	protected $resfuse_reason, $antifraud_score, $boleto_url, $boleto_barcode;
 	protected $card_brand;
 	protected $metadata;
@@ -78,7 +78,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		}
 
 		if(checkCustomerInformation()) {
-			if(!$this->zipcode || !$this->street_number || !$this->ddd || !$this->number || !$this->name || !$this->document_number || !$this->email || !$this->sex || !$this->born_at || !$this->street || !$this->neighborhood) {
+			if(!$this->zipcode || !$this->street_number || !$this->ddd || !$this->number || !$this->name || !$this->document_number || !$this->email || !$this->sex || !$this->gender || !$this->born_at || !$this->street || !$this->neighborhood) {
 				return new PagarMe_Error(array('message' => "Faltam informações do cliente", 'parameter_name' => 'customer', 'type' => "invalid_parameter"));
 			}
 		}
@@ -87,7 +87,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	}
 
 	protected function checkCustomerInformation() {
-		if($this->zipcode || $this->complementary || $this->street_number || $this->ddd || $this->number || $this->name || $this->document_number || $this->email || $this->sex || $this->born_at || $this->street || $this->neighborhood) {
+		if($this->zipcode || $this->complementary || $this->street_number || $this->ddd || $this->number || $this->name || $this->document_number || $this->email || $this->sex || $this->gender || $this->born_at || $this->street || $this->neighborhood) {
 			return true;
 		} else {
 			return false;
@@ -106,6 +106,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$transactionInfo['customer']['document_number'] = $this->document_number;
 		$transactionInfo['customer']['email'] = $this->email;
 		$transactionInfo['customer']['sex'] = $this->sex;
+		$transactionInfo['customer']['gender'] = $this->gender;
 		$transactionInfo['customer']['born_at'] = $this->born_at;
 		$transactionInfo['customer']['name'] = $this->name;
 		return $transactionInfo;
@@ -158,6 +159,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$this->email = isset($first_parameter['customer']['email']) ? $first_parameter['customer']['email'] : '';
 		$this->born_at = isset($first_parameter['customer']['born_at']) ? $first_parameter['customer']['born_at'] : '';
 		$this->sex = isset($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : '';
+		$this->gender = isset($first_parameter['customer']['gender']) ? $first_parameter['customer']['gender'] : '';
 		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
 		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
 		$this->metadata = isset($first_parameter['metadata']) ? $first_parameter['metadata'] : '';
@@ -269,6 +271,10 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 
 	public function getSex() { return $this->sex;}
 	public function setSex($sex) { $this->sex = $sex; }
+
+	public function getGender() { return $this->gender;}
+	public function setGender($gender) { $this->gender = $gender; }
+	
 
 	public function setCustomer($customer) {
 		if($customer) { 

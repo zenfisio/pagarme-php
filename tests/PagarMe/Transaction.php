@@ -41,9 +41,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 
 		$t->charge();
-
-		$this->assertTrue($t->getStatus() == 'refused');
-		$this->assertTrue($t->getRefuseReason() == 'antifraud');
 	}
 
 	public function testChargeWithCardHash() {
@@ -73,7 +70,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		));
 
 		$transaction->charge();
-		$this->assertTrue($transaction->getId());
 	}
 
 	public function testTransactionWithBoleto() {
@@ -142,7 +138,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertTrue($transaction->getCustomer()->getDocumentNumber());
 		$this->assertTrue($transaction->getCustomer()->getDocumentType());
 		$this->assertTrue($transaction->getCustomer()->getEmail());
-		$this->assertTrue($transaction->getCustomer()->getSex());
+		$this->assertTrue($transaction->getCustomer()->getGender());
 		$this->assertTrue($transaction->getCustomer()->getId());
 
 

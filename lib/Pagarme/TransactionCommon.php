@@ -275,6 +275,9 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	public function getGender() { return $this->gender;}
 	public function setGender($gender) { $this->gender = $gender; }
 	
+	public function getPostbackUrl() { return $this->postback_url;}
+	public function setPostbackUrl($postback_url) { $this->postback_url = $postback_url; }
+	
 
 	public function setCustomer($customer) {
 		if($customer) { 

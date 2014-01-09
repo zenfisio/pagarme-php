@@ -8,7 +8,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction->charge();
 		$this->assertTrue($transaction->getId());
 		$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
-
 	}
 
 	public function testAntifraudTransaction() {
@@ -84,6 +83,13 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 		$this->assertFalse($transaction->getBoletoUrl());
 		$this->assertEqual($transaction->getStatus(), 'waiting_payment');
+	}
+
+	public function testPostback() {
+		$transaction = self::createTestTransaction();
+		$transaction->setPostbackUrl('abc2');
+
+		$this->assertEqual('abc2', $transaction->getPostbackUrl());
 	}
 
 	public function testCreationWithFraud() {

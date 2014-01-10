@@ -23,7 +23,6 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			"card_expiration_month" => 12,
 			"card_expiration_year" => 15,
 			"card_cvv" => "123",
-			"postback_url" => "http://url.com"
 		));
 	}
 

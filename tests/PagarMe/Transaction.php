@@ -38,6 +38,15 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			));
 		$t->charge();
 	}
+
+
+	public function testPostbackUrl() {
+		$t = self::createTestTransaction();	
+		$t->setPostbackUrl('http://url.com');
+		$t->charge();
+
+		$this->assertEqual($t->getStatus(), 'processing');
+	}
 	
 	public function testPostbackUrlWithCardHash() {
 		$t = self::createTestTransaction();

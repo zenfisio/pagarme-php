@@ -38,6 +38,23 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			));
 		$t->charge();
 	}
+	
+	public function testPostbackUrlWithCardHash() {
+		$t = self::createTestTransaction();
+		$card_hash = $t->generateCardHash();
+
+		$transaction = new PagarMe_Transaction(array(
+			'payment_method' => 'credit_card',
+			'amount' => '15000',
+			'card_hash' => $card_hash,
+		));
+
+		$transaction->setPostbackUrl('http://url.com');
+		$transaction->charge();
+
+		$this->assertEqual($transaction->getPostbackUrl(), 'http://url.com');
+		$this->assertEqual($transaction->getStatus(), 'processing');
+	}
 
 	public function testChargeWithCardHash() {
 		$t = self::createTestTransaction();
@@ -47,7 +64,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			'payment_method' => 'credit_card',
 			'amount' => '16000',
 			'card_hash' => $card_hash,
-			'postback_url' => "http://url.com/postback",
 			'customer' => array(
 				'name' => "Jose da Silva",  
 				'document_number' => "36433809847", 

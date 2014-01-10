@@ -131,9 +131,9 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 					$this->card_expiration_year = $this->card_expiration_year[2] . $this->card_expiration_year[3];
 				}
 				$this->card_cvv = isset($first_parameter["card_cvv"]) ? $first_parameter['card_cvv'] : '';
-				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
 			} elseif(isset($first_parameter['card_hash'])) {
 				$this->card_hash = $first_parameter['card_hash'];
+				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
 			}
 		}
 

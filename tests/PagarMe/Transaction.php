@@ -36,9 +36,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 				'sex' => 'M', 
 				'born_at' => '1995-10-11')
 			));
-
-
-
 		$t->charge();
 	}
 
@@ -50,6 +47,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			'payment_method' => 'credit_card',
 			'amount' => '16000',
 			'card_hash' => $card_hash,
+			'postback_url' => "http://url.com/postback",
 			'customer' => array(
 				'name' => "Jose da Silva",  
 				'document_number' => "36433809847", 

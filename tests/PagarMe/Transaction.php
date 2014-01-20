@@ -61,7 +61,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 
 		$this->assertEqual($t2->getPaymentMethod(), 'boleto');
-		$this->assertEqual($t2->getPostbackUrl(), 'http://postback.com');
 	}
 
 	public function testPostback() {

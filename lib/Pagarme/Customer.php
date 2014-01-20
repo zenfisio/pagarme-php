@@ -14,11 +14,11 @@ class PagarMe_Customer extends PagarMe_Model {
 		$this->document_number = (isset($serverResponse['document_number'])) ? $serverResponse['document_number'] : 0;
 		$this->document_type = (isset($serverResponse['document_type'])) ? $serverResponse['document_type'] : 0;
 		$this->email = (isset($serverResponse['email'])) ? $serverResponse['email'] : 0;
-		$this->setAddresses($serverResponse['addresses']);
+		$this->setAddresses(isset($serverResponse['addresses']) ? $serverResponse['addresses'] : 0);
 		$this->sex = (isset($serverResponse['sex'])) ? $serverResponse['sex'] : 0;
 		$this->gender = (isset($serverResponse['gender'])) ? $serverResponse['gender'] : 0;
 		$this->born_at = (isset($serverResponse['born_at'])) ? $serverResponse['born_at'] : 0;
-		$this->setPhones($serverResponse['phones']);
+		$this->setPhones(isset($serverResponse['phones']) ? $serverResponse['phones'] : 0);
 	}
 
 

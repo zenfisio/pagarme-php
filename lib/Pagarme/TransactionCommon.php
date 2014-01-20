@@ -26,19 +26,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 
 
 	protected function validateCreditCard($s) {
-		if(0==$s) { 
-			return(false); 
-		} // Don’t allow all zeros
-		
-		$sum=0;
-		$i=strlen($s); // Find the last character
-		$o=$i%2; // Shift odd/even for odd-length $s
-		while ($i– > 0) { // Iterate all digits backwards
-			$sum+=$s[$i]; // Add the current digit
-			// If the digit is even, add it again. Adjust for digits 10+ by subtracting 9.
-			($o==($i%2)) ? ($s[$i] > 4) ? ($sum+=($s[$i]-9)) : ($sum+=$s[$i]) : false;
-		}
-		return (0==($sum%10)) ;
+		return true;
 	}
 
 	//TODO Validate address and phone info
@@ -119,10 +107,10 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 			$this->setAmount($first_parameter['amount']);
 		}
 
-		$this->status = $first_parameter['status'] ? $first_parameter['status'] : 'local';
-		$this->setCustomer($first_parameter['customer']);
-		if($first_parameter['payment_method'] != 'boleto') { 
-			if(!$first_parameter['card_hash']) { 
+		$this->status = (isset($first_parameter['status']) ? $first_parameter['status'] : 'local');
+		$this->setCustomer(isset($first_parameter['customer']) ? $first_parameter['customer'] : 0);
+		if(!isset($first_parameter['payment_method']) || $first_parameter['payment_method'] != 'boleto') { 
+			if(!isset($first_parameter['card_hash'])) { 
 				$this->card_number = (isset($first_parameter["card_number"])) ? $first_parameter['card_number']  : null;
 				$this->card_holder_name = (isset($first_parameter["card_holder_name"])) ? $first_parameter['card_holder_name'] : '';
 				$this->card_expiration_month = isset($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : '';

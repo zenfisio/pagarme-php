@@ -69,7 +69,7 @@ class RestClient
 
 			curl_setopt($this->curl, CURLOPT_URL, $this->url);	
 
-			if($params["headers"]) {
+			if(isset($params["headers"])) {
 				$this->headers = array_merge($this->headers, $params["headers"]);
 				curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers);
 			}

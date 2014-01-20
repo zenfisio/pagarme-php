@@ -7,11 +7,11 @@ class PagarMe_Phone extends PagarMe_Model {
 	}
 
 	public function updateFieldsFromResponse($serverResponse) {
-			$this->type = ($firstParameter['type']) ? $firstParameter['type'] : 0; 
-			$this->ddi = ($firstParameter['ddi']) ? $firstParameter['ddi'] : '55';
-			$this->ddd = ($firstParameter['ddd']) ? $firstParameter['ddd'] : 0;
-			$this->number = ($firstParameter['number']) ? $firstParameter['number'] : 0;
-			$this->id = ($firstParameter['id'])	? $firstParameter['id'] : 0;
+			$this->type = (isset($serverResponse['type'])) ? $serverResponse['type'] : 0; 
+			$this->ddi = (isset($serverResponse['ddi'])) ? $serverResponse['ddi'] : '55';
+			$this->ddd = (isset($serverResponse['ddd'])) ? $serverResponse['ddd'] : 0;
+			$this->number = (isset($serverResponse['number'])) ? $serverResponse['number'] : 0;
+			$this->id = (isset($serverResponse['id']))	? $serverResponse['id'] : 0;
 	}
 
 	public function setType($type) {$this->type = $type;}

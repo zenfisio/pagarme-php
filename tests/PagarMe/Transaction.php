@@ -6,39 +6,14 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction = self::createTestTransaction();
 		$this->assertFalse($transaction->getId());
 		$transaction->charge();
-		$this->assertTrue($transaction->getId());
-		$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
+		$this->validateTransactionResponse($transaction);
 	}
 
 	public function testAntifraudTransaction() {
-		$t = new PagarMe_Transaction(array(
-			'card_number' => '4901720080344448', 
-			'amount' => '16000',
-			'card_holder_name' => "Jose da silva", 
-			'card_expiration_month' => 11, 
-			'card_expiration_year' => "15", 
-			'card_cvv' => 356, 
-			'customer' => array(
-				'name' => "Jose da Silva",  
-				'document_number' => "36433809847", 
-				'email' => "henrique@pagar.me", 
-				'address' => array(
-					'street' => "Av Faria Lima",
-					'neighborhood' => 'Jardim Europa',
-					'zipcode' => '12460000', 
-					'street_number' => 295, 
-				),
-				'phone' => array(
-					'type' => "cellphone",
-					'ddd' => 12, 
-					'number' => '981433533', 
-				),
-				'sex' => 'M', 
-				'born_at' => '1995-10-11')
-			));
+		$t = self::createTestTransactionWithCustomer();
 		$t->charge();
+		$this->validateTransactionResponse($t);
 	}
-
 
 	public function testPostbackUrl() {
 		$t = self::createTestTransaction();	
@@ -49,63 +24,44 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 	}
 	
 	public function testPostbackUrlWithCardHash() {
-		$t = self::createTestTransaction();
+		$t = self::createTestTransactionWithCustomer();
 		$card_hash = $t->generateCardHash();
 
-		$transaction = new PagarMe_Transaction(array(
-			'payment_method' => 'credit_card',
-			'amount' => '15000',
-			'card_hash' => $card_hash,
-		));
+		$t->setPostbackUrl('http://url.com');
+		$t->charge();
 
-		$transaction->setPostbackUrl('http://url.com');
-		$transaction->charge();
+		$this->validateTransactionResponse($t);
 
-		$this->assertEqual($transaction->getPostbackUrl(), 'http://url.com');
-		$this->assertEqual($transaction->getStatus(), 'processing');
+		$this->assertEqual($t->getPostbackUrl(), 'http://url.com');
+		$this->assertEqual($t->getStatus(), 'processing');
 	}
 
 	public function testChargeWithCardHash() {
-		$t = self::createTestTransaction();
+		$t = self::createTestTransactionWithCustomer();
 		$card_hash = $t->generateCardHash();
 
-		$transaction = new PagarMe_Transaction(array( 
-			'payment_method' => 'credit_card',
-			'amount' => '16000',
-			'card_hash' => $card_hash,
-			'customer' => array(
-				'name' => "Jose da Silva",  
-				'document_number' => "36433809847", 
-				'email' => "henrique@pagar.me", 
-				'address' => array(
-					'street' => "Av Faria Lima",
-					'neighborhood' => 'Jardim Europa',
-					'zipcode' => '12460000', 
-					'street_number' => 295, 
-				),
-				'phone' => array(
-					'type' => "cellphone",
-					'ddd' => 12, 
-					'number' => '981433533', 
-				)
-			)
-		));
-
-		$transaction->charge();
+		$t->setCardHash($card_hash);
+		$t->charge();
+		$this->validateTransactionResponse($t);
 	}
 
 	public function testTransactionWithBoleto() {
 		authorizeFromEnv();
-		$transaction = new PagarMe_Transaction(array(
-			'payment_method' => 'boleto',
-			'amount' => '10000',
-			'postback_url' => 'testeee.com'
-		));
+		$t1 = self::createTestTransaction();
+		$t1->setPaymentMethod('boleto');
+		$t1->charge();
 
-		$transaction->charge();
+		$this->validateTransactionResponse($t1);
 
-		$this->assertFalse($transaction->getBoletoUrl());
-		$this->assertEqual($transaction->getStatus(), 'waiting_payment');
+		$t2 = self::createTestTransactionWithCustomer();
+		$t2->setPaymentMethod('boleto');
+		$t2->charge();
+
+		$this->validateTransactionResponse($t2);
+
+
+		$this->assertEqual($t2->getPaymentMethod(), 'boleto');
+		$this->assertEqual($t2->getPostbackUrl(), 'http://postback.com');
 	}
 
 	public function testPostback() {
@@ -177,8 +133,12 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 	public function testRefund() {
 		$transaction = self::createTestTransaction();
 		$transaction->charge();
+		$this->validateTransactionResponse($transaction);
 		$transaction->refund();
 		$this->assertEqual($transaction->getStatus(), 'refunded');
+
+		$this->expectException(new IsAExpectation('PagarMe_Exception'));
+		$transaction->refund();
 	}
 
 	public function testCreation() {

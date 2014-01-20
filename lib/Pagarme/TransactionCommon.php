@@ -164,6 +164,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
 		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
 		$this->metadata = isset($first_parameter['metadata']) ? $first_parameter['metadata'] : '';
+		$this->date_created = isset($first_parameter['date_created']) ? $first_parameter['date_created'] : '';
 	}
 
 	protected function cardDataParameters() 
@@ -217,65 +218,6 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	function getMetadata() { return $this->metadata;}
 	function setMetadata($metadata) { $this->metadata = $metadata; } 
 
-	//Address Info
-	public function getStreet() { return $this->street;}
-	public function setStreet($street) {$this->street = $street;}
-
-	public function getCity() { return $this->city;}
-
-	public function getState() { return $this->state;}
-
-	public function getNeighborhood() { return $this->neighborhood;}
-	public function setNeighborhood($neighborhood) { $this->neighborhood = $neighborhood;}
-
-	public function setZipcode($zipcode) {$this->zipcode = $zipcode;}
-	public function getZipcode() { return $this->zipcode;}
-
-	public function getAddressId() { return $this->address_id;}
-
-	public function setComplementary($complementary) {$this->complementary = $complementary;}
-	public function getComplementary() { return $this->complementary;}
-
-	public function setStreetNumber($street_number) {$this->street_number = $street_number;}
-	public function getStreetNumber() { return $this->street_number;}
-
-	public function getCountry() { return $this->country;}
-
-	// Phone Info
-
-	function getPhoneType() {return $this->type;}
-
-	public function getDDI() {return $this->ddi;}
-
-	public function setDDD($ddd) {$this->ddd = $ddd;}
-	public function getDDD() {return $this->ddd;}
-
-	public function setNumber($number) {$this->number = $number;}
-	public function getNumber() {return $this->number;}
-
-	public function getPhoneId() {return $this->phone_id;}
-
-
-	//Customer info
-
-	public function getName() { return $this->name;}
-	public function setName($name) { $this->name = $name; }
-
-	public function getDocumentNumber() { return $this->document_number;}
-	public function setDocumentNumber($document_number) { $this->document_number = $document_number; }
-
-	public function getDocumentType() { return $this->document_type;}
-	public function setDocumentType($document_type) { $this->document_type = $document_type; }
-
-	public function getEmail() { return $this->email;}
-	public function setEmail($email) { $this->email = $email; }
-
-	public function getSex() { return $this->sex;}
-	public function setSex($sex) { $this->sex = $sex; }
-
-	public function getGender() { return $this->gender;}
-	public function setGender($gender) { $this->gender = $gender; }
-	
 	public function getPostbackUrl() { return $this->postback_url;}
 	public function setPostbackUrl($postback_url) { $this->postback_url = $postback_url; }
 	

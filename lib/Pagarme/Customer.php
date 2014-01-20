@@ -3,23 +3,22 @@
 class PagarMe_Customer extends PagarMe_Model {
 	private $id, $name, $document_number, $document_type, $email, $addresses, $sex, $gender, $born_at, $phones;
 
-
 	public function __construct($customer = 0) {
 		$this->updateFieldsFromResponse($customer);
 	}
 
 	//TODO try to assume document_type
 	protected function updateFieldsFromResponse($serverResponse) {
-			$this->id = ($serverResponse['id']) ?  $serverResponse['id'] : 0;
-			$this->name = ($serverResponse['name']) ? $serverResponse['name'] : 0;
-			$this->document_number = ($serverResponse['document_number']) ? $serverResponse['document_number'] : 0;
-			$this->document_type = ($serverResponse['document_type']) ? $serverResponse['document_type'] : 0;
-			$this->email = ($serverResponse['email']) ? $serverResponse['email'] : 0;
-			$this->setAddresses($serverResponse['addresses']);
-			$this->sex = ($serverResponse['sex']) ? $serverResponse['sex'] : 0;
-			$this->gender = ($serverResponse['gender']) ? $serverResponse['gender'] : 0;
-			$this->born_at = ($serverResponse['born_at']) ? $serverResponse['born_at'] : 0;
-			$this->setPhones($serverResponse['phones']);
+		$this->id = (isset($serverResponse['id'])) ?  $serverResponse['id'] : 0;
+		$this->name = (isset($serverResponse['name'])) ? $serverResponse['name'] : 0;
+		$this->document_number = (isset($serverResponse['document_number'])) ? $serverResponse['document_number'] : 0;
+		$this->document_type = (isset($serverResponse['document_type'])) ? $serverResponse['document_type'] : 0;
+		$this->email = (isset($serverResponse['email'])) ? $serverResponse['email'] : 0;
+		$this->setAddresses($serverResponse['addresses']);
+		$this->sex = (isset($serverResponse['sex'])) ? $serverResponse['sex'] : 0;
+		$this->gender = (isset($serverResponse['gender'])) ? $serverResponse['gender'] : 0;
+		$this->born_at = (isset($serverResponse['born_at'])) ? $serverResponse['born_at'] : 0;
+		$this->setPhones($serverResponse['phones']);
 	}
 
 

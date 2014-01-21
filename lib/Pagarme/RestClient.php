@@ -53,7 +53,7 @@ class RestClient
 					break;
 				case 'put':
 				case 'PUT':
-					$this->method = HTTP_METH_PUT;
+					$this->method = 'HTTP_METH_PUT';
 					curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'PUT');
 					curl_setopt($this->curl, CURLOPT_POSTFIELDS, $this->parameters);
 					break;

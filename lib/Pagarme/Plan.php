@@ -54,7 +54,7 @@ class PagarMe_Plan extends PagarMe_Model
 
 	protected function updateFieldsFromResponse($firstParameter) 
 	{
-		$this->amount = ($firstParameter['amount']) ? $firstParameter['amount'] : 0;
+		$this->amount = (isset($firstParameter['amount'])) ? $firstParameter['amount'] : null;
 		$this->amount = trim($this->amount);
 		$this->amount = str_replace(',', "", $this->amount);
 		$this->amount = str_replace('.', "", $this->amount);
@@ -62,8 +62,8 @@ class PagarMe_Plan extends PagarMe_Model
 
 		$this->days = ($firstParameter['days']) ? $firstParameter['days'] : 0;
 		$this->name = ($firstParameter['name']) ? $firstParameter['name'] : 0;
-		$this->trial_days = ($firstParameter['trial_days']) ? $firstParameter['trial_days'] : 0;
-		$this->id = ($firstParameter['id']) ? $firstParameter['id'] : 0;
+		$this->trial_days = (isset($firstParameter['trial_days'])) ? $firstParameter['trial_days'] : null;
+		$this->id = (isset($firstParameter['id'])) ? $firstParameter['id'] : 0;
 	}
 
 	public function getAmount() 

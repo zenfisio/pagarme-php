@@ -7,10 +7,10 @@ class PagarMe_Exception extends Exception
 	// Builds with a message and a response from the server
 	public function __construct($message = null, $response_error = null) 
 	{
-		$this->url = ($response_error) ? $response_error['url'] : null;
-		$this->method = ($response_error) ? $response_error['method'] : null;
+		$this->url = (isset($response_error)) ? $response_error['url'] : null;
+		$this->method = (isset($response_error)) ? $response_error['method'] : null;
 
-		if($response_error) {
+		if(isset($response_error)) {
 			foreach($response_error['errors'] as $error) {
 				$this->errors[] = new PagarMe_Error($error);
 			}
@@ -28,6 +28,8 @@ class PagarMe_Exception extends Exception
 
 	// Builds an exception with the server response and joins all the errors
 	public static function buildWithFullMessage($response_error) {
+		$joined_messages = '';
+
 		foreach($response_error['errors'] as $error) {
 			$joined_messages .= $error['message'] . "\n";
 		}

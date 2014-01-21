@@ -69,7 +69,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	}
 
 	protected function checkAddress() {
-		if($this->zipcode || $this->street_number || $this->street || $this->complementary || $this->neighborhood) {
+		if(isset($this->zipcode) || isset($this->street_number) || isset($this->street) || isset($this->complementary) || isset($this->neighborhood)) {
 			return true;
 		} else {
 			return false;
@@ -77,11 +77,11 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	}
 
 	protected function checkPhone() {
-		return ($this->ddd || $this->number);
+		return (isset($this->ddd) || isset($this->number));
 	}
 
 	protected function checkCustomerInformation() {
-		if($this->checkAddress || $this->checkPhone() || $this->name || $this->document_number || $this->email || $this->gender || $this->born_at) {
+		if($this->checkAddress() || $this->checkPhone() || $this->name || $this->document_number || $this->email || $this->gender || $this->born_at) {
 			return true;
 		} else {
 			return false;
@@ -114,7 +114,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected function updateFieldsFromResponse($first_parameter)  
 	{
 
-		if($first_parameter['amount']) {
+		if(isset($first_parameter['amount'])) {
 			$this->setAmount($first_parameter['amount']);
 		}
 
@@ -140,7 +140,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		$this->installments = isset($first_parameter['installments']) ? $first_parameter["installments"] : null;
 		$this->payment_method = isset($first_parameter['payment_method']) ? $first_parameter['payment_method'] : 'credit_card';
 		$this->refuse_reason = isset($first_parameter['refuse_reason']) ? $first_parameter['refuse_reason'] : null;
-		$this->street = isset($first_parameter['customer']['address']['street']) ? $first_parameter['customer']['address']['street'] : 0;
+		$this->street = isset($first_parameter['customer']['address']['street']) ? $first_parameter['customer']['address']['street'] : null;
 		$this->city = isset($first_parameter['customer']['address']['city']) ? $first_parameter['customer']['address']['city'] : null;
 		$this->state = isset($first_parameter['customer']['address']['state']) ? $first_parameter['customer']['address']['state'] : null;
 		$this->neighborhood = isset($first_parameter['customer']['address']['neighborhood']) ? $first_parameter['customer']['address']['neighborhood'] : null;

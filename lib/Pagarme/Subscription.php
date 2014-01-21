@@ -26,7 +26,7 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 				'postback_url' => ($this->postback_url),
 			);
 
-			if($this->plan) {
+			if(isset($this->plan)) {
 				$parameters['plan_id'] = $this->plan->getId();
 			}
 
@@ -44,7 +44,7 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 
 	public function charge($amount) {
 		try {
-			if($this->plan) {
+			if(isset($this->plan)) {
 				throw new Exception("Subscription nao eh variavel.");
 			}
 			$this->setAmount($amount);
@@ -59,13 +59,12 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 
 	public function updateFieldsFromResponse($r) {
 		parent::updateFieldsFromResponse($r);
-		$this->customer_email = ($r['customer_email']) ? $r['customer_email'] : 0;
-		$this->current_period_start = ($r['current_period_start']) ? $r['current_period_start'] : 0;
-		$this->current_period_end = ($r['current_period_end']) ? $r['current_period_end'] : 0;
-		if($r['plan']) {
+		$this->current_period_start = (isset($r['current_period_start'])) ? $r['current_period_start'] : 0;
+		$this->current_period_end = (isset($r['current_period_end'])) ? $r['current_period_end'] : 0;
+		if(isset($r['plan'])) {
 			$this->plan = new PagarMe_Plan($r['plan']);
 		}	
-		if($r['transactions']) {
+		if(isset($r['transactions'])) {
 			for($i=0; $i < sizeof($r['transactions']); $i++) {
 				$this->transactions[$i] = new PagarMe_Transaction($r['transactions'][$i]);
 			}

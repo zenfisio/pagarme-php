@@ -63,15 +63,15 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	protected static function createTestSubscription(array $attributes = array()) {
 		authorizeFromEnv();	
 		return new PagarMe_Subscription($attributes + array(
-			'amount' => 2000,
-			'customer_email' => "customer@pagar.me",
-			'payment_method' => "credit_card",		
-			'postback_url' => 'http://testepagarme.com',
-			'card_number' => '4111111111111111',
-			'card_holder_name' => "Jose da Silva",
-			'card_expiration_month' => "12",
-			'card_expiration_year' => '15',
-			'card_cvv' => "123"
+			"amount" => 'R$ 10,00',
+			"card_number" => "4901720080344448",
+			"card_holder_name" => "Jose da Silva",
+			"card_expiration_month" => 12,
+			"card_expiration_year" => 15,
+			"card_cvv" => "123",
+			'customer' => array(
+				'email' => 'customer@pagar.me'
+			)
 		));
 	}
 

@@ -28,7 +28,6 @@ class PagarMe_Exception extends Exception
 
 	// Builds an exception with the server response and joins all the errors
 	public static function buildWithFullMessage($response_error) {
-		var_dump($response_error);
 		foreach($response_error['errors'] as $error) {
 			$joined_messages .= $error['message'] . "\n";
 		}

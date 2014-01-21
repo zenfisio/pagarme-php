@@ -65,17 +65,23 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 			return new PagarMe_Error(array('message' => "Valor inválido", 'parameter_name' => 'amount', 'type' => "invalid_parameter"));
 		}
 
-		if(checkCustomerInformation()) {
-			if(!$this->zipcode || !$this->street_number || !$this->ddd || !$this->number || !$this->name || !$this->document_number || !$this->email || !$this->sex || !$this->gender || !$this->born_at || !$this->street || !$this->neighborhood) {
-				return new PagarMe_Error(array('message' => "Faltam informações do cliente", 'parameter_name' => 'customer', 'type' => "invalid_parameter"));
-			}
-		}
-
 		return null;
 	}
 
+	protected function checkAddress() {
+		if($this->zipcode || $this->street_number || $this->street || $this->complementary || $this->neighborhood) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	protected function checkPhone() {
+		return ($this->ddd || $this->number);
+	}
+
 	protected function checkCustomerInformation() {
-		if($this->zipcode || $this->complementary || $this->street_number || $this->ddd || $this->number || $this->name || $this->document_number || $this->email || $this->sex || $this->gender || $this->born_at || $this->street || $this->neighborhood) {
+		if($this->checkAddress || $this->checkPhone() || $this->name || $this->document_number || $this->email || $this->gender || $this->born_at) {
 			return true;
 		} else {
 			return false;
@@ -84,13 +90,18 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	}
 
 	protected function mergeCustomerInformation($transactionInfo) {
-		$transactionInfo['customer']['phone']['ddd'] = $this->ddd;
-		$transactionInfo['customer']['phone']['number'] = $this->number;
-		$transactionInfo['customer']['address']['street_number'] = $this->street_number;
-		$transactionInfo['customer']['address']['street'] = $this->street;
-		$transactionInfo['customer']['address']['neighborhood'] = $this->neighborhood;
-		$transactionInfo['customer']['address']['zipcode'] = $this->zipcode;
-		$transactionInfo['customer']['address']['complementary'] = $this->complementary;
+		if($this->checkPhone()) {
+			$transactionInfo['customer']['phone']['ddd'] = $this->ddd;
+			$transactionInfo['customer']['phone']['number'] = $this->number;
+		}
+
+		if($this->checkAddress()) {
+			$transactionInfo['customer']['address']['street_number'] = $this->street_number;
+			$transactionInfo['customer']['address']['street'] = $this->street;
+			$transactionInfo['customer']['address']['neighborhood'] = $this->neighborhood;
+			$transactionInfo['customer']['address']['zipcode'] = $this->zipcode;
+			$transactionInfo['customer']['address']['complementary'] = $this->complementary;
+		}
 		$transactionInfo['customer']['document_number'] = $this->document_number;
 		$transactionInfo['customer']['email'] = $this->email;
 		$transactionInfo['customer']['sex'] = $this->sex;
@@ -112,47 +123,47 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		if(!isset($first_parameter['payment_method']) || $first_parameter['payment_method'] != 'boleto') { 
 			if(!isset($first_parameter['card_hash'])) { 
 				$this->card_number = (isset($first_parameter["card_number"])) ? $first_parameter['card_number']  : null;
-				$this->card_holder_name = (isset($first_parameter["card_holder_name"])) ? $first_parameter['card_holder_name'] : '';
-				$this->card_expiration_month = isset($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : '';
-				$this->card_expiration_year = isset($first_parameter["card_expiration_year"]) ? $first_parameter['card_expiration_year'] : '';
+				$this->card_holder_name = (isset($first_parameter["card_holder_name"])) ? $first_parameter['card_holder_name'] : null;
+				$this->card_expiration_month = isset($first_parameter["card_expiration_month"]) ? $first_parameter['card_expiration_month'] : null;
+				$this->card_expiration_year = isset($first_parameter["card_expiration_year"]) ? $first_parameter['card_expiration_year'] : null;
 				if(strlen($this->card_expiration_year) >= '4') {
 					$this->card_expiration_year = $this->card_expiration_year[2] . $this->card_expiration_year[3];
 				}
-				$this->card_cvv = isset($first_parameter["card_cvv"]) ? $first_parameter['card_cvv'] : '';
-				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
+				$this->card_cvv = isset($first_parameter["card_cvv"]) ? $first_parameter['card_cvv'] : null;
+				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : null;
 			} elseif(isset($first_parameter['card_hash'])) {
 				$this->card_hash = $first_parameter['card_hash'];
-				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : '';
+				$this->postback_url = isset($first_parameter['postback_url']) ? $first_parameter['postback_url'] : null;
 			}
 		}
 
-		$this->installments = isset($first_parameter['installments']) ? $first_parameter["installments"] : '';
+		$this->installments = isset($first_parameter['installments']) ? $first_parameter["installments"] : null;
 		$this->payment_method = isset($first_parameter['payment_method']) ? $first_parameter['payment_method'] : 'credit_card';
-		$this->refuse_reason = isset($first_parameter['refuse_reason']) ? $first_parameter['refuse_reason'] : '';
+		$this->refuse_reason = isset($first_parameter['refuse_reason']) ? $first_parameter['refuse_reason'] : null;
 		$this->street = isset($first_parameter['customer']['address']['street']) ? $first_parameter['customer']['address']['street'] : 0;
-		$this->city = isset($first_parameter['customer']['address']['city']) ? $first_parameter['customer']['address']['city'] : '';
-		$this->state = isset($first_parameter['customer']['address']['state']) ? $first_parameter['customer']['address']['state'] : '';
-		$this->neighborhood = isset($first_parameter['customer']['address']['neighborhood']) ? $first_parameter['customer']['address']['neighborhood'] : '';
-		$this->zipcode = isset($first_parameter['customer']['address']['zipcode']) ? $first_parameter['customer']['address']['zipcode'] : '';
-		$this->complementary = isset($first_parameter['customer']['address']['complementary']) ? $first_parameter['customer']['address']['complementary'] : '';
-		$this->street_number = isset($first_parameter['customer']['address']['street_number']) ? $first_parameter['customer']['address']['street_number'] : '';
-		$this->country = isset($first_parameter['customer']['address']['country']) ? $first_parameter['customer']['address']['country'] : '';
-		$this->type = isset($first_parameter['customer']['phone']['type']) ? $first_parameter['customer']['phone']['type'] : '';
-		$this->ddi = isset($first_parameter['customer']['phone']['ddi']) ? $first_parameter['customer']['phone']['ddi'] : '';
-		$this->ddd = isset($first_parameter['customer']['phone']['ddd']) ? $first_parameter['customer']['phone']['ddd'] : '';
-		$this->number = isset($first_parameter['customer']['phone']['number']) ? $first_parameter['customer']['phone']['number'] : '';
-		$this->id = isset($first_parameter['id']) ? $first_parameter['id'] : '';
-		$this->name = isset($first_parameter['customer']['name']) ? $first_parameter['customer']['name'] : '';
-		$this->document_type = isset($first_parameter['customer']['document_type']) ? $first_parameter['customer']['document_type'] : '';
-		$this->document_number = isset($first_parameter['customer']['document_number']) ? $first_parameter['customer']['document_number'] : '';
-		$this->email = isset($first_parameter['customer']['email']) ? $first_parameter['customer']['email'] : '';
-		$this->born_at = isset($first_parameter['customer']['born_at']) ? $first_parameter['customer']['born_at'] : '';
-		$this->sex = isset($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : '';
-		$this->gender = isset($first_parameter['customer']['gender']) ? $first_parameter['customer']['gender'] : '';
-		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : '';
-		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : '';
-		$this->metadata = isset($first_parameter['metadata']) ? $first_parameter['metadata'] : '';
-		$this->date_created = isset($first_parameter['date_created']) ? $first_parameter['date_created'] : '';
+		$this->city = isset($first_parameter['customer']['address']['city']) ? $first_parameter['customer']['address']['city'] : null;
+		$this->state = isset($first_parameter['customer']['address']['state']) ? $first_parameter['customer']['address']['state'] : null;
+		$this->neighborhood = isset($first_parameter['customer']['address']['neighborhood']) ? $first_parameter['customer']['address']['neighborhood'] : null;
+		$this->zipcode = isset($first_parameter['customer']['address']['zipcode']) ? $first_parameter['customer']['address']['zipcode'] : null;
+		$this->complementary = isset($first_parameter['customer']['address']['complementary']) ? $first_parameter['customer']['address']['complementary'] : null;
+		$this->street_number = isset($first_parameter['customer']['address']['street_number']) ? $first_parameter['customer']['address']['street_number'] : null;
+		$this->country = isset($first_parameter['customer']['address']['country']) ? $first_parameter['customer']['address']['country'] : null;
+		$this->type = isset($first_parameter['customer']['phone']['type']) ? $first_parameter['customer']['phone']['type'] : null;
+		$this->ddi = isset($first_parameter['customer']['phone']['ddi']) ? $first_parameter['customer']['phone']['ddi'] : null;
+		$this->ddd = isset($first_parameter['customer']['phone']['ddd']) ? $first_parameter['customer']['phone']['ddd'] : null;
+		$this->number = isset($first_parameter['customer']['phone']['number']) ? $first_parameter['customer']['phone']['number'] : null;
+		$this->id = isset($first_parameter['id']) ? $first_parameter['id'] : null;
+		$this->name = isset($first_parameter['customer']['name']) ? $first_parameter['customer']['name'] : null;
+		$this->document_type = isset($first_parameter['customer']['document_type']) ? $first_parameter['customer']['document_type'] : null;
+		$this->document_number = isset($first_parameter['customer']['document_number']) ? $first_parameter['customer']['document_number'] : null;
+		$this->email = isset($first_parameter['customer']['email']) ? $first_parameter['customer']['email'] : null;
+		$this->born_at = isset($first_parameter['customer']['born_at']) ? $first_parameter['customer']['born_at'] : null;
+		$this->sex = isset($first_parameter['customer']['sex']) ? $first_parameter['customer']['sex'] : null;
+		$this->gender = isset($first_parameter['customer']['gender']) ? $first_parameter['customer']['gender'] : null;
+		$this->card_brand = isset($first_parameter['card_brand']) ? $first_parameter['card_brand'] : null;
+		$this->boleto_url = isset($first_parameter['boleto_url']) ? $first_parameter['boleto_url'] : null;
+		$this->metadata = isset($first_parameter['metadata']) ? $first_parameter['metadata'] : null;
+		$this->date_created = isset($first_parameter['date_created']) ? $first_parameter['date_created'] : null;
 	}
 
 	protected function cardDataParameters() 

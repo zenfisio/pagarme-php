@@ -1,6 +1,6 @@
 <?php
 class PagarMe_Subscription extends PagarMe_TransactionCommon {
-	protected $plan, $current_period_start, $current_period_end, $customer_email, $transactions;	
+	protected $plan, $current_period_start, $current_period_end, $transactions;	
 
 	public function __construct($subscription = 0) { 
 		$this->transactions = Array();
@@ -24,9 +24,7 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 				'payment_method' => $this->payment_method,
 				'card_hash' => ($this->payment_method == 'credit_card') ? ($this->card_hash ? $this->card_hash : $this->generateCardHash()) : null,
 				'postback_url' => ($this->postback_url),
-				'customer_email' => $this->customer_email
 			);
-
 
 			if($this->plan) {
 				$parameters['plan_id'] = $this->plan->getId();

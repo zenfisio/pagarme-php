@@ -16,7 +16,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		return new PagarMe_Transaction(
 			$attributes + 
 			array(
-			"amount" => 'R$ 10,00',
+			"amount" => '1000',
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
 			"card_expiration_month" => 12,
@@ -34,12 +34,11 @@ abstract class PagarMeTestCase extends UnitTestCase {
 				'address' => array(
 					'street' => "Av Faria Lima",
 					'neighborhood' => 'Jardim Europa',
-					'zipcode' => '12460000', 
+					'zipcode' => '01452000', 
 					'street_number' => 296, 
 					'complementary' => '8 andar'
 				),
 				'phone' => array(
-					'type' => "cellphone",
 					'ddd' => 12, 
 					'number' => '981433533', 
 				),
@@ -63,7 +62,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	protected static function createTestSubscription(array $attributes = array()) {
 		authorizeFromEnv();	
 		return new PagarMe_Subscription($attributes + array(
-			"amount" => 'R$ 10,00',
+			"amount" => '1000',
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
 			"card_expiration_month" => 12,
@@ -96,9 +95,36 @@ abstract class PagarMeTestCase extends UnitTestCase {
 
 		$phones = $customer->getPhones();
 		$phone = $phones[0];
-		$this->assertEqual($phone->getType(), 'cellphone');
 		$this->assertEqual($phone->getDDD(), '12');
 		$this->assertEqual($phone->getNumber(), '981433533');
+	}
+
+	protected static function createTestSet() {
+		return new PagarMe_Set(array('key', 'value', 'key', 'value', 'abc', 'bcd', 'kkkk'));
+	}
+
+	protected static function createPagarMeObject() {
+		$response = array("status"=> "paid",
+			"object" => 'transaction',
+			"refuse_reason" => null,
+			"date_created" => "2013-09-26T03:19:36.000Z",
+			"amount" => 1590,
+			"installments" => 1,
+			"id" => 1379,
+			"card_holder_name" => "Jose da Silva",
+			"card_last_digits" => "4448",
+			"card_brand" => "visa",
+			"postback_url" => null,
+			"payment_method" => "credit_card",
+			"customer" => array(
+				'object' => 'customer',
+				"document_number" => "51472745531",
+				'address' => array(
+					'object' => "address",
+					'street' => 'asdas'
+				)
+			));
+		return PagarMe_Object::build($response, 'PagarMe_Transaction');
 	}
 
 	protected function validateTransactionResponse($transaction) {

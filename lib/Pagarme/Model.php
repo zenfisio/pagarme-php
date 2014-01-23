@@ -1,10 +1,10 @@
 <?php
-class PagarMe_Model extends Pagarme 
+class PagarMe_Model extends PagarMe_Object
 {	
 	protected static $root_url;
 
-	public function __construct($object = 0) {
-		$this->updateFieldsFromResponse($object);
+	public function __construct($response = array()) {
+		parent::__construct($response);
 	}
 
 	public static function getUrl() {
@@ -12,6 +12,35 @@ class PagarMe_Model extends Pagarme
 		$search = preg_match("/PagarMe_(.*)/",$class, $matches);
 		return '/'. strtolower($matches[1]) . 's';
 	}
+
+	public function create() {
+		try {
+			$request = new PagarMe_Request(self::getUrl(), 'POST');
+			$parameters = $this->__toArray(true);
+			$request->setParameters($parameters);
+			$response = $request->run();
+			return $this->refresh($response);
+		} catch(Exception $e) {
+			throw new PagarMe_Exception($e->getMessage());
+		}
+	}
+
+	public function save() 
+	{
+		try {
+			if(method_exists(get_called_class(), 'validate')) {
+				if(!$this->validate()) return false;
+			}
+			$request = new PagarMe_Request(self::getUrl(). '/' . $this->id, 'PUT');
+			$parameters = $this->unsavedArray();
+			$request->setParameters($parameters);
+			$response = $request->run();
+			return $this->refresh($response);
+		} catch(Exception $e) {
+			throw new PagarMe_Exception($e->getMessage());
+		}
+	}
+
 
 	public static function findById($id) 
 	{

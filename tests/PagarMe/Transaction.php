@@ -40,9 +40,10 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$t = self::createTestTransactionWithCustomer();
 		$card_hash = $t->generateCardHash();
 
-		$t->setCardHash($card_hash);
-		$t->charge();
-		$this->validateTransactionResponse($t);
+		$transaction = self::createTestTransactionWithCustomer();
+		$transaction->setCardHash($card_hash);
+		$transaction->charge();
+		$this->validateTransactionResponse($transaction);
 	}
 
 	public function testTransactionWithBoleto() {
@@ -90,7 +91,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 					'street_number' => 295, 
 				),
 				'phone' => array(
-					'type' => "cellphone",
 					'ddd' => 12, 
 					'number' => '981433533', 
 				),
@@ -99,7 +99,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 			));
 
 		$transaction->setInstallments(6); // Número de parcelas
-		$transaction->setAmount('10.00'); // Set Amount
+		$transaction->setAmount('1000'); // Set Amount
 
 		$transaction->charge();
 		$this->assertEqual($transaction->getStatus(), 'paid');
@@ -155,6 +155,18 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction2 = PagarMe_Transaction::findById($transaction->getId());
 		$metadata = $transaction2->getMetadata();
 		$this->assertEqual($metadata['event']['name'], "Evento irado");
+	}
+
+	public function testDeepMetadata() {
+		$transaction = self::createTestTransaction();
+		$transaction->setMetadata(array('basket' => array('session' => array('date' => "31/04/2014", 'time' => "12:00:00"), 'ticketTypeId'=> '5209', 'type' => "inteira", 'quantity' => '1', 'price' => 2000)));
+		$transaction->charge();
+		$this->assertTrue($transaction->getId());
+
+		$transaction2 = PagarMe_Transaction::findById($transaction->getId());
+		$metadata = $transaction2->getMetadata();
+		$this->assertEqual($metadata['basket']['quantity'], "1");
+		$this->assertEqual($metadata['basket']['session']['date'], "31/04/2014");
 	}
 
 	public function testValidation() {

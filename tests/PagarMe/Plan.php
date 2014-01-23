@@ -12,14 +12,13 @@ class PagarMe_PlanTest extends PagarMeTestCase {
 		$plan->create();
 		$this->assertEqual($plan->getName(), "Plano Silver");
 		$plan->setName("Plano gold!");
-		$plan->update();
+		$plan->save();
 		$plan2 = PagarMe_Plan::findById($plan->getId());		
 		$this->assertEqual($plan->getName(), $plan2->getName());
 
 		$this->expectException(new IsAExpectation('PagarMe_Exception'));
-		$plan2->setAmount('R$ 20.00');
-		$this->expectException(new IsAExpectation('PagarMe_Exception'));
 		$plan2->setDays('60');
+		$plan2->save();
 	} 
 
 	public function testValidate() {

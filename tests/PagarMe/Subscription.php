@@ -62,7 +62,7 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 
 	public function testCreateWithPlanAndFraud() {
 		$subscription =  new PagarMe_Subscription(array(
-			'amount' => 'R$ 70.00',
+			'amount' => '7000',
 			'customer_email' => "henrique@pagar.me",
 			'customer_name' => "Henrique Silva",
 			'card_number' => '4901720080344448', 

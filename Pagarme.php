@@ -24,9 +24,11 @@ if (!function_exists('json_decode')) {
 
 
 require(dirname(__FILE__) . '/lib/Pagarme/PagarMe.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Set.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Object.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Util.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Error.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Exception.php');
-require(dirname(__FILE__) . '/lib/Pagarme/ApiException.php');
 require(dirname(__FILE__) . '/lib/Pagarme/RestClient.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Request.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Model.php');

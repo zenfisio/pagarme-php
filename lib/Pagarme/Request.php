@@ -27,9 +27,9 @@ class PagarMe_Request extends PagarMe
 				$client = new RestClient(array("method" => $this->method, "url" => $this->full_api_url($this->path), "headers" => $this->headers, "parameters" => $this->parameters ));	
 				$response = $client->run();
 				// // var_dump($response);
-				// $decode = json_decode($response["body"], true);
-				// if(!$decode) {
-				// 	throw new Exception("Failed to decode json from response.\n\n Response: ".$response);
+				$decode = json_decode($response["body"], true);
+				if(!$decode) {
+					throw new Exception("Failed to decode json from response.\n\n Response: ".$response);
 				} else {
 					if($response["code"] == 200) {
 						return $decode;

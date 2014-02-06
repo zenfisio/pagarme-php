@@ -71,64 +71,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual('abc2', $transaction->getPostbackUrl());
 	}
 
-	public function testCreationWithFraud() {
-		authorizeFromEnv();
-		self::setAntiFraud("false");
-		$transaction = new PagarMe_Transaction(array(
-			'card_number' => '4111111111111111', 
-			'card_holder_name' => "Jose da silva", 
-			'card_expiration_month' => 11, 
-			'card_expiration_year' => "2014", 
-			'card_cvv' => 356, 
-			'customer' => array(
-				'name' => "Jose da Silva",  
-				'document_number' => "36433809847", 
-				'email' => "henrique@pagar.me", 
-				'address' => array(
-					'street' => "Av Faria Lima",
-					'neighborhood' => 'Jardim Europa',
-					'zipcode' => '12460000', 
-					'street_number' => 295, 
-				),
-				'phone' => array(
-					'ddd' => 12, 
-					'number' => '981433533', 
-				),
-				'sex' => 'M', 
-				'born_at' => '1995-10-11')
-			));
-
-		$transaction->setInstallments(6); // Número de parcelas
-		$transaction->setAmount('1000'); // Set Amount
-
-		$transaction->charge();
-		$this->assertEqual($transaction->getStatus(), 'paid');
-		$this->assertEqual($transaction->getAmount(), '1000');
-
-		$this->assertTrue($transaction->getCardBrand());
-		$this->assertEqual($transaction->getCardBrand(), 'visa');
-
-		$this->assertEqual($transaction->getInstallments(), 6);
-
-		$this->assertTrue($transaction->getId());
-		$this->assertFalse($transaction->getRefuseReason());
-		$this->assertTrue($transaction->getCustomer());
-
-		$this->assertTrue($transaction->getCustomer()->getPhones());
-		$this->assertTrue($transaction->getCustomer()->getAddresses());
-
-		$this->assertEqual($transaction->getCustomer()->getName(), 'Jose da Silva');
-		$this->assertTrue($transaction->getCustomer()->getName());
-		$this->assertTrue($transaction->getCustomer()->getDocumentNumber());
-		$this->assertTrue($transaction->getCustomer()->getDocumentType());
-		$this->assertTrue($transaction->getCustomer()->getEmail());
-		$this->assertTrue($transaction->getCustomer()->getGender());
-		$this->assertTrue($transaction->getCustomer()->getId());
-
-
-		self::setAntiFraud("false");
-	}
-
 	public function testRefund() {
 		$transaction = self::createTestTransaction();
 		$transaction->charge();

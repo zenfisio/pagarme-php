@@ -25,26 +25,32 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		));
 	}
 
+	protected static function createTestCustomer(array $attributes = array()) {
+		$customer = array(
+			'name' => "Jose da Silva",  
+			'document_number' => "36433809847", 
+			'email' => "customer@pagar.me", 
+			'address' => array(
+				'street' => "Av Faria Lima",
+				'neighborhood' => 'Jardim Europa',
+				'zipcode' => '01452000', 
+				'street_number' => 296, 
+				'complementary' => '8 andar'
+			),
+			'phone' => array(
+				'ddd' => 12, 
+				'number' => '999999999', 
+			),
+			'sex' => 'M', 
+			'born_at' => '1995-10-11');
+		return $customer;	
+	}
+
 	protected static function createTestTransactionWithCustomer(array $attributes = array()) {
 		authorizeFromEnv();	
-		$customer = array('customer' => array(
-				'name' => "Jose da Silva",  
-				'document_number' => "36433809847", 
-				'email' => "henrique@pagar.me", 
-				'address' => array(
-					'street' => "Av Faria Lima",
-					'neighborhood' => 'Jardim Europa',
-					'zipcode' => '01452000', 
-					'street_number' => 296, 
-					'complementary' => '8 andar'
-				),
-				'phone' => array(
-					'ddd' => 12, 
-					'number' => '981433533', 
-				),
-				'sex' => 'M', 
-				'born_at' => '1995-10-11'));
-		return self::createTestTransaction($customer);
+		$transaction = self::createTestTransaction();
+		$transaction->customer = self::createTestCustomer();
+		return $transaction;
 	}
 
 	protected static function createTestPlan(array $attributes = array()) {
@@ -59,10 +65,17 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		);
 	}	
 
+	protected function validatePlan($plan) {
+		$this->assertTrue($plan->getId());
+		$this->assertEqual($plan->getAmount(), '1000');
+		$this->assertEqual($plan->getName(), 'Plano Silver');
+		$this->assertEqual($plan->getTrialDays(), '2');
+	}
+	
+
 	protected static function createTestSubscription(array $attributes = array()) {
 		authorizeFromEnv();	
 		return new PagarMe_Subscription($attributes + array(
-			"amount" => '1000',
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
 			"card_expiration_month" => 12,
@@ -74,29 +87,21 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		));
 	}
 
+	protected static function createSubscriptionWithCustomer(array $attributes = array()) {
+		authorizeFromEnv();
+		$subscription = self::createTestSubscription();
+		$subscription->customer = self::createTestCustomer();
+		return $subscription;
+	}
+
 	protected function validateCustomerResponse($customer) {
 		authorizeFromEnv();	
 		$this->assertTrue($customer->getId());
-		$this->assertTrue($customer->getAddresses());
-		$this->assertTrue($customer->getPhones());
 		$this->assertEqual($customer->getDocumentType(), 'cpf');
 		$this->assertEqual($customer->getName(), 'Jose da Silva');
 		$this->assertTrue($customer->getBornAt());
 		$this->assertEqual($customer->getGender(), 'M');
 
-		$addresses = $customer->getAddresses();
-		$addr =  end($addresses);
-		$this->assertEqual($addr->getStreet(), 'Av Faria Lima');
-		$this->assertTrue($addr->getCity());
-		$this->assertTrue($addr->getCountry());
-		$this->assertEqual($addr->getNeighborhood(), 'Jardim Europa');
-		$this->assertEqual($addr->getStreetNumber(), 296);
-		$this->assertEqual($addr->getComplementary(), '8 andar');
-
-		$phones = $customer->getPhones();
-		$phone = $phones[0];
-		$this->assertEqual($phone->getDDD(), '12');
-		$this->assertEqual($phone->getNumber(), '981433533');
 	}
 
 	protected static function createTestSet() {
@@ -127,8 +132,36 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		return PagarMe_Object::build($response, 'PagarMe_Transaction');
 	}
 
+	protected function validateAddress($addr) {
+		$this->assertEqual($addr->getStreet(), 'Av Faria Lima');
+		$this->assertEqual($addr->getNeighborhood(), 'Jardim Europa');
+		$this->assertEqual($addr->getZipcode(), '01452000');
+		$this->assertEqual($addr->getComplementary(), '8 andar');
+		$this->assertEqual($addr->getStreetNumber(), '296');
+	}
+
+	protected function validatePhone($phone) {
+		$this->assertEqual($phone->getDdd(), '12');
+		$this->assertEqual($phone->getNumber(), '999999999');
+	}
+
+	protected function validateSubscription($subscription) {
+		if($subscription->getCustomer()->getName()) {
+			$this->validateCustomerResponse($subscription->getCustomer());
+		}	
+
+		if($subscription->getPlan()) {
+			$this->validatePlan($subscription->getPlan());
+		}
+
+		$this->assertTrue($subscription->getId());
+		$this->assertEqual($subscription->getCustomer()->getEmail(), 'customer@pagar.me');
+	}
+
+
 	protected function validateTransactionResponse($transaction) {
 		authorizeFromEnv();	
+		
 		$this->assertTrue($transaction->getId());	
 		$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
 		$this->assertTrue($transaction->getDateCreated());
@@ -142,6 +175,14 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		if($transaction->getCustomer()) {
 			$customer = $transaction->getCustomer();
 			$this->validateCustomerResponse($customer);	
+		}
+
+		if($transaction->getAddress()) {
+			$this->validateAddress($transaction->getAddress());
+		}
+
+		if($transaction->getPhone()) {
+			$this->validatePhone($transaction->getPhone());
 		}
 	}
 

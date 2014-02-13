@@ -8,6 +8,17 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$this->validateSubscription($subscription);
 	}
 
+	public function testUpdate() {
+		$subscription = self::createTestSubscription();
+		$subscription->create();
+
+		$subscription->setPaymentMethod('boleto');
+		$subscription->save();
+
+		$subscription2 = PagarMe_Subscription::findById($subscription->getId());
+		$this->assertEqual($subscription2->getPaymentMethod(), 'boleto');
+	}
+
 	public function testCreateWithFraud() {
 		$subscription = self::createSubscriptionWithCustomer();
 		$subscription->create();

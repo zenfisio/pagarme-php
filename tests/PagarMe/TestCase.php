@@ -169,8 +169,6 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		$this->assertEqual($transaction->getInstallments(), '1');
 		// $this->assertEqual($transaction->getStatus(), 'paid');
 		$this->assertFalse($transaction->getRefuseReason());
-		$this->assertFalse($transaction->getBoletoBarcode());
-		$this->assertFalse($transaction->getBoletoUrl());
 
 		if($transaction->getCustomer()) {
 			$customer = $transaction->getCustomer();

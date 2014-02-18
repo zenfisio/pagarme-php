@@ -21,6 +21,19 @@ class PagarMe_PlanTest extends PagarMeTestCase {
 		$plan2->save();
 	} 
 
+	public function testUpdatePaymentMethods() {
+		$plan = self::createTestPlan();	
+		$plan->create();
+		$this->assertTrue(in_array('credit_card', $plan->getPaymentMethods()));
+		$this->assertTrue(in_array('boleto', $plan->getPaymentMethods()));
+
+		$plan2 = self::createTestPlan();
+		$plan2->setPaymentMethods(array('credit_card'));
+
+		$this->assertTrue(in_array('credit_card', $plan2->getPaymentMethods()));
+		$this->assertFalse(in_array('boleto', $plan2->getPaymentMethods()));
+	}
+
 	public function testValidate() {
 		$plan = new PagarMe_Plan();
 

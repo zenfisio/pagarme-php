@@ -1,8 +1,6 @@
 <?php
 class PagarMe_Subscription extends PagarMe_TransactionCommon {
 
-
-
 	public function create() {
 		if($this->plan) {
 			$this->plan_id = $this->plan->id;
@@ -11,6 +9,13 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 		parent::create();
 	}
 
+	public function save() {
+		if($this->plan) {
+			$this->plan_id = $this->plan->id;
+			unset($this->plan);
+		}
+		parent::save();
+	}
 
 	public function cancel() {
 		try {

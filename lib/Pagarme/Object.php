@@ -101,7 +101,7 @@ class PagarMe_Object implements ArrayAccess, Iterator {
 
 		foreach($this->_unsavedAttributes->toArray() as $a) {
 			if($this->_attributes[$a] instanceof PagarMe_Object) {
-				$arr[$a] = $a->unsavedArray();
+				$arr[$a] = $this->_attributes[$a]->unsavedArray();
 			} else {
 				$arr[$a] = $this->_attributes[$a];
 			}

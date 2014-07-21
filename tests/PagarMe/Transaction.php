@@ -22,6 +22,27 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 		$this->assertEqual($t->getStatus(), 'processing');
 	}
+
+	public function testPostbackWithBoleto() {
+		$t = self::createTestTransactionWithCustomer();
+		$t->setPaymentMethod('boleto');
+		$t->setPostbackUrl('http://requestb.in/1a4cif91');
+		$t->charge();
+
+		$this->assertEqual($t->getStatus(), 'waiting_payment');
+	}
+
+	public function testSeparateAuthAndCapture() {
+		$t = self::createTestTransaction();
+		$t->setCapture(false);
+		$t->charge();
+
+		$this->assertEqual($t->getStatus(), 'authorized');
+
+		$t->capture();
+
+		$this->assertEqual($t->getStatus(), 'paid');
+	}
 	
 	public function testPostbackUrlWithCardHash() {
 		$t = self::createTestTransactionWithCustomer();
@@ -33,7 +54,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->validateTransactionResponse($t);
 
 		$this->assertEqual($t->getPostbackUrl(), 'http://url.com');
-		$this->assertEqual($t->getStatus(), 'processing');
+		$this->assertEqual($t->getStatus(), 'paid');
 	}
 
 	public function testChargeWithCardHash() {

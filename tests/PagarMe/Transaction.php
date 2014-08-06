@@ -43,6 +43,18 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 		$this->assertEqual($t->getStatus(), 'paid');
 	}
+
+	public function testPartialCapture() {
+		$t = self::createTestTransaction();
+		$t->setCapture(false);
+		$t->charge();
+
+		$this->assertEqual($t->getStatus(), 'authorized');
+
+		$t->capture(1000);
+		$this->assertEqual($t->getAmount(), 1000);
+		$this->assertEqual($t->getStatus(), 'paid');
+	}
 	
 	public function testPostbackUrlWithCardHash() {
 		$t = self::createTestTransactionWithCustomer();

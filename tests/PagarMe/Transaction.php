@@ -23,6 +23,13 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual($t->getStatus(), 'processing');
 	}
 
+	public function testCalculateInstallments() {
+		$installments = PagarMe_Transaction::calculateInstallments('10000', '1.5', '12')['installments'];	
+		$this->assertEqual($installments["5"]["amount"], '10390');
+		$this->assertEqual($installments["5"]["installment"],  '5');
+		$this->assertEqual($installments["5"]["installment_amount"],  '2078');
+	}
+
 	public function testPostbackWithBoleto() {
 		$t = self::createTestTransactionWithCustomer();
 		$t->setPaymentMethod('boleto');

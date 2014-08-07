@@ -158,7 +158,6 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		$this->assertEqual($subscription->getCustomer()->getEmail(), 'customer@pagar.me');
 	}
 
-
 	protected function validateTransactionResponse($transaction) {
 		authorizeFromEnv();	
 		

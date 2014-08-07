@@ -7,7 +7,7 @@ abstract class PagarMe
 	const endpoint = "https://api.pagar.me";
 	const api_version = '1';
 
-	public function full_api_url($path) {
+	public static function full_api_url($path) {
 		return self::endpoint . '/' . self::api_version . $path;
 		// return self::endpoint . $path;
 	}

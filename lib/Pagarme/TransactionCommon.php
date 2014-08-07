@@ -36,8 +36,8 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		unset($this->card_cvv);
 	}
 
-	public static function calculateInstallments($amount, $interest_rate, $max_installments) {
-		$request = new PagarMe_Request(self::getUrl() . '/calculate_installments', 'GET');
+	public static function calculateInstallmentsAmount($amount, $interest_rate, $max_installments) {
+		$request = new PagarMe_Request(self::getUrl() . '/calculate_installments_amount', 'GET');
 		$params = array('amount' => $amount, 'interest_rate' => $interest_rate, 'max_installments' => $max_installments);	
 		$request->setParameters($params);
 		$response = $request->run();

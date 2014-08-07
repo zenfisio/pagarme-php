@@ -23,8 +23,9 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual($t->getStatus(), 'processing');
 	}
 
-	public function testCalculateInstallments() {
-		$installments = PagarMe_Transaction::calculateInstallments('10000', '1.5', '12')['installments'];	
+	public function testCalculateInstallmentsAmount() {
+		$request = PagarMe_Transaction::calculateInstallmentsAmount('10000', '1.5', '12');
+		$installments = $request['installments'];	
 		$this->assertEqual($installments["5"]["amount"], '10390');
 		$this->assertEqual($installments["5"]["installment"],  '5');
 		$this->assertEqual($installments["5"]["installment_amount"],  '2078');

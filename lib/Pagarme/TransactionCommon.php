@@ -49,10 +49,10 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 		try {
 			if(!$this->card_hash && $this->payment_method == 'credit_card') {
 				$validation_error= $this->errorInTransaction();
-				$this->card_hash = $this->generateCardHash();
 				if($validation_error) {
 					throw PagarMe_Exception::buildWithError($validation_error);
 				}
+				$this->card_hash = $this->generateCardHash();
 			} 
 		
 			if($this->card_hash) {
@@ -108,32 +108,32 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 	protected function errorInTransaction() 
 	{
 		if($this->status != 'local') {
-			throw new PagarMe_Exception(null,array('message' => "Transação já realizada", 'parameter_name' => 'status', 'type' => 'forbidden_action'));
+			throw new PagarMe_Error(array('message' => "Transação já realizada", 'parameter_name' => 'status', 'type' => 'forbidden_action'));
 		}
 
 		if($this->payment_method == 'credit_card') { 
 			if(strlen($this->card_number) > 20 || !$this->validateCreditCard($this->card_number)) {
-				return new PagarMe_Exception(null, array('message' => "Número de cartão inválido.", 'parameter_name' => 'card_number', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => "Número de cartão inválido.", 'parameter_name' => 'card_number', 'type' => "invalid_parameter"));
 			}
 
 			else if(strlen($this->card_holder_name) == 0) {
-				return new PagarMe_Exception(null, array('message' => " Nome do portador do cartão inválido", 'parameter_name' => 'card_holder_name', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => " Nome do portador do cartão inválido", 'parameter_name' => 'card_holder_name', 'type' => "invalid_parameter"));
 			}
 
 			else if($this->card_expiration_month <= 0 || $this->card_expiration_month > 12) {
-				return new PagarMe_Exception(null, array('message' => "Mês de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => "Mês de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
 			else if($this->card_expiration_year <= 0) {
-				return new PagarMe_Exception(null, array('message' => "Ano de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => "Ano de expiração do cartão inválido", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
 			else if($this->card_expiration_year < substr(date('Y'),-2)) {
-				return new PagarMe_Exception(null, array('message' => "Cartão expirado", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => "Cartão expirado", 'parameter_name' => 'card_expiration_date', 'type' => "invalid_parameter"));
 			}
 
 			else if(strlen($this->card_cvv) < 3  || strlen($this->card_cvv) > 4) {
-				return new PagarMe_Exception(null, array('message' => "Código de segurança inválido", 'parameter_name' => 'card_cvv', 'type' => "invalid_parameter"));
+				return new PagarMe_Error(array('message' => "Código de segurança inválido", 'parameter_name' => 'card_cvv', 'type' => "invalid_parameter"));
 			}
 
 			else {
@@ -141,7 +141,7 @@ class PagarMe_TransactionCommon extends PagarMe_Model
 			}
 		}
 		if($this->amount <= 0) {
-			return new PagarMe_Exception(null,array('message' => "Valor inválido", 'parameter_name' => 'amount', 'type' => "invalid_parameter"));
+			return new PagarMe_Error(null,array('message' => "Valor inválido", 'parameter_name' => 'amount', 'type' => "invalid_parameter"));
 		}
 
 		return null;

@@ -38,12 +38,13 @@ class PagarMe_Subscription extends PagarMe_TransactionCommon {
 		}
 	}
 
-	public function charge($amount) {
+	public function charge($amount, $installments=1) {
 		try {
 			if(!$this->id) {
 				throw new Exception("Can't charge subscription which is not created.");
 			}
 			$this->amount = $amount;
+			$this->installments = $installments;
 			$request = new PagarMe_Request(self::getUrl(). '/' . $this->id . '/transactions', 'POST');
 			$request->setParameters($this->unsavedArray());
 			$response = $request->run();

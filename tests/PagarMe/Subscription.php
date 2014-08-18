@@ -117,7 +117,17 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$subscription->create();
 		$subscription->charge(3600);
 		$transaction = $subscription->getCurrentTransaction();
+		$this->assertEqual($transaction->getInstallments(), '1');
 		$this->assertEqual($transaction->getAmount(), '3600');
+	}
+	
+	public function testChargeWithInstallments() {
+		$subscription = self::createTestSubscription();
+		$subscription->create();
+		$subscription->charge(3600, 3);
+		$transaction = $subscription->getCurrentTransaction();
+		$this->assertEqual($transaction->getAmount(), '3600');
+		$this->assertEqual($transaction->getInstallments(), '3');
 	}
 }
 

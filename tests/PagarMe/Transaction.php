@@ -26,9 +26,9 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 	public function testCalculateInstallmentsAmount() {
 		$request = PagarMe_Transaction::calculateInstallmentsAmount('10000', '1.5', '12');
 		$installments = $request['installments'];	
-		$this->assertEqual($installments["5"]["amount"], '10390');
+		$this->assertEqual($installments["5"]["amount"], '10471');
 		$this->assertEqual($installments["5"]["installment"],  '5');
-		$this->assertEqual($installments["5"]["installment_amount"],  '2078');
+		$this->assertEqual($installments["5"]["installment_amount"],  '2094');
 	}
 
 	public function testPostbackWithBoleto() {

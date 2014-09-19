@@ -11,7 +11,6 @@ class RestClient
 
 	public function __construct($params = array()) 
 	{
-		try {
 			$this->curl = curl_init();
 			$this->headers = array(
 				'Accept: application/json',
@@ -19,7 +18,7 @@ class RestClient
 			);
 
 			if(!$params["url"]) {
-				throw new Exception("You must set the URL to make a request.");
+				throw new PagarMe_Exception("You must set the URL to make a request.");
 			} else {
 				$this->url = $params["url"];
 			}
@@ -73,11 +72,6 @@ class RestClient
 				$this->headers = array_merge($this->headers, $params["headers"]);
 				curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers);
 			}
-
-		} catch(HttpException $e) {
-			throw new Exception($e->message);
-		}
-
 	}
 
 
@@ -133,18 +127,14 @@ class RestClient
 
 	public function run() 
 	{
-		try {
 			$response = curl_exec($this->curl);
 			$error = curl_error($this->curl);
 			if($error) {
-				throw new Exception("error: ".$error);
+				throw new PagarMe_Exception("error: ".$error);
 			}
 			$code = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 			curl_close($this->curl);
 			return array("code" => $code, "body" => $response);
-		} catch(Exception $e) {
-			throw new PagarMe_Exception($e->getMessage());
-		}	
 	}
 
 }

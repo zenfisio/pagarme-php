@@ -38,6 +38,11 @@ class PagarMe_Exception extends Exception
 		return $instance;
 	}
 
+	public function getErrors()
+	{
+		return $this->errors;
+	}
+
 	public function getUrl() 
 	{
 		return $this->url;

@@ -8,7 +8,7 @@ class PagarMe_Exception extends Exception
 	public function __construct($message = null, $response_error = null) 
 	{
 		$this->url = (isset($response_error['url'])) ? $response_error['url'] : null;
-		$this->method = (isset($response_error['url'])) ? $response_error['method'] : null;
+		$this->method = (isset($response_error['method'])) ? $response_error['method'] : null;
 
 		if(isset($response_error['errors'])) {
 			foreach($response_error['errors'] as $error) {

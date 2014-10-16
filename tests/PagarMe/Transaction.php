@@ -74,7 +74,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->validateTransactionResponse($t);
 
 		$this->assertEqual($t->getPostbackUrl(), 'http://url.com');
-		$this->assertEqual($t->getStatus(), 'paid');
+		$this->assertEqual($t->getStatus(), 'processing');
 	}
 
 	public function testChargeWithCardHash() {
@@ -103,7 +103,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 
 		$this->assertEqual($t2->getPaymentMethod(), 'boleto');
-		$this->assertEqual($t2->getBoletoUrl(), 'http://www.pagar.me/');
+		$this->assertEqual($t2->getBoletoUrl(), 'https://pagar.me/');
 		$this->assertTrue($t2->getBoletoBarcode());
 	}
 

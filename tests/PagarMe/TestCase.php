@@ -162,7 +162,11 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		authorizeFromEnv();	
 		
 		$this->assertTrue($transaction->getId());	
-		$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
+
+		if ($transaction->getPaymentMethod() == 'credit_card') {
+			$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
+		}
+
 		$this->assertTrue($transaction->getDateCreated());
 		$this->assertEqual($transaction->getAmount(), 1000);
 		$this->assertEqual($transaction->getInstallments(), '1');

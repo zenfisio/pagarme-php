@@ -24,9 +24,6 @@ class RestClient
 			}
 
 			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($this->curl, CURLOPT_SSLVERSION, 3);
-			curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, false);
 
 			if($params["parameters"]) {
 				$this->parameters = array_merge($this->parameters, $params["parameters"]);

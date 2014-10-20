@@ -24,8 +24,6 @@ class RestClient
 			}
 
 			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, true);
-			curl_setopt($this->curl, CURLOPT_CAINFO, dirname(__FILE__) . '/ca-certificates.crt');
 
 			if($params["parameters"]) {
 				$this->parameters = array_merge($this->parameters, $params["parameters"]);
@@ -127,6 +125,17 @@ class RestClient
 	public function run() 
 	{
 			$response = curl_exec($this->curl);
+
+			if (!defined('CURLE_SSL_CACERT_BADFILE')) {
+				define('CURLE_SSL_CACERT_BADFILE', 77);
+			}
+
+			$errno = curl_errno($this->curl);
+			if ($errno == CURLE_SSL_CACERT || $errno == CURLE_SSL_PEER_CERTIFICATE ||$errno == CURLE_SSL_CACERT_BADFILE) {
+				curl_setopt($this->curl, CURLOPT_CAINFO, dirname(__FILE__) . '/ca-certificates.crt');
+				$response = curl_exec($this->curl);
+			}
+
 			$error = curl_error($this->curl);
 			if($error) {
 				throw new PagarMe_Exception("error: ".$error);
@@ -138,5 +147,3 @@ class RestClient
 
 }
 
-
-?>

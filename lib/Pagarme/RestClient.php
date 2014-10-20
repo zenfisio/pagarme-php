@@ -24,6 +24,8 @@ class RestClient
 			}
 
 			curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, true);
+			curl_setopt($this->curl, CURLOPT_CAINFO, dirname(__FILE__) . '/ca-certificates.crt');
 
 			if($params["parameters"]) {
 				$this->parameters = array_merge($this->parameters, $params["parameters"]);

@@ -34,7 +34,7 @@ class RestClient
 			}
 
 			$params =  self::_encodeObjects($this->parameters);
-			$this->parameters = self::encode($params);
+			$this->parameters = http_build_query($params);
 
 			if ($this->method){
 				switch($this->method) {

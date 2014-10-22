@@ -125,6 +125,29 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction->refund();
 	}
 
+	public function testBoletoRefund() {
+		$transaction = self::createTestTransaction();
+		$transaction->setPaymentMethod('boleto');
+		$transaction->charge();
+
+		$transaction->setStatus('paid');
+		$transaction->save();
+
+		$transaction->refund(array(
+			'bank_account' => array(
+				'bank_code' => '001',
+				'agencia' => '1111',
+				'agencia_dv' => '1',
+				'conta' => '11111111',
+				'conta_dv' => '1',
+				'document_number' => '11111111111',
+				'legal_name' => 'Jose da Silva',
+			),
+		));
+
+		$this->assertEqual('pending_refund', $transaction->getStatus());
+	}
+
 	public function testCreation() {
 		$transaction = self::createTestTransaction();
 		$this->assertEqual($transaction->getStatus(), 'local');

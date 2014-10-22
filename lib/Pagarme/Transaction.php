@@ -15,9 +15,10 @@ class PagarMe_Transaction extends PagarMe_TransactionCommon {
 			$this->refresh($response);
 	}
 
-	public function refund() 
+	public function refund($params = array()) 
 	{
 			$request = new PagarMe_Request(self::getUrl().'/'.$this->id . '/refund', 'POST');
+			$request->setParameters($params);
 			$response = $request->run();
 			$this->refresh($response);
 	}

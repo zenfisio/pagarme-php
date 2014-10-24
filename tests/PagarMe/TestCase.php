@@ -46,6 +46,17 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		return $customer;	
 	}
 
+	protected static function createTestCard(array $attributes = array()) {
+		authorizeFromEnv();
+		return new PagarMe_Card(array(
+			'card_number' => '4111111111111111',
+			'card_holder_name' => 'Jose da Silva',
+			'card_expiration_month' => 10,
+			'card_expiration_year' => 22,
+			'card_cvv' => '123',
+		));
+	}
+
 	protected static function createTestTransactionWithCustomer(array $attributes = array()) {
 		authorizeFromEnv();	
 		$transaction = self::createTestTransaction();

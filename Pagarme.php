@@ -32,12 +32,14 @@ require(dirname(__FILE__) . '/lib/Pagarme/Exception.php');
 require(dirname(__FILE__) . '/lib/Pagarme/RestClient.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Request.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Model.php');
+require(dirname(__FILE__) . '/lib/Pagarme/CardHashCommon.php');
 require(dirname(__FILE__) . '/lib/Pagarme/TransactionCommon.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Transaction.php');
-require(dirname(__FILE__). '/lib/Pagarme/Plan.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Plan.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Subscription.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Customer.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Address.php');
 require(dirname(__FILE__) . '/lib/Pagarme/Phone.php');
+require(dirname(__FILE__) . '/lib/Pagarme/Card.php');
 
 ?>

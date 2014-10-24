@@ -13,6 +13,34 @@ class PagarMe_TransactionCommon extends PagarMe_CardHashCommon
 		}
 	} 
 
+	protected function checkCard()
+	{
+		if ($this->card) {
+			if ($this->card->id) {
+				$this->card_id = $this->card->id;
+			} else {
+				$this->card_number = $this->card->card_number;
+				$this->card_holder_name = $this->card->card_holder_name;
+				$this->card_expiration_month = $this->card->card_expiration_month;
+				$this->card_expiration_year = $this->card->card_expiration_year;
+				$this->card_cvv = $this->card->card_cvv;
+			}
+			unset($this->card);
+		}
+	}
+
+	public function create()
+	{
+		$this->checkCard();
+		parent::create();
+	}
+
+	public function save()
+	{
+		$this->checkCard();
+		parent::save();
+	}
+
 	public static function calculateInstallmentsAmount($amount, $interest_rate, $max_installments)
 	{
 		$request = new PagarMe_Request(self::getUrl() . '/calculate_installments_amount', 'GET');

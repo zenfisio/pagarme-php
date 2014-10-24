@@ -102,6 +102,41 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$subscription2 = PagarMe_Subscription::findById($subscription->getId());
 		$this->assertTrue($subscription2->getPlan());
 		$this->assertEqual($subscription2->getPlan()->getId(), $plan->getId());
+
+		$card = self::createTestCard();
+		$subscription3 = new PagarMe_Subscription(array(
+			'customer' => array(
+				'email' => 'lala@lala.com',
+			),
+		));
+		$subscription3->setPlan($plan);
+		$subscription3->setCard($card);
+		$subscription3->create();
+
+		$this->assertTrue($subscription3->getId());
+
+		$card->create();
+		$subscription4 = new PagarMe_Subscription(array(
+			'customer' => array(
+				'email' => 'lala@lala.com',
+			),
+		));
+		$subscription4->setPlan($plan);
+		$subscription4->setCard($card);
+		$subscription4->create();
+
+		$this->assertTrue($subscription4->getId());
+
+		$subscription4 = new PagarMe_Subscription(array(
+			'card' => $card,
+			'customer' => array(
+				'email' => 'lala@lala.com',
+			),
+		));
+		$subscription4->setPlan($plan);
+		$subscription4->create();
+
+		$this->assertTrue($subscription4->getId());
 	}
 
 	public function testCancel() {

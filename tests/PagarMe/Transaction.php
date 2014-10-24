@@ -107,6 +107,50 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertTrue($t2->getBoletoBarcode());
 	}
 
+	public function testTransactionWithUnsavedCardObject() {
+		$card = self::createTestCard();
+		$transaction = new PagarMe_Transaction(array(
+			'amount' => 10000,
+			'payment_method' => 'credit_card',
+		));
+
+		$transaction->setCard($card);
+		$transaction->charge();
+
+		$this->assertEqual($transaction->getStatus(), 'paid');
+	}
+
+	public function testTransactionWithSavedCardObject() {
+		$card = self::createTestCard();
+		$card->create();
+
+		$transaction = new PagarMe_Transaction(array(
+			'amount' => 10000,
+			'payment_method' => 'credit_card',
+		));
+
+		$transaction->setCard($card);
+		$transaction->charge();
+
+		$this->assertEqual($transaction->getStatus(), 'paid');
+	}
+
+	public function testTransactionWithReturnedCard() {
+		$transaction = self::createTestTransaction();
+		$transaction->charge();
+
+		$card = $transaction->getCard();
+
+		$transaction2 = new PagarMe_Transaction(array(
+			'amount' => 123456,
+			'payment_method' => 'credit_card',
+		));
+		$transaction2->setCard($card);
+		$transaction2->charge();
+
+		$this->assertEqual($transaction->getStatus(), 'paid');
+	}
+
 	public function testPostback() {
 		$transaction = self::createTestTransaction();
 		$transaction->setPostbackUrl('abc2');

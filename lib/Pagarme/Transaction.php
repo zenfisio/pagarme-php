@@ -6,7 +6,8 @@ class PagarMe_Transaction extends PagarMe_TransactionCommon {
 		$this->create();
 	}
 
-	public function capture($amount = false) {
+	public function capture($amount = false)
+	{
 			$request = new PagarMe_Request(self::getUrl().'/'.$this->id . '/capture', 'POST');
 			if($amount) { 
 				$request->setParameters(array('amount' => $amount));

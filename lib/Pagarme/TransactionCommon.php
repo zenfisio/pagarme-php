@@ -53,7 +53,7 @@ class PagarMe_TransactionCommon extends PagarMe_CardHashCommon
 
 	protected function shouldGenerateCardHash()
 	{
-		return $this->payment_method == 'credit_card';
+		return $this->payment_method == 'credit_card' && !$this->card_id;
 	}
 }
 

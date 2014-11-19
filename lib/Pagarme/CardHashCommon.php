@@ -29,6 +29,18 @@ class PagarMe_CardHashCommon extends PagarMe_Model
 
 	public function create()
 	{
+		$this->generateCardHashIfNecessary();
+		parent::create();
+	}
+
+	public function save()
+	{
+		$this->generateCardHashIfNecessary();
+		parent::save();
+	}
+
+	private function generateCardHashIfNecessary()
+	{
 		if(!$this->card_hash && $this->shouldGenerateCardHash()) {
 			$this->card_hash = $this->generateCardHash();
 		} 
@@ -40,6 +52,5 @@ class PagarMe_CardHashCommon extends PagarMe_Model
 			unset($this->card_expiration_year);
 			unset($this->card_cvv);
 		}
-		parent::create();
 	}
 }

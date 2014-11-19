@@ -16,14 +16,16 @@ class PagarMe_TransactionCommon extends PagarMe_CardHashCommon
 	protected function checkCard()
 	{
 		if ($this->card) {
-			if ($this->card->id) {
-				$this->card_id = $this->card->id;
-			} else {
-				$this->card_number = $this->card->card_number;
-				$this->card_holder_name = $this->card->card_holder_name;
-				$this->card_expiration_month = $this->card->card_expiration_month;
-				$this->card_expiration_year = $this->card->card_expiration_year;
-				$this->card_cvv = $this->card->card_cvv;
+			if (!$this->hasUnsavedCardAttributes()) {
+				if ($this->card->id) {
+					$this->card_id = $this->card->id;
+				} else {
+					$this->card_number = $this->card->card_number;
+					$this->card_holder_name = $this->card->card_holder_name;
+					$this->card_expiration_month = $this->card->card_expiration_month;
+					$this->card_expiration_year = $this->card->card_expiration_year;
+					$this->card_cvv = $this->card->card_cvv;
+				}
 			}
 			unset($this->card);
 		}
@@ -54,6 +56,13 @@ class PagarMe_TransactionCommon extends PagarMe_CardHashCommon
 	protected function shouldGenerateCardHash()
 	{
 		return $this->payment_method == 'credit_card' && !$this->card_id;
+	}
+
+	protected function hasUnsavedCardAttributes()
+	{
+		$hasUnsavedCardAttrbutes = $this->_unsavedAttributes->includes('card_number');
+
+		return $hasUnsavedCardAttrbutes;
 	}
 }
 

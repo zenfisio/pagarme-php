@@ -19,8 +19,8 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			"amount" => '1000',
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
-			"card_expiration_month" => 12,
-			"card_expiration_year" => 15,
+			"card_expiration_month" => '12',
+			"card_expiration_year" => '15',
 			"card_cvv" => "123",
 		));
 	}
@@ -34,11 +34,11 @@ abstract class PagarMeTestCase extends UnitTestCase {
 				'street' => "Av Faria Lima",
 				'neighborhood' => 'Jardim Europa',
 				'zipcode' => '01452000', 
-				'street_number' => 296, 
+				'street_number' => '296', 
 				'complementary' => '8 andar'
 			),
 			'phone' => array(
-				'ddd' => 12, 
+				'ddd' => '12', 
 				'number' => '999999999', 
 			),
 			'sex' => 'M', 
@@ -51,8 +51,8 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		return new PagarMe_Card(array(
 			'card_number' => '4111111111111111',
 			'card_holder_name' => 'Jose da Silva',
-			'card_expiration_month' => 10,
-			'card_expiration_year' => 22,
+			'card_expiration_month' => '10',
+			'card_expiration_year' => '22',
 			'card_cvv' => '123',
 		));
 	}

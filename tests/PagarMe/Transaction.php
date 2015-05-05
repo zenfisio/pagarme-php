@@ -103,7 +103,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 
 		$this->assertEqual($t2->getPaymentMethod(), 'boleto');
-		$this->assertEqual($t2->getBoletoUrl(), 'https://pagar.me/');
+		$this->assertEqual($t2->getBoletoUrl(), 'https://pagar.me');
 		$this->assertTrue($t2->getBoletoBarcode());
 	}
 

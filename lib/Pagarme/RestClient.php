@@ -18,6 +18,7 @@ class RestClient
 		);
 
 		if(!$params["url"]) {
+	//
 			throw new PagarMe_Exception("You must set the URL to make a request.");
 		} else {
 			$this->url = $params["url"];
@@ -65,6 +66,7 @@ class RestClient
 
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);	
 		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers);
+		curl_setopt($this->curl, CURLOPT_CAPATH, '../cert');
 	}
 
 	public function run() 

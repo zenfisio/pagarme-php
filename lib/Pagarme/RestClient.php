@@ -66,7 +66,7 @@ class RestClient
 
 		curl_setopt($this->curl, CURLOPT_URL, $this->url);	
 		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->headers);
-		curl_setopt($this->curl, CURLOPT_CAPATH, '../cert');
+		curl_setopt($this->curl, CURLOPT_CAPATH, realpath(__DIR__ . DIRECTORY_SEPARATOR . '../../certs'));
 	}
 
 	public function run() 

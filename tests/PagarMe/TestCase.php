@@ -1,20 +1,19 @@
 <?php
 
 abstract class PagarMeTestCase extends UnitTestCase {
-	
+
 
 	protected static function setAntiFraud($status) {
-		// authorizeFromEnv();	
+		// authorizeFromEnv();
 		// $request = new PagarMe_Request('/company', 'PUT');
-		// $request->setParameters(array('antifraud' => $status));	
+		// $request->setParameters(array('antifraud' => $status));
 		// $response = $request->run();
 	}
 
-	protected static function createTestTransaction(array $attributes = array()) 
-	{
-		authorizeFromEnv();	
+	protected static function createTestTransaction(array $attributes = array()) {
+		authorizeFromEnv();
 		return new PagarMe_Transaction(
-			$attributes + 
+			$attributes +
 			array(
 			"amount" => '1000',
 			"card_number" => "4901720080344448",
@@ -27,23 +26,23 @@ abstract class PagarMeTestCase extends UnitTestCase {
 
 	protected static function createTestCustomer(array $attributes = array()) {
 		$customer = array(
-			'name' => "Jose da Silva",  
-			'document_number' => "36433809847", 
-			'email' => "customer@pagar.me", 
+			'name' => "Jose da Silva",
+			'document_number' => "36433809847",
+			'email' => "customer@pagar.me",
 			'address' => array(
 				'street' => "Av Faria Lima",
 				'neighborhood' => 'Jardim Europa',
-				'zipcode' => '01452000', 
-				'street_number' => '296', 
+				'zipcode' => '01452000',
+				'street_number' => '296',
 				'complementary' => '8 andar'
 			),
 			'phone' => array(
-				'ddd' => '12', 
-				'number' => '999999999', 
+				'ddd' => '12',
+				'number' => '999999999',
 			),
-			'sex' => 'M', 
+			'sex' => 'M',
 			'born_at' => '1995-10-11');
-		return $customer;	
+		return $customer;
 	}
 
 	protected static function createTestCard(array $attributes = array()) {
@@ -58,23 +57,23 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	}
 
 	protected static function createTestTransactionWithCustomer(array $attributes = array()) {
-		authorizeFromEnv();	
+		authorizeFromEnv();
 		$transaction = self::createTestTransaction();
 		$transaction->customer = self::createTestCustomer();
 		return $transaction;
 	}
 
 	protected static function createTestPlan(array $attributes = array()) {
-		authorizeFromEnv();		
+		authorizeFromEnv();
 		return new PagarMe_Plan($attributes +
 			array(
 				'amount' => 1000,
 				'days' => '30',
 				'name' => "Plano Silver",
-				'trial_days' => '2'	
+				'trial_days' => '2'
 			)
 		);
-	}	
+	}
 
 	protected function validatePlan($plan) {
 		$this->assertTrue($plan->getId());
@@ -82,10 +81,10 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		$this->assertEqual($plan->getName(), 'Plano Silver');
 		$this->assertEqual($plan->getTrialDays(), '2');
 	}
-	
+
 
 	protected static function createTestSubscription(array $attributes = array()) {
-		authorizeFromEnv();	
+		authorizeFromEnv();
 		return new PagarMe_Subscription($attributes + array(
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
@@ -106,7 +105,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	}
 
 	protected function validateCustomerResponse($customer) {
-		authorizeFromEnv();	
+		authorizeFromEnv();
 		$this->assertTrue($customer->getId());
 		$this->assertEqual($customer->getDocumentType(), 'cpf');
 		$this->assertEqual($customer->getName(), 'Jose da Silva');
@@ -159,7 +158,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	protected function validateSubscription($subscription) {
 		if($subscription->getCustomer()->getName()) {
 			$this->validateCustomerResponse($subscription->getCustomer());
-		}	
+		}
 
 		if($subscription->getPlan()) {
 			$this->validatePlan($subscription->getPlan());
@@ -170,9 +169,9 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	}
 
 	protected function validateTransactionResponse($transaction) {
-		authorizeFromEnv();	
-		
-		$this->assertTrue($transaction->getId());	
+		authorizeFromEnv();
+
+		$this->assertTrue($transaction->getId());
 
 		if ($transaction->getPaymentMethod() == 'credit_card') {
 			$this->assertEqual($transaction->getCardHolderName(), 'Jose da Silva');
@@ -186,7 +185,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 
 		if($transaction->getCustomer()) {
 			$customer = $transaction->getCustomer();
-			$this->validateCustomerResponse($customer);	
+			$this->validateCustomerResponse($customer);
 		}
 
 		if($transaction->getAddress()) {
@@ -199,5 +198,3 @@ abstract class PagarMeTestCase extends UnitTestCase {
 	}
 
 }
-
-?>

@@ -16,7 +16,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 	}
 
 	public function testPostbackUrl() {
-		$t = self::createTestTransaction();	
+		$t = self::createTestTransaction();
 		$t->setPostbackUrl('http://url.com');
 		$t->charge();
 
@@ -25,7 +25,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 	public function testCalculateInstallmentsAmount() {
 		$request = PagarMe_Transaction::calculateInstallmentsAmount('10000', '1.5', '12');
-		$installments = $request['installments'];	
+		$installments = $request['installments'];
 		$this->assertEqual($installments["5"]["amount"], '10471');
 		$this->assertEqual($installments["5"]["installment"],  '5');
 		$this->assertEqual($installments["5"]["installment_amount"],  '2094');
@@ -63,7 +63,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual($t->getAmount(), 1000);
 		$this->assertEqual($t->getStatus(), 'paid');
 	}
-	
+
 	public function testPostbackUrlWithCardHash() {
 		$t = self::createTestTransactionWithCustomer();
 		$card_hash = $t->generateCardHash();
@@ -196,7 +196,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction = self::createTestTransaction();
 		$this->assertEqual($transaction->getStatus(), 'local');
 		$this->assertEqual($transaction->getPaymentMethod(), 'credit_card');
-	} 
+	}
 
 	public function testMetadata() {
 		$transaction = self::createTestTransaction();
@@ -254,10 +254,7 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$transaction->setAmount(1000);
 	}
 
-
 	public function testFingerprint() {
-		$this->assertTrue(PagarMe::validateFingerprint('13', sha1('13' . '#' . PagarMe::getApiKey())));		
+		$this->assertTrue(PagarMe::validateFingerprint('13', sha1('13' . '#' . PagarMe::getApiKey())));
 	}
 }
-
-?>

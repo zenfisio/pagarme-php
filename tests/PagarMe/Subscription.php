@@ -3,7 +3,7 @@
 class PagarMe_SubscriptionTest extends PagarMeTestCase {
 
 	public function testCreate() {
-		$subscription = self::createTestSubscription();	
+		$subscription = self::createTestSubscription();
 		$subscription->create();
 		$this->validateSubscription($subscription);
 	}
@@ -155,7 +155,7 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$this->assertEqual($transaction->getInstallments(), '1');
 		$this->assertEqual($transaction->getAmount(), '3600');
 	}
-	
+
 	public function testChargeWithInstallments() {
 		$subscription = self::createTestSubscription();
 		$subscription->create();
@@ -165,5 +165,3 @@ class PagarMe_SubscriptionTest extends PagarMeTestCase {
 		$this->assertEqual($transaction->getInstallments(), '3');
 	}
 }
-
-?>

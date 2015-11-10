@@ -1,7 +1,6 @@
 <?php
 
 class PagarMe_ObjectTest extends  PagarMeTestCase {
-	
 	public function testBuild() {
 		$obj = self::createPagarMeObject();
 		$this->assertTrue($obj instanceof PagarMe_Transaction);
@@ -26,7 +25,7 @@ class PagarMe_ObjectTest extends  PagarMeTestCase {
 
 		foreach($obj as $k => $v) {
 			$this->assertTrue($k);
-			$this->assertTrue($v);	
+			$this->assertTrue($v);
 			$count++;
 		}
 
@@ -42,4 +41,3 @@ class PagarMe_ObjectTest extends  PagarMeTestCase {
 		$this->assertFalse($obj->card_brand);
 	}
 }
-?>

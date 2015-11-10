@@ -13,16 +13,16 @@ class PagarMe_PlanTest extends PagarMeTestCase {
 		$this->assertEqual($plan->getName(), "Plano Silver");
 		$plan->setName("Plano gold!");
 		$plan->save();
-		$plan2 = PagarMe_Plan::findById($plan->getId());		
+		$plan2 = PagarMe_Plan::findById($plan->getId());
 		$this->assertEqual($plan->getName(), $plan2->getName());
 
 		$this->expectException(new IsAExpectation('PagarMe_Exception'));
 		$plan2->setDays('60');
 		$plan2->save();
-	} 
+	}
 
 	public function testUpdatePaymentMethods() {
-		$plan = self::createTestPlan();	
+		$plan = self::createTestPlan();
 		$plan->create();
 		$this->assertTrue(in_array('credit_card', $plan->getPaymentMethods()));
 		$this->assertTrue(in_array('boleto', $plan->getPaymentMethods()));
@@ -62,5 +62,3 @@ class PagarMe_PlanTest extends PagarMeTestCase {
 		$plan->assertTrue($plan->getId());
 	}
 }
-
-?>

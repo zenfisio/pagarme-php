@@ -1,15 +1,15 @@
 <?php
 
 class PagarMe_UtilTest extends PagarMeTestCase {
-	
+
 	public function testIsList() {
 		$arr1 = '123';
 		$arr2 = array('abc' => 'bcd', '456' => 'bcd');
 		$arr3 = array('abc', 'bcd', 'def');
 
-		$this->assertFalse(PagarMe_Util::isList($arr1));	
-		$this->assertFalse(PagarMe_Util::isList($arr2));	
-		$this->assertTrue(PagarMe_Util::isList($arr3));	
+		$this->assertFalse(PagarMe_Util::isList($arr1));
+		$this->assertFalse(PagarMe_Util::isList($arr2));
+		$this->assertTrue(PagarMe_Util::isList($arr3));
 	}
 
 	public function testCamelCase() {
@@ -62,5 +62,3 @@ class PagarMe_UtilTest extends PagarMeTestCase {
 		$this->assertTrue($obj->customer->address instanceof PagarMe_Address);
 	}
 }
-
-?>

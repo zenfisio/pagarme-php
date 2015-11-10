@@ -38,4 +38,3 @@ class PagarMe_SetTest extends PagarMeTestCase {
 		$this->assertTrue($count == 5);
 	}
 }
-?>

@@ -36,3 +36,5 @@ require_once(dirname(__FILE__) . '/PagarMe/Set.php');
 require_once(dirname(__FILE__) . '/PagarMe/Transaction.php');
 require_once(dirname(__FILE__) . '/PagarMe/Plan.php');
 require_once(dirname(__FILE__) . '/PagarMe/Subscription.php');
+require_once(dirname(__FILE__) . '/PagarMe/Bank_Account.php');
+require_once(dirname(__FILE__) . '/PagarMe/Recipient.php');

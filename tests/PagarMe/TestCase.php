@@ -97,6 +97,41 @@ abstract class PagarMeTestCase extends UnitTestCase {
 		));
 	}
 
+	protected static function createTestBankAccount(array $attributes = array()) {
+		authorizeFromEnv();
+
+		return new PagarMe_Bank_Account(array(
+			"bank_code" => "341",
+			"agencia" => "0932",
+			"agencia_dv" => "5",
+			"conta" => "58054",
+			"conta_dv" => "1",
+			"document_number" => "26268738888",
+			"legal_name" => "API BANK ACCOUNT"
+		));
+	}
+
+	protected static function createTestRecipient(array $attributes = array()) {
+		authorizeFromEnv();
+
+		return new PagarMe_Recipient(array(
+			"transfer_interval" => "weekly",
+			"transfer_day" => 5,
+			"transfer_enabled" => true,
+			"automatic_anticipation_enabled" => true,
+			"anticipatable_volume_percentage" => 85,
+			"bank_account" => array(
+				"bank_code" => "341",
+				"agencia" => "0932",
+				"agencia_dv" => "5",
+				"conta" => "58054",
+				"conta_dv" => "1",
+				"document_number" => "26268738888",
+				"legal_name" => "API BANK ACCOUNT",
+			)
+		));
+	}	
+
 	protected static function createSubscriptionWithCustomer(array $attributes = array()) {
 		authorizeFromEnv();
 		$subscription = self::createTestSubscription();

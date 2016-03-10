@@ -256,6 +256,6 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 
 	public function testFingerprint() {
 		$expectedResult = "7820fcb6d03ec8f721c14596654d24623af9e7de";
-		$this->assertTrue(PagarMe::validateFingerprint('{"sample":"payload","value":true}', $expectedResult));
+		$this->assertTrue(PagarMe::validateRequestSignature('{"sample":"payload","value":true}', $expectedResult));
 	}
 }

@@ -19,7 +19,12 @@ abstract class PagarMe {
 		return self::$api_key;
 	}
 
-	public static function validateFingerprint($payload, $fingerprint) {
-		return (hash_hmac("sha1", $payload, self::$api_key) == $fingerprint);
+	public static function validateFingerprint($id, $fingerprint) {
+		throw_error("PagarMe::validateFingerprint will be deprecated in a future release. Please use PagarMe::validateRequestSignature instead. Also, notice this function is now calling this new method and its result will be negative.", E_USER_WARNING);
+		return self::validateRequestSignature($id, $fingerprint);
+	}
+
+	public static function validateRequestSignature($payload, $signature) {
+		return (hash_hmac("sha1", $payload, self::$api_key) == $signature);
 	}
 }

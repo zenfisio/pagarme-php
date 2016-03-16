@@ -19,7 +19,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
 			"card_expiration_month" => '12',
-			"card_expiration_year" => '15',
+			"card_expiration_year" => '22',
 			"card_cvv" => "123",
 		));
 	}
@@ -89,7 +89,7 @@ abstract class PagarMeTestCase extends UnitTestCase {
 			"card_number" => "4901720080344448",
 			"card_holder_name" => "Jose da Silva",
 			"card_expiration_month" => 12,
-			"card_expiration_year" => 15,
+			"card_expiration_year" => 22,
 			"card_cvv" => "123",
 			'customer' => array(
 				'email' => 'customer@pagar.me'

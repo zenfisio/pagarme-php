@@ -25,6 +25,7 @@ abstract class PagarMe {
 	}
 
 	public static function validateRequestSignature($payload, $signature) {
-		return (hash_hmac("sha1", $payload, self::$api_key) == $signature);
+		$parts = explode("=", $signature, 2);
+		return ( count($parts) == 2 ) && ( hash_hmac($parts[0], $payload, self::$api_key) == $parts[1] );
 	}
 }

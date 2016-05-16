@@ -38,3 +38,4 @@ require_once(dirname(__FILE__) . '/PagarMe/Plan.php');
 require_once(dirname(__FILE__) . '/PagarMe/Subscription.php');
 require_once(dirname(__FILE__) . '/PagarMe/Bank_Account.php');
 require_once(dirname(__FILE__) . '/PagarMe/Recipient.php');
+require_once(dirname(__FILE__) . '/PagarMe/Payable.php');

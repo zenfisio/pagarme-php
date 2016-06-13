@@ -31,6 +31,42 @@ class PagarMe_TransactionTest extends PagarMeTestCase {
 		$this->assertEqual($installments["5"]["installment_amount"],  2150);
 	}
 
+	public function testCalculateInstallmentsAmountWithFreeInstallmentsWithoutInterest()
+	{
+		$request = PagarMe_Transaction::calculateInstallmentsAmount('90000', '2', '3', 3);
+		$installments = $request['installments'];
+		$this->assertEqual($installments["3"]["amount"], 90000);
+		$this->assertEqual($installments["3"]["installment"],  '3');
+		$this->assertEqual($installments["3"]["installment_amount"],  30000);
+	}
+
+	public function testCalculateInstallmentsAmountWithZeroFreeInstallments()
+	{
+		$request = PagarMe_Transaction::calculateInstallmentsAmount('90000', '2', '3', 0);
+		$installments = $request['installments'];
+		$this->assertEqual($installments["1"]["amount"], 90000);
+		$this->assertEqual($installments["1"]["installment"], '1');
+		$this->assertEqual($installments["1"]["installment_amount"],  90000);
+	}
+
+	public function testCalculateInstallmentsAmountWithThreeFreeInstallments()
+	{
+		$request = PagarMe_Transaction::calculateInstallmentsAmount('90000', '2', '9', 3);
+		$installments = $request['installments'];
+		$this->assertEqual($installments["3"]["amount"], 90000);
+		$this->assertEqual($installments["3"]["installment"],  '3');
+		$this->assertEqual($installments["3"]["installment_amount"],  30000);
+	}
+
+	public function testCalculateInstallmentsAmountWithInvalidFreeInstallments()
+	{
+		$request = PagarMe_Transaction::calculateInstallmentsAmount('90000', '2', '9', 13);
+		$installments = $request['installments'];
+		$this->assertEqual($installments["3"]["amount"], 90000);
+		$this->assertEqual($installments["3"]["installment"],  '3');
+		$this->assertEqual($installments["3"]["installment_amount"],  30000);
+	}
+
 	public function testPostbackWithBoleto() {
 		$t = self::createTestTransactionWithCustomer();
 		$t->setPaymentMethod('boleto');

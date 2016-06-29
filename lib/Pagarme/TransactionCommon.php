@@ -22,7 +22,7 @@ class PagarMe_TransactionCommon extends PagarMe_CardHashCommon {
 				} else {
 					$this->card_number = $this->card->card_number;
 					$this->card_holder_name = $this->card->card_holder_name;
-					$this->card_expiration_month = $this->card->card_expiration_month;
+					$this->card_expiration_month = sprintf("%02d", $this->card->card_expiration_month);
 					$this->card_expiration_year = $this->card->card_expiration_year;
 					$this->card_cvv = $this->card->card_cvv;
 				}

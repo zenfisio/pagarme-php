@@ -9,7 +9,7 @@ class PagarMe_CardHashCommon extends PagarMe_Model {
 		$params = array(
 			"card_number" => $this->card_number,
 			"card_holder_name" => $this->card_holder_name,
-			"card_expiration_date" => $this->card_expiration_month . $this->card_expiration_year,
+			"card_expiration_date" => sprintf("%02d", $this->card_expiration_month) . $this->card_expiration_year,
 			"card_cvv" => $this->card_cvv
 		);
 		$str = "";

@@ -62,7 +62,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 ],
                 'metadata' => null,
                 'async' => null,
-                'boleto_instructions' => null
+                'boleto_instructions' => null,
+                'soft_descriptor' => null
             ],
             $transactionCreate->getPayload()
         );
@@ -149,7 +150,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 ],
                 'metadata' => null,
                 'async' => null,
-                'boleto_instructions' => null
+                'boleto_instructions' => null,
+                'soft_descriptor' => null
             ],
             $transactionCreate->getPayload()
         );

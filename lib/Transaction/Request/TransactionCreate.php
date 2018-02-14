@@ -46,6 +46,10 @@ class TransactionCreate implements RequestInterface
             'born_at'         => $customer->getBornAt()
         ];
 
+        if (!is_null($customer->getId())) {
+            $customerData['id'] = $customer->getId();
+        }
+
         $customerData = array_merge(
             $customerData,
             $this->getCustomerAddressData($customer),

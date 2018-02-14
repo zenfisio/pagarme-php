@@ -78,6 +78,10 @@ abstract class SubscriptionCreate implements RequestInterface
             'postback_url' => $this->postbackUrl
         ];
 
+        if (!is_null($this->customer->getId())) {
+            $payload['customer']['id'] = $this->customer->getId();
+        }
+
         if (!is_null($this->customer->getAddress())) {
             $payload['customer']['address'] = $this->getAddresssData();
         }

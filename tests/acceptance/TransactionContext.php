@@ -42,8 +42,41 @@ class TransactionContext extends BasicContext
         $this->customer = new Customer($customerData);
     }
 
+    /**
+     * @Given an existent customer
+     */
+    public function anExistentCustomer()
+    {
+        $address = new \PagarMe\Sdk\Customer\Address(
+            [
+                'street' => 'rua teste',
+                'street_number' => 42,
+                'neighborhood' => 'centro',
+                'zipcode' => '01227200'
+            ]
+        );
 
-     /**
+        $this->customer = self::getPagarMe()
+            ->customer()
+            ->create(
+                $this->getCustomerName(),
+                $this->getCustomerEmail(),
+                $this->getCustomerDocumentNumber(),
+                $address,
+                new \PagarMe\Sdk\Customer\Phone(
+                    [
+                        'ddd' =>11,
+                        'number' =>987654321
+                    ]
+                )
+            );
+
+        $this->customer = self::getPagarMe()
+            ->customer()
+            ->get($this->customer->getId());
+    }
+
+    /**
      * @When make a credit card transaction with :arg1 and :arg2
      * @And make a credit card transaction with :amount and :installments
      */
@@ -209,7 +242,7 @@ class TransactionContext extends BasicContext
         $this->makeABoletoTransactionWith(1337);
     }
 
-     /**
+    /**
      * @Given I had multiple transactions registered
      */
     public function iHadMultipleTransactionsRegistered()
@@ -493,5 +526,14 @@ class TransactionContext extends BasicContext
     public function mustHaveStatus($status)
     {
         assertEquals($this->transaction->getStatus(), $status);
+    }
+
+    /**
+     * @Then the transaction customer must be the same retrieved
+     */
+    public function theTransactionCustomerMustBeTheSameRetrieved()
+    {
+        $transactionCustomer = $this->transaction->getCustomer();
+        assertEquals($transactionCustomer->id, $this->customer->getId());
     }
 }

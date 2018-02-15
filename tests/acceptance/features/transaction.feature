@@ -161,3 +161,8 @@ Feature: Transaction
       |  amount  | async  |      status     |
       |   1000   | true   |    processing   |
       |   1000   | false  | waiting_payment |
+
+  Scenario: Create a boleto transaction with a retrieved customer
+    Given an existent customer
+    When make a boleto transaction with random amount and metadata
+    Then the transaction customer must be the same retrieved

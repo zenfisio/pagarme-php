@@ -16,6 +16,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     const POSTBACK_URL   = 'http://myhost.com/postback';
 
+    const CUSTOMER_ID             = 12345;
     const CUSTOMER_NAME           = 'John Doe';
     const CUSTOMER_EMAIL          = 'john@test.com';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
@@ -53,6 +54,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $customerMock->method('getId')
+            ->willReturn(self::CUSTOMER_ID);
         $customerMock->method('getName')
             ->willReturn(self::CUSTOMER_NAME);
         $customerMock->method('getEmail')
@@ -167,6 +170,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             'payment_method' => self::PLAN_PAYMENT_METHOD,
             'metadata'       => $this->planMetadata(),
             'customer'       => [
+                'id'              => self::CUSTOMER_ID,
                 'name'            => self::CUSTOMER_NAME,
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,

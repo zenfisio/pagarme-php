@@ -133,6 +133,54 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function mustPayloadContainCustomerId()
+    {
+        $cardMock   = $this->getCardMock();
+
+        $customer = $this->getBlankCustomerMock();
+        $customer->method('getId')->willReturn(12345);
+
+        $transaction =  new CreditCardTransaction(
+            [
+                'amount'       => 1337,
+                'card'         => $cardMock,
+                'customer'     => $customer,
+                'installments' => 1,
+                'capture'      => false,
+                'postback_url' => null
+            ]
+        );
+
+        $transactionCreate = new CreditCardTransactionCreate($transaction);
+
+        $this->assertEquals(
+            [
+                'amount'         => 1337,
+                'card_id'        => self::CARD_ID,
+                'installments'   => 1,
+                'payment_method' => 'credit_card',
+                'capture'        => false,
+                'postback_url'   => null,
+                'customer' => [
+                    'id'              => 12345,
+                    'name'            => null,
+                    'born_at'         => null,
+                    'document_number' => null,
+                    'email'           => null,
+                    'sex'             => null
+                ],
+                'metadata'        => null,
+                'soft_descriptor' => null,
+                'async'           => null
+
+            ],
+            $transactionCreate->getPayload()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function mustPayloadContainMonetarySplitRules()
     {
         $customerMock = $this->getFullCustomerMock();

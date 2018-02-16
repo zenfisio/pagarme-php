@@ -53,6 +53,17 @@ class SubscriptionContext extends BasicContext
     }
 
     /**
+     * @Given retrieving an existent customer
+     * @And retrieving an existent customer
+     */
+    public function retrievingACustomer()
+    {
+        $this->customer = self::getPagarMe()
+            ->customer()
+            ->get($this->customer->getId());
+    }
+
+    /**
      * @Given a valid plan
      */
     public function aValidPlan($planName = 'Test Plan')
@@ -251,5 +262,14 @@ class SubscriptionContext extends BasicContext
             ->subscription()
             ->update($this->subscription);
         $this->iQueryForTheSubscription();
+    }
+
+    /**
+     * @Then the subscription customer id must be the same as the retrieved
+     */
+    public function theSubscriptionCustomerIdMustBeTheSameAsTheRetrieved()
+    {
+        $subscriptionCustomer = $this->subscription->getCustomer();
+        assertEquals($subscriptionCustomer->getId(), $this->customer->getId());
     }
 }

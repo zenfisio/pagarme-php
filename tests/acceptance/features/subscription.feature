@@ -18,6 +18,13 @@ Feature: Subscription
     Then a subscription must be created
     And the payment method must be 'boleto'
 
+ Scenario: Create a boleto subscription with a retrieved customer
+    Given a valid customer
+    And retrieving an existent customer
+    And a valid plan
+    When make a boleto subscription
+    Then the subscription customer id must be the same as the retrieved
+
  Scenario: Get a subscription
     Given a previous created subscription
     When I query for the subscription

@@ -31,7 +31,6 @@ class BoletoTransaction extends AbstractTransaction
      */
     protected $softDescriptor;
 
-
     /**
      * @var string
      */
@@ -90,7 +89,6 @@ class BoletoTransaction extends AbstractTransaction
     {
         return $this->softDescriptor;
     }
-
 
     /**
      * @return string

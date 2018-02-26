@@ -3,9 +3,12 @@
 namespace PagarMe\Sdk\Transaction\Request;
 
 use PagarMe\Sdk\RequestInterface;
+use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 
 class TransactionCapture implements RequestInterface
 {
+    use \PagarMe\Sdk\SplitRuleSerializer;
+
     /**
      * @var int
      */
@@ -18,17 +21,23 @@ class TransactionCapture implements RequestInterface
      * @var array
      */
     protected $metadata;
+    /**
+     * @var PagarMe\Sdk\SplitRule\SplitRuleCollection
+     */
+    protected $splitRules;
 
     /**
      * @param PagarMe\Sdk\Transaction\Transaction $transaction
      * @param int $amount
      * @param array $metadata
+     * @param PagarMe\Sdk\SplitRule\SplitRuleCollection $splitRules
      */
-    public function __construct($transaction, $amount, $metadata = [])
+    public function __construct($transaction, $amount, $metadata = [], SplitRuleCollection $splitRules = null)
     {
         $this->transaction = $transaction;
         $this->amount = $amount;
         $this->metadata = $metadata;
+        $this->splitRules = $splitRules;
     }
 
     /**
@@ -44,6 +53,12 @@ class TransactionCapture implements RequestInterface
 
         if (!empty($this->metadata)) {
             $payload['metadata'] = $this->metadata;
+        }
+
+        if (!is_null($this->splitRules)) {
+            $payload['split_rules'] = $this->getSplitRulesInfo(
+                $this->splitRules
+            );
         }
 
         return $payload;

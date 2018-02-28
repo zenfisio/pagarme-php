@@ -24,7 +24,8 @@ class BoletoTransactionCreate extends TransactionCreate
         $boletoData = [
             'boleto_expiration_date' => $this->transaction->getBoletoExpirationDate(),
             'async' => $this->transaction->getAsync(),
-            'boleto_instructions' => $this->transaction->getBoletoInstructions()
+            'boleto_instructions' => $this->transaction->getBoletoInstructions(),
+            'soft_descriptor' => $this->transaction->getSoftDescriptor()
         ];
 
         return array_merge($basicData, $boletoData);

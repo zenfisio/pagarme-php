@@ -29,6 +29,11 @@ class BoletoTransaction extends AbstractTransaction
     /**
      * @var string
      */
+    protected $softDescriptor;
+
+    /**
+     * @var string
+     */
     protected $boletoInstructions;
 
     /**
@@ -74,6 +79,15 @@ class BoletoTransaction extends AbstractTransaction
     public function getAsync()
     {
         return $this->async;
+    }
+
+    /**
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function getSoftDescriptor()
+    {
+        return $this->softDescriptor;
     }
 
     /**

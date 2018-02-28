@@ -62,7 +62,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 ],
                 'metadata' => null,
                 'async' => null,
-                'boleto_instructions' => null
+                'boleto_instructions' => null,
+                'soft_descriptor' => null
             ],
             $transactionCreate->getPayload()
         );
@@ -149,7 +150,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 ],
                 'metadata' => null,
                 'async' => null,
-                'boleto_instructions' => null
+                'boleto_instructions' => null,
+                'soft_descriptor' => null
             ],
             $transactionCreate->getPayload()
         );
@@ -227,5 +229,60 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
         );
 
         return $customerMock;
+    }
+
+    /**
+     * @test
+     */
+    public function mustPayloadContainSoftDescriptor()
+    {
+
+        $customerMock = $this->getCustomerMock();
+
+        $transaction =  new BoletoTransaction(
+            [
+                'amount'                 => 1338,
+                'postback_url'           => 'example.com/postback',
+                'customer'               => $customerMock,
+                'soft_descriptor'        => "Minha loja"
+            ]
+        );
+
+        $transactionCreate = new boletoTransactionCreate (
+            $transaction
+        );
+
+        $this->assertEquals(
+            [
+                'amount'                 => 1338,
+                'payment_method'         => 'boleto',
+                'postback_url'           => 'example.com/postback',
+                'boleto_expiration_date' => null,
+                'customer' => [
+                    'name'            => 'Eduardo Nascimento',
+                    'born_at'         => '15071991',
+                    'document_number' => '10586649727',
+                    'email'           => 'eduardo@eduardo.com',
+                    'sex'             => 'M',
+                    'address' => [
+                        'street'        => 'rua teste',
+                        'street_number' => 42,
+                        'neighborhood'  => 'centro',
+                        'zipcode'       => '01227200',
+                        'complementary' => null
+                    ],
+                    'phone' => [
+                        'ddi'    => 55,
+                        'ddd'    => 15,
+                        'number' => 987523421
+                    ]
+                ],
+                'metadata' => null,
+                'async' => null,
+                'boleto_instructions' => null,
+                'soft_descriptor' => 'Minha loja'
+            ],
+            $transactionCreate->getPayload()
+        );
     }
 }

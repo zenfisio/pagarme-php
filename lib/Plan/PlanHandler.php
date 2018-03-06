@@ -27,7 +27,8 @@ class PlanHandler extends AbstractHandler
         $trialDays = null,
         $paymentsMethods = [],
         $charges = null,
-        $installments = null
+        $installments = null,
+        $invoiceReminder = null
     ) {
         $request = new PlanCreate(
             $amount,
@@ -36,7 +37,8 @@ class PlanHandler extends AbstractHandler
             $trialDays,
             $paymentsMethods,
             $charges,
-            $installments
+            $installments,
+            $invoiceReminder
         );
 
         $response = $this->client->send($request);

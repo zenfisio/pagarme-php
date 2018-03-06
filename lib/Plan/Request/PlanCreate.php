@@ -42,6 +42,10 @@ class PlanCreate implements RequestInterface
      */
     private $installments;
 
+    /**
+     * @var int
+     */
+    private $invoiceReminder;
 
     /**
      * @param int $amount
@@ -59,7 +63,8 @@ class PlanCreate implements RequestInterface
         $trialDays,
         $paymentsMethods,
         $charges,
-        $installments
+        $installments,
+        $invoiceReminder
     ) {
         $this->amount          = $amount;
         $this->days            = $days;
@@ -68,6 +73,7 @@ class PlanCreate implements RequestInterface
         $this->paymentsMethods = $paymentsMethods;
         $this->charges         = $charges;
         $this->installments    = $installments;
+        $this->invoiceReminder = $invoiceReminder;
     }
 
     /**
@@ -82,7 +88,8 @@ class PlanCreate implements RequestInterface
             'trial_days'       => $this->trialDays,
             'payment_methods'  => $this->paymentsMethods,
             'charges'          => $this->charges,
-            'installments'     => $this->installments
+            'installments'     => $this->installments,
+            'invoice_reminder' => $this->invoiceReminder
         ];
     }
 

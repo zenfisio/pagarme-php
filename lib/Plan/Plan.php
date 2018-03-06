@@ -46,6 +46,10 @@ class Plan
      */
     private $installments;
 
+    /**
+     * @var int
+     */
+    private $invoiceReminder;
 
     /**
      * @param array $planData
@@ -155,5 +159,14 @@ class Plan
     public function getInstallments()
     {
         return $this->installments;
+    }
+
+    /**
+     * @return int
+     * @codeCoverageIgnore
+     */
+    public function getInvoiceReminder()
+    {
+        return $this->invoiceReminder;
     }
 }

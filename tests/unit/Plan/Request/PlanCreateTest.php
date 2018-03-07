@@ -21,7 +21,8 @@ class PlanCreateTest extends \PHPUnit_Framework_TestCase
             10,
             null,
             13,
-            26
+            26,
+            3
         );
 
         $this->assertEquals(self::PATH, $request->getPath());
@@ -34,7 +35,8 @@ class PlanCreateTest extends \PHPUnit_Framework_TestCase
                 'trial_days'      => 10,
                 'payment_methods' => null,
                 'charges'         => 13,
-                'installments'    => 26
+                'installments'    => 26,
+                'invoice_reminder'=> 3
             ],
             $request->getPayload()
         );

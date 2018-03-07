@@ -9,14 +9,15 @@ class PlanUpdateTest extends \PHPUnit_Framework_TestCase
 {
     const PATH = 'plans/1406';
 
-    const ID              = 1406;
-    const AMOUNT          = 1337;
-    const DAYS            = 15;
-    const NAME            = "Plano teste";
-    const TRIAL_DAYS      = 10;
-    const PAYMENT_METHODS = null;
-    const CHARGES         = 13;
-    const INSTALLMENTS    = 26;
+    const ID                = 1406;
+    const AMOUNT            = 1337;
+    const DAYS              = 15;
+    const NAME              = "Plano teste";
+    const TRIAL_DAYS        = 10;
+    const PAYMENT_METHODS   = null;
+    const CHARGES           = 13;
+    const INSTALLMENTS      = 26;
+    const INVOICE_REMINDER  = 4;
 
     /**
      * @test
@@ -35,6 +36,7 @@ class PlanUpdateTest extends \PHPUnit_Framework_TestCase
         $planMock->method('getPaymentMethods')->willReturn(self::PAYMENT_METHODS);
         $planMock->method('getCharges')->willReturn(self::CHARGES);
         $planMock->method('getInstallments')->willReturn(self::INSTALLMENTS);
+        $planMock->method('getInvoiceReminder')->willReturn(self::INVOICE_REMINDER);
 
         $request = new PlanUpdate($planMock);
 
@@ -42,10 +44,11 @@ class PlanUpdateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(RequestInterface::HTTP_PUT, $request->getMethod());
         $this->assertEquals(
             [
-                'id'              => self::ID,
-                'name'            => self::NAME,
-                'trial_days'      => self::TRIAL_DAYS,
-                'charges'         => self::CHARGES
+                'id'                => self::ID,
+                'name'              => self::NAME,
+                'trial_days'        => self::TRIAL_DAYS,
+                'charges'           => self::CHARGES,
+                'invoice_reminder'  => self::INVOICE_REMINDER
             ],
             $request->getPayload()
         );

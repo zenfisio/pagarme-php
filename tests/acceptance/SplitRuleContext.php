@@ -15,6 +15,7 @@ use PagarMe\Sdk\Customer\Customer;
 class SplitRuleContext extends BasicContext
 {
     use Helper\CustomerDataProvider;
+    use Helper\RecipientData;
 
     private $customer;
     private $splitRules;
@@ -132,22 +133,5 @@ class SplitRuleContext extends BasicContext
         $countedSplitRules = count($this->transaction->getSplitRules());
         assertInternalType('int', $countedSplitRules);
         assertEquals($quantity, $countedSplitRules);
-    }
-
-    private function createRecipient()
-    {
-        $accountData = [
-            "bank_code" => "341",
-            "agencia" => "0932",
-            "conta" => "580" . rand(10, 99),
-            "conta_dv" => "5",
-            "document_number" => "26268738888",
-            "legal_name" => "API BANK ACCOUNT"
-        ];
-
-        $bankAccount = new BankAccount($accountData);
-        return self::getPagarMe()
-            ->recipient()
-            ->create($bankAccount);
     }
 }

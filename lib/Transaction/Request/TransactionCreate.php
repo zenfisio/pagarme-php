@@ -11,6 +11,8 @@ use PagarMe\Sdk\Customer\Customer;
 
 class TransactionCreate implements RequestInterface
 {
+    use \PagarMe\Sdk\SplitRuleSerializer;
+
     /**
      * @var \PagarMe\Sdk\Transaction\Transaction
      */
@@ -81,40 +83,6 @@ class TransactionCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     * @param \PagarMe\Sdk\SplitRule\SplitRuleCollection $splitRules
-     * @return array
-     */
-    private function getSplitRulesInfo(SplitRuleCollection $splitRules)
-    {
-        $rules = [];
-
-        foreach ($splitRules as $key => $splitRule) {
-            $rule = [
-                'recipient_id'          => $splitRule->getRecipient()->getId(),
-                'charge_processing_fee' => $splitRule->getChargeProcessingFee(),
-                'liable'                => $splitRule->getLiable()
-            ];
-
-            $rules[$key] = array_merge($rule, $this->getRuleValue($splitRule));
-        }
-
-        return $rules;
-    }
-
-    /**
-     * @param \PagarMe\Sdk\SplitRule\SplitRule $splitRule
-     * @return array
-     */
-    private function getRuleValue($splitRule)
-    {
-        if (!is_null($splitRule->getAmount())) {
-            return ['amount' => $splitRule->getAmount()];
-        }
-
-        return ['percentage' => $splitRule->getPercentage()];
     }
 
     /**

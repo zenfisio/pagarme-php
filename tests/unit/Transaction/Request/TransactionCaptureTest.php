@@ -2,12 +2,18 @@
 
 namespace PagarMe\SdkTest\Transaction\Request;
 
-use PagarMe\Sdk\Transaction\Request\TransactionCapture;
+use PagarMe\Sdk\BankAccount\BankAccount;
+use PagarMe\Sdk\Recipient\Recipient;
+use PagarMe\Sdk\SplitRule\SplitRule;
+use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\Transaction\CreditCardTransaction;
+use PagarMe\Sdk\Transaction\Request\TransactionCapture;
 use PagarMe\Sdk\RequestInterface;
 
 class TransactionCaptureTest extends \PHPUnit_Framework_TestCase
 {
+    use \PagarMe\SdkTest\Helper\RecipientData;
+
     const PATH   = 'transactions/%s/capture';
 
     private $defaultMetadata = ['foo' => 'bar'];
@@ -137,6 +143,60 @@ class TransactionCaptureTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $expectedPayload,
             $transactionCreate->getPayload()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function payloadMustBeEqualWhenProvidingSplitRulesAtTheCaptureStep()
+    {
+        $splitRules = new SplitRuleCollection();
+        $splitRule1 = new SplitRule([
+            "percentage" => 80,
+            "recipient" => $this->createRecipient(),
+            "liable" => true,
+            "charge_processing_fee" => true,
+            "charge_remainder" => true
+        ]);
+
+        $splitRule2 = new SplitRule([
+            "percentage" => 20,
+            "recipient" => $this->createRecipient(),
+            "liable" => false,
+            "charge_processing_fee" => false,
+            "charge_remainder" => false
+        ]);
+
+        $splitRules[] = $splitRule1;
+        $splitRules[] = $splitRule2;
+
+        $transactionCapture = new TransactionCapture(
+            $this->getAbstractTransactionMock(),
+            1000,
+            null,
+            $splitRules
+        );
+
+        $this->assertEquals(
+            [
+                'amount' => 1000,
+                'split_rules' => array(
+                    array(
+                        "recipient_id" => null,
+                        "charge_processing_fee" => true,
+                        "liable" => true,
+                        "percentage" => 80
+                    ),
+                    array(
+                        "recipient_id" => null,
+                        "charge_processing_fee" => false,
+                        "liable" => false,
+                        "percentage" => 20
+                    )
+                )
+            ],
+            $transactionCapture->getPayload()
         );
     }
 }

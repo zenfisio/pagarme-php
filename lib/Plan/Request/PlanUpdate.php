@@ -32,6 +32,7 @@ class PlanUpdate implements RequestInterface
             'name'            => $plan->getName(),
             'trial_days'      => $plan->getTrialDays(),
             'charges'         => $plan->getCharges(),
+            'invoice_reminder'=> $plan->getInvoiceReminder()
         ];
     }
 

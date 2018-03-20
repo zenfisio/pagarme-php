@@ -130,6 +130,12 @@ Feature: Transaction
     When a valid credit card transaction
     Then then transaction must be retriavable
 
+  Scenario: Retrieving a Transaction Payables
+    Given a valid customer
+    And a valid card
+    When a valid credit card transaction
+    Then then transaction payables must be retriavable
+
   Scenario: Retrieving a Boleto Transaction
     Given a valid customer
     When a valid boleto transaction

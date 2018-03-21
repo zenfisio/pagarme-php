@@ -240,6 +240,23 @@ class TransactionContext extends BasicContext
     }
 
     /**
+     * @Then then transaction payables must be retriavable
+     */
+    public function thenTransactionPayablesMustBeRetriavable()
+    {
+        $payables = self::getPagarMe()
+            ->transaction()
+            ->payables($this->transaction->getId());
+
+        assertTrue(is_array($payables));
+        assertInstanceOf(
+            'PagarMe\Sdk\Payable\Payable',
+            $payables[0]
+        );
+        assertEquals($payables[0]->getStatus(), 'waiting_funds');
+    }
+
+    /**
      * @Given a valid boleto transaction
      */
     public function aValidBoletoTransaction()

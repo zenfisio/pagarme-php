@@ -67,6 +67,7 @@ class TransactionContext extends BasicContext
                 $this->getCustomerName(),
                 $this->getCustomerEmail(),
                 $this->getCustomerExternalId(),
+                $this->getCustomerType(),
                 $this->getCustomerDocumentNumber(),
                 $address,
                 new \PagarMe\Sdk\Customer\Phone(

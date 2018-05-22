@@ -19,6 +19,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_ID             = 12345;
     const CUSTOMER_NAME           = 'John Doe';
     const CUSTOMER_EXTERNAL_ID    = 'x-1234';
+    const CUSTOMER_TYPE           = 'individual';
     const CUSTOMER_EMAIL          = 'john@test.com';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
     const CUSTOMER_BORN_AT        = '12031990';
@@ -57,6 +58,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $customerMock->method('getId')
             ->willReturn(self::CUSTOMER_ID);
+        $customerMock->method('getType')
+            ->willReturn(self::CUSTOMER_TYPE);
         $customerMock->method('getExternalId')
             ->willReturn(self::CUSTOMER_EXTERNAL_ID);
         $customerMock->method('getName')
@@ -176,6 +179,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'id'              => self::CUSTOMER_ID,
                 'name'            => self::CUSTOMER_NAME,
                 'external_id'     => self::CUSTOMER_EXTERNAL_ID,
+                'type'            => self::CUSTOMER_TYPE,
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
                 'address'         => [

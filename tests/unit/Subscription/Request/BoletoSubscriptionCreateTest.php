@@ -19,6 +19,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_NAME           = 'John Doe';
     const CUSTOMER_EMAIL          = 'john@test.com';
     const CUSTOMER_EXTERNAL_ID    = 'x-1234';
+    const CUSTOMER_TYPE           = 'individual';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
     const CUSTOMER_BORN_AT        = '12031990';
     const CUSTOMER_GENDER         = 'm';
@@ -43,6 +44,8 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $customerMock->method('getName')
             ->willReturn(self::CUSTOMER_NAME);
+        $customerMock->method('getType')
+            ->willReturn(self::CUSTOMER_TYPE);
         $customerMock->method('getExternalId')
             ->willReturn(self::CUSTOMER_EXTERNAL_ID);
         $customerMock->method('getEmail')
@@ -207,6 +210,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             'customer'       => [
                 'name'            => self::CUSTOMER_NAME,
                 'external_id'     => self::CUSTOMER_EXTERNAL_ID,
+                'type'            => self::CUSTOMER_TYPE,
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
                 'address'         => [

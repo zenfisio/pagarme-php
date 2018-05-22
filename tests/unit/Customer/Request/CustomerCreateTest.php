@@ -13,6 +13,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
     const NAME            = 'Eduardo Nascimento';
     const EMAIL           = 'eduardo@eduardo.com';
     const EXTERNAL_ID     = 'x-1234';
+    const TYPE            = 'individual';
     const DOCUMENT_NUMBER = '10586649727';
     const BORN_AT         = '15071991';
     const GENDER          = 'M';
@@ -39,6 +40,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::NAME,
             self::EMAIL,
             self::EXTERNAL_ID,
+            self::TYPE,
             self::DOCUMENT_NUMBER,
             $address,
             new \PagarMe\Sdk\Customer\Phone(
@@ -57,6 +59,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                 'document_number' => '10586649727',
                 'email'           => 'eduardo@eduardo.com',
                 'external_id'     => 'x-1234',
+                'type'            => 'individual',
                 'gender'          => 'M',
                 'name'            => 'Eduardo Nascimento',
                 'address' => [
@@ -87,6 +90,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::NAME,
             self::EMAIL,
             self::EXTERNAL_ID,
+            self::TYPE,
             self::DOCUMENT_NUMBER,
             $this->getAddressMock(),
             $this->getPhoneMock(),
@@ -106,6 +110,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::NAME,
             self::EMAIL,
             self::EXTERNAL_ID,
+            self::TYPE,
             self::DOCUMENT_NUMBER,
             $this->getAddressMock(),
             $this->getPhoneMock(),

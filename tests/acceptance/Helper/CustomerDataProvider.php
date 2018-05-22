@@ -23,6 +23,11 @@ trait CustomerDataProvider
         return 'x-1234';
     }
 
+    protected function getCustomerType()
+    {
+        return 'individual';
+    }
+
     protected function getCustomerDocumentNumber()
     {
         return '78863832064';

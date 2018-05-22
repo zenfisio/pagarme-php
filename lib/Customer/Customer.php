@@ -17,6 +17,11 @@ class Customer
     private $externalId;
 
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
      * @var PagarMe\Sdk\Customer\Address
      */
     private $address;
@@ -76,6 +81,15 @@ class Customer
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**

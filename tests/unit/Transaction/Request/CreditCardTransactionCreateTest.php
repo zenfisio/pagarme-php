@@ -56,7 +56,8 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'capture'        => $capture,
                 'postback_url'   => $postbackUrl,
                 'customer' => [
-                    'external_id'    => 'x-1234',
+                    'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
@@ -119,6 +120,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => null,
                     'external_id'     => null,
+                    'type'            => null,
                     'born_at'         => null,
                     'document_number' => null,
                     'email'           => null,
@@ -167,6 +169,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'id'              => 12345,
                     'name'            => null,
                     'external_id'     => null,
+                    'type'            => null,
                     'born_at'         => null,
                     'document_number' => null,
                     'email'           => null,
@@ -228,6 +231,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -314,6 +318,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -419,6 +424,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -527,6 +533,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
 
         $customerMock->method('getBornAt')->willReturn('15071991');
         $customerMock->method('getExternalId')->willReturn('x-1234');
+        $customerMock->method('getType')->willReturn('individual');
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getGender')->willReturn('M');
@@ -558,6 +565,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
 
         $customerMock->method('getBornAt')->willReturn(null);
         $customerMock->method('getExternalId')->willReturn(null);
+        $customerMock->method('getType')->willReturn(null);
         $customerMock->method('getDocumentNumber')->willReturn(null);
         $customerMock->method('getEmail')->willReturn(null);
         $customerMock->method('getGender')->willReturn(null);

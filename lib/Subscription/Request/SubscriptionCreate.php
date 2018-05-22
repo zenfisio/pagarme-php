@@ -72,6 +72,7 @@ abstract class SubscriptionCreate implements RequestInterface
                 'name'            => $this->customer->getName(),
                 'email'           => $this->customer->getEmail(),
                 'external_id'     => $this->customer->getExternalId(),
+                'type'            => $this->customer->getType(),
                 'document_number' => $this->customer->getDocumentNumber(),
                 'born_at'         => $this->customer->getBornAt(),
                 'gender'          => $this->customer->getGender()

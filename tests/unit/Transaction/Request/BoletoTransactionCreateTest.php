@@ -43,6 +43,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'boleto_expiration_date' => $expirationDate,
                 'customer' => [
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
@@ -119,6 +120,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -211,6 +213,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
 
         $customerMock->method('getBornAt')->willReturn('15071991');
         $customerMock->method('getExternalId')->willReturn('x-1234');
+        $customerMock->method('getType')->willReturn('individual');
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getGender')->willReturn('M');
@@ -264,6 +267,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
+                    'type'            => 'individual',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',

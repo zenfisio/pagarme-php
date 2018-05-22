@@ -45,6 +45,7 @@ class CustomerContext extends BasicContext
             ->create(
                 $this->getCustomerName(),
                 $this->getCustomerEmail(),
+                $this->getCustomerExternalId(),
                 $this->getCustomerDocumentNumber(),
                 $address,
                 new \PagarMe\Sdk\Customer\Phone(

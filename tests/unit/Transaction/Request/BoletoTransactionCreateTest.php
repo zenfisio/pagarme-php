@@ -42,6 +42,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'postback_url'           => 'example.com/postback',
                 'boleto_expiration_date' => $expirationDate,
                 'customer' => [
+                    'external_id'     => 'x-1234',
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
@@ -117,6 +118,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'boleto_expiration_date' => $expirationDate,
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
+                    'external_id'     => 'x-1234',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -208,6 +210,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $customerMock->method('getBornAt')->willReturn('15071991');
+        $customerMock->method('getExternalId')->willReturn('x-1234');
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getGender')->willReturn('M');
@@ -248,7 +251,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $transactionCreate = new boletoTransactionCreate (
+        $transactionCreate = new boletoTransactionCreate(
             $transaction
         );
 
@@ -260,6 +263,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'boleto_expiration_date' => null,
                 'customer' => [
                     'name'            => 'Eduardo Nascimento',
+                    'external_id'     => 'x-1234',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',

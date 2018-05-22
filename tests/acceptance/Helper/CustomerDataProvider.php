@@ -18,6 +18,11 @@ trait CustomerDataProvider
         return uniqid('user') . '@email.com';
     }
 
+    protected function getCustomerExternalId()
+    {
+        return 'x-1234';
+    }
+
     protected function getCustomerDocumentNumber()
     {
         return '78863832064';

@@ -42,6 +42,7 @@ class TransactionCreate implements RequestInterface
 
         $customerData = [
             'name'            => $customer->getName(),
+            'external_id'     => $customer->getExternalId(),
             'document_number' => $customer->getDocumentNumber(),
             'email'           => $customer->getEmail(),
             'sex'             => $customer->getGender(),

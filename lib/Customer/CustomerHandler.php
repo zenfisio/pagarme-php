@@ -17,6 +17,7 @@ class CustomerHandler extends AbstractHandler
     /**
      * @param string $name
      * @param string $email
+     * @param string $externalId
      * @param int $documentNumber
      * @param Address $address
      * @param Phone $phone
@@ -26,6 +27,7 @@ class CustomerHandler extends AbstractHandler
     public function create(
         $name,
         $email,
+        $externalId,
         $documentNumber,
         Address $address,
         Phone $phone,
@@ -35,6 +37,7 @@ class CustomerHandler extends AbstractHandler
         $request = new CustomerCreate(
             $name,
             $email,
+            $externalId,
             $documentNumber,
             $address,
             $phone,

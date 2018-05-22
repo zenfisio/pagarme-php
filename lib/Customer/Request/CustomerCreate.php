@@ -14,6 +14,11 @@ class CustomerCreate implements RequestInterface
     private $name;
 
      /**
+     * @var string | Identificador do cliente na loja
+     */
+    private $externalId;
+
+     /**
      * @var string | E-mail do comprador
      */
     private $email;
@@ -55,6 +60,7 @@ class CustomerCreate implements RequestInterface
     public function __construct(
         $name,
         $email,
+        $externalId,
         $documentNumber,
         Address $address,
         Phone $phone,
@@ -63,6 +69,7 @@ class CustomerCreate implements RequestInterface
     ) {
         $this->name           = $name;
         $this->email          = $email;
+        $this->externalId     = $externalId;
         $this->documentNumber = $documentNumber;
         $this->address        = $address;
         $this->phone          = $phone;
@@ -78,6 +85,7 @@ class CustomerCreate implements RequestInterface
         return [
             'name'            => $this->name,
             'email'           => $this->email,
+            'external_id'     => $this->externalId,
             'document_number' => $this->documentNumber,
             'address'         => $this->getAddresssData(),
             'phone'           => $this->getPhoneData(),

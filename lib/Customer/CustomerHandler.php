@@ -19,6 +19,7 @@ class CustomerHandler extends AbstractHandler
      * @param string $email
      * @param string $externalId
      * @param string $type
+     * @param array $phoneNumbers
      * @param int $documentNumber
      * @param Address $address
      * @param Phone $phone
@@ -30,6 +31,8 @@ class CustomerHandler extends AbstractHandler
         $email,
         $externalId,
         $type,
+        $country,
+        $phoneNumbers,
         $documentNumber,
         Address $address,
         Phone $phone,
@@ -41,6 +44,8 @@ class CustomerHandler extends AbstractHandler
             $email,
             $externalId,
             $type,
+            $country,
+            $phoneNumbers,
             $documentNumber,
             $address,
             $phone,

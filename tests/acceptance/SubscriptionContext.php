@@ -36,6 +36,8 @@ class SubscriptionContext extends BasicContext
                 'john@test.com',
                 'x-1234',
                 'individual',
+                'br',
+                ['+5511912345678'],
                 '25123317171',
                 new Address(
                     [

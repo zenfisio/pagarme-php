@@ -22,6 +22,16 @@ class Customer
     private $type;
 
     /**
+     * @var string
+     */
+    private $country;
+
+    /**
+     * @var array
+     */
+    private $phoneNumbers;
+
+    /**
      * @var PagarMe\Sdk\Customer\Address
      */
     private $address;
@@ -99,6 +109,24 @@ class Customer
     public function getExternalId()
     {
         return $this->externalId;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function getPhoneNumbers()
+    {
+        return $this->phoneNumbers;
     }
 
     /**

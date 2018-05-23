@@ -44,6 +44,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'customer' => [
                     'external_id'     => 'x-1234',
                     'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['+5511912345678'],
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
@@ -121,6 +123,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
                     'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['5511912345678'],
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
@@ -214,6 +218,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getBornAt')->willReturn('15071991');
         $customerMock->method('getExternalId')->willReturn('x-1234');
         $customerMock->method('getType')->willReturn('individual');
+        $customerMock->method('getCountry')->willReturn('br');
+        $customerMock->method('getPhoneNumbers')->willReturn(['+5511912345678']);
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getGender')->willReturn('M');
@@ -268,6 +274,8 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'name'            => 'Eduardo Nascimento',
                     'external_id'     => 'x-1234',
                     'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',

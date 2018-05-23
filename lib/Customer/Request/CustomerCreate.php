@@ -24,6 +24,16 @@ class CustomerCreate implements RequestInterface
     private $externalId;
 
      /**
+     * @var string | País
+     */
+    private $country;
+
+     /**
+     * @var array | Números de telefone
+     */
+    private $phoneNumbers;
+
+     /**
      * @var string | E-mail do comprador
      */
     private $email;
@@ -67,6 +77,8 @@ class CustomerCreate implements RequestInterface
         $email,
         $externalId,
         $type,
+        $country,
+        $phoneNumbers,
         $documentNumber,
         Address $address,
         Phone $phone,
@@ -77,6 +89,8 @@ class CustomerCreate implements RequestInterface
         $this->email          = $email;
         $this->externalId     = $externalId;
         $this->type           = $type;
+        $this->country        = $country;
+        $this->phoneNumbers   = $phoneNumbers;
         $this->documentNumber = $documentNumber;
         $this->address        = $address;
         $this->phone          = $phone;
@@ -94,6 +108,8 @@ class CustomerCreate implements RequestInterface
             'email'           => $this->email,
             'external_id'     => $this->externalId,
             'type'            => $this->type,
+            'country'         => $this->country,
+            'phone_numbers'   => $this->phoneNumbers,
             'document_number' => $this->documentNumber,
             'address'         => $this->getAddresssData(),
             'phone'           => $this->getPhoneData(),

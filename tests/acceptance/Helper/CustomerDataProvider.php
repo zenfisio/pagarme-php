@@ -28,6 +28,16 @@ trait CustomerDataProvider
         return 'individual';
     }
 
+    protected function getCustomerCountry()
+    {
+        return 'br';
+    }
+
+    protected function getCustomerPhoneNumbers()
+    {
+        return ['+5511912345678'];
+    }
+
     protected function getCustomerDocumentNumber()
     {
         return '78863832064';

@@ -20,6 +20,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_NAME           = 'John Doe';
     const CUSTOMER_EXTERNAL_ID    = 'x-1234';
     const CUSTOMER_TYPE           = 'individual';
+    const CUSTOMER_COUNTRY        = 'br';
+    const CUSTOMER_PHONE_NUMBERS  = ['+5511912345678'];
     const CUSTOMER_EMAIL          = 'john@test.com';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
     const CUSTOMER_BORN_AT        = '12031990';
@@ -62,6 +64,10 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn(self::CUSTOMER_TYPE);
         $customerMock->method('getExternalId')
             ->willReturn(self::CUSTOMER_EXTERNAL_ID);
+        $customerMock->method('getCountry')
+            ->willReturn(self::CUSTOMER_COUNTRY);
+        $customerMock->method('getPhoneNumbers')
+            ->willReturn(self::CUSTOMER_PHONE_NUMBERS);
         $customerMock->method('getName')
             ->willReturn(self::CUSTOMER_NAME);
         $customerMock->method('getEmail')
@@ -180,6 +186,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'name'            => self::CUSTOMER_NAME,
                 'external_id'     => self::CUSTOMER_EXTERNAL_ID,
                 'type'            => self::CUSTOMER_TYPE,
+                'country'         => self::CUSTOMER_COUNTRY,
+                'phone_numbers'   => self::CUSTOMER_PHONE_NUMBERS,
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
                 'address'         => [

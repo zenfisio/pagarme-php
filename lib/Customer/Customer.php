@@ -54,11 +54,6 @@ class Customer
     /**
      * @var string
      */
-    private $documentType;
-
-    /**
-     * @var string
-     */
     private $email;
 
     /**
@@ -199,14 +194,5 @@ class Customer
     public function getDateCreated()
     {
         return $this->dateCreated;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return string
-     */
-    public function getDocumentType()
-    {
-        return $this->documentType;
     }
 }

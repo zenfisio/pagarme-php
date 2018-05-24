@@ -62,7 +62,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => ['+5511912345678'],
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[
@@ -130,7 +129,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => null,
                     'phone_numbers'   => null,
                     'born_at'         => null,
-                    'document_number' => null,
                     'documents'       => null,
                     'email'           => null,
                     'sex'             => null
@@ -182,7 +180,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => null,
                     'phone_numbers'   => null,
                     'born_at'         => null,
-                    'document_number' => null,
                     'documents'       => null,
                     'email'           => null,
                     'sex'             => null
@@ -247,7 +244,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => 'br',
                     'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[
@@ -340,7 +336,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => 'br',
                     'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[
@@ -452,7 +447,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => 'br',
                     'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[

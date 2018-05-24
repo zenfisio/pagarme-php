@@ -46,7 +46,6 @@ class SubscriptionContext extends BasicContext
                 'individual',
                 'br',
                 ['+5511912345678'],
-                '25123317171',
                 $documents,
                 new Address(
                     [

@@ -44,11 +44,6 @@ class CustomerCreate implements RequestInterface
     private $documents;
 
      /**
-     * @var int | Número do CPF ou CNPJ do cliente
-     */
-    private $documentNumber;
-
-     /**
      * @var Address | Endereço do comprador
      */
     private $address;
@@ -71,7 +66,6 @@ class CustomerCreate implements RequestInterface
     /**
      * @param string $name
      * @param string $email
-     * @param int $documentNumber
      * @param Address $address
      * @param Phone $phone
      * @param string $bornAt
@@ -84,7 +78,6 @@ class CustomerCreate implements RequestInterface
         $type,
         $country,
         $phoneNumbers,
-        $documentNumber,
         $documents,
         Address $address,
         Phone $phone,
@@ -97,7 +90,6 @@ class CustomerCreate implements RequestInterface
         $this->type           = $type;
         $this->country        = $country;
         $this->phoneNumbers   = $phoneNumbers;
-        $this->documentNumber = $documentNumber;
         $this->documents      = $documents;
         $this->address        = $address;
         $this->phone          = $phone;
@@ -117,7 +109,6 @@ class CustomerCreate implements RequestInterface
             'type'            => $this->type,
             'country'         => $this->country,
             'phone_numbers'   => $this->phoneNumbers,
-            'document_number' => $this->documentNumber,
             'documents'       => $this->getDocumentsData(),
             'address'         => $this->getAddresssData(),
             'phone'           => $this->getPhoneData(),

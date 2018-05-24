@@ -48,7 +48,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => ['+5511912345678'],
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[
@@ -130,7 +129,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => 'br',
                     'phone_numbers'   => ['5511912345678'],
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[
@@ -289,7 +287,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'country'         => 'br',
                     'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
-                    'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
                     'documents'       => [[

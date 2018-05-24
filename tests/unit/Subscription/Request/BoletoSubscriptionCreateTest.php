@@ -237,7 +237,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'country'         => self::CUSTOMER_COUNTRY,
                 'phone_numbers'   => ['+5511912345678'],
                 'email'           => self::CUSTOMER_EMAIL,
-                'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
                 'documents'       => [[
                     'type' => self::CUSTOMER_DOCUMENTTYPE,
                     'number' => self::CUSTOMER_DOCUMENTNUMBER

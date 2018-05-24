@@ -51,7 +51,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::TYPE,
             self::COUNTRY,
             ['+5511912345678'],
-            self::DOCUMENT_NUMBER,
             $documents,
             $address,
             new \PagarMe\Sdk\Customer\Phone(
@@ -67,7 +66,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'born_at'         => '15071991',
-                'document_number' => '10586649727',
                 'email'           => 'eduardo@eduardo.com',
                 'external_id'     => 'x-1234',
                 'type'            => 'individual',
@@ -110,7 +108,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::TYPE,
             self::COUNTRY,
             ['+5511912345678'],
-            self::DOCUMENT_NUMBER,
             $this->getDocumentsMock(),
             $this->getAddressMock(),
             $this->getPhoneMock(),
@@ -133,7 +130,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::TYPE,
             self::COUNTRY,
             ['+5511912345678'],
-            self::DOCUMENT_NUMBER,
             $this->getDocumentsMock(),
             $this->getAddressMock(),
             $this->getPhoneMock(),

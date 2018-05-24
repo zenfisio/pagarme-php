@@ -46,7 +46,6 @@ class TransactionCreate implements RequestInterface
             'type'            => $customer->getType(),
             'country'         => $customer->getCountry(),
             'phone_numbers'   => $customer->getPhoneNumbers(),
-            'document_number' => $customer->getDocumentNumber(),
             'documents'       => $customer->getDocuments(),
             'email'           => $customer->getEmail(),
             'sex'             => $customer->getGender(),

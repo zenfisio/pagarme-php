@@ -56,7 +56,6 @@ class CustomerContext extends BasicContext
                 $this->getCustomerType(),
                 $this->getCustomerCountry(),
                 $this->getCustomerPhoneNumbers(),
-                $this->getCustomerDocumentNumber(),
                 $documents,
                 $address,
                 new \PagarMe\Sdk\Customer\Phone(

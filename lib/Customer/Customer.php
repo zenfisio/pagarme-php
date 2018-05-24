@@ -52,11 +52,6 @@ class Customer
     private $dateCreated;
 
     /**
-     * @var int
-     */
-    private $documentNumber;
-
-    /**
      * @var string
      */
     private $documentType;
@@ -150,15 +145,6 @@ class Customer
     public function getBornAt()
     {
         return $this->bornAt;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return int
-     */
-    public function getDocumentNumber()
-    {
-        return $this->documentNumber;
     }
 
     /**

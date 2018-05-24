@@ -23,7 +23,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_COUNTRY        = 'br';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
     const CUSTOMER_DOCUMENTTYPE = 'cpf';
-    const CUSTOMER_BORN_AT        = '12031990';
 
     const PHONE_DDD    = '11';
     const PHONE_NUMBER = '44445555';
@@ -57,8 +56,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn(self::CUSTOMER_EMAIL);
         $customerMock->method('getDocumentNumber')
             ->willReturn(self::CUSTOMER_DOCUMENTNUMBER);
-        $customerMock->method('getBornAt')
-            ->willReturn(self::CUSTOMER_BORN_AT);
 
         return $customerMock;
     }
@@ -247,8 +244,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'phone'           => [
                     'ddd'    => self::PHONE_DDD,
                     'number' => self::PHONE_NUMBER
-                ],
-                'born_at'         => self::CUSTOMER_BORN_AT
+                ]
             ],
             'postback_url' => self::POSTBACK_URL
         ];

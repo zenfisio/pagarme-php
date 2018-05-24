@@ -53,17 +53,11 @@ class CustomerCreate implements RequestInterface
      */
     private $phone;
 
-     /**
-     * @var string | Data de nascimento ex: '13121988'
-     */
-    private $bornAt;
-
     /**
      * @param string $name
      * @param string $email
      * @param Address $address
      * @param Phone $phone
-     * @param string $bornAt
      */
     public function __construct(
         $name,
@@ -74,8 +68,7 @@ class CustomerCreate implements RequestInterface
         $phoneNumbers,
         $documents,
         Address $address,
-        Phone $phone,
-        $bornAt
+        Phone $phone
     ) {
         $this->name           = $name;
         $this->email          = $email;
@@ -86,7 +79,6 @@ class CustomerCreate implements RequestInterface
         $this->documents      = $documents;
         $this->address        = $address;
         $this->phone          = $phone;
-        $this->bornAt         = $bornAt;
     }
 
     /**
@@ -103,8 +95,7 @@ class CustomerCreate implements RequestInterface
             'phone_numbers'   => $this->phoneNumbers,
             'documents'       => $this->getDocumentsData(),
             'address'         => $this->getAddresssData(),
-            'phone'           => $this->getPhoneData(),
-            'born_at'         => $this->bornAt
+            'phone'           => $this->getPhoneData()
         ];
     }
 

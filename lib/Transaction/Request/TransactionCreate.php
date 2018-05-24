@@ -47,8 +47,7 @@ class TransactionCreate implements RequestInterface
             'country'         => $customer->getCountry(),
             'phone_numbers'   => $customer->getPhoneNumbers(),
             'documents'       => $customer->getDocuments(),
-            'email'           => $customer->getEmail(),
-            'born_at'         => $customer->getBornAt()
+            'email'           => $customer->getEmail()
         ];
 
         if (!is_null($customer->getId())) {

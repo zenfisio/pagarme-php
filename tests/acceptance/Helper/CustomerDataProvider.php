@@ -43,15 +43,9 @@ trait CustomerDataProvider
         return '78863832064';
     }
 
-    protected function getCustomerBornAt()
-    {
-        return '15071991';
-    }
-
     protected function getValidCustomerData()
     {
         return [
-            'born_at'         => $this->getCustomerBornAt(),
             'document_number' => $this->getCustomerDocumentNumber(),
             'email'           => $this->getCustomerEmail(),
             'name'            => $this->getCustomerName(),

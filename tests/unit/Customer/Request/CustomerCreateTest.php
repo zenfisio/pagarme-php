@@ -16,7 +16,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
     const TYPE            = 'individual';
     const COUNTRY         = 'br';
     const DOCUMENT_NUMBER = '10586649727';
-    const BORN_AT         = '15071991';
 
     /**
      * @test
@@ -57,13 +56,11 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                     'ddd'    =>15,
                     'number' =>987523421
                 ]
-            ),
-            self::BORN_AT
+            )
         );
 
         $this->assertEquals(
             [
-                'born_at'         => '15071991',
                 'email'           => 'eduardo@eduardo.com',
                 'external_id'     => 'x-1234',
                 'type'            => 'individual',

@@ -42,11 +42,6 @@ class Customer
     private $address;
 
     /**
-     * @var string
-     */
-    private $bornAt;
-
-    /**
      * @var \DateTime
      */
     private $dateCreated;
@@ -126,15 +121,6 @@ class Customer
     public function getDocuments()
     {
         return $this->documents;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return string
-     */
-    public function getBornAt()
-    {
-        return $this->bornAt;
     }
 
     /**

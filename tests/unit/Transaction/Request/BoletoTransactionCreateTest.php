@@ -49,7 +49,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'name'            => 'Eduardo Nascimento',
                     'born_at'         => '15071991',
                     'email'           => 'eduardo@eduardo.com',
-                    'sex'             => 'M',
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
@@ -130,7 +129,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => ['5511912345678'],
                     'born_at'         => '15071991',
                     'email'           => 'eduardo@eduardo.com',
-                    'sex'             => 'M',
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
@@ -228,7 +226,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getPhoneNumbers')->willReturn(['+5511912345678']);
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
-        $customerMock->method('getGender')->willReturn('M');
         $customerMock->method('getName')->willReturn('Eduardo Nascimento');
         $customerMock->method('getDocuments')->willReturn([[
             'type' => 'cpf',
@@ -288,7 +285,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => ['+5511912345678'],
                     'born_at'         => '15071991',
                     'email'           => 'eduardo@eduardo.com',
-                    'sex'             => 'M',
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'

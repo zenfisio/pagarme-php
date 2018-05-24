@@ -59,11 +59,6 @@ class Customer
     /**
      * @var string
      */
-    private $gender;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -149,15 +144,6 @@ class Customer
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
     }
 
     /**

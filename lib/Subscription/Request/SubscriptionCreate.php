@@ -76,7 +76,6 @@ abstract class SubscriptionCreate implements RequestInterface
                 'country'         => $this->customer->getCountry(),
                 'phone_numbers'   => $this->customer->getPhoneNumbers(),
                 'born_at'         => $this->customer->getBornAt(),
-                'gender'          => $this->customer->getGender(),
                 'documents'       => $this->getDocumentsData()
             ],
             'postback_url' => $this->postbackUrl

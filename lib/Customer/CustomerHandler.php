@@ -24,7 +24,6 @@ class CustomerHandler extends AbstractHandler
      * @param Address $address
      * @param Phone $phone
      * @param string $bornAt
-     * @param string $gender
      */
     public function create(
         $name,
@@ -36,8 +35,7 @@ class CustomerHandler extends AbstractHandler
         $documents,
         Address $address,
         Phone $phone,
-        $bornAt = null,
-        $gender = null
+        $bornAt = null
     ) {
         $request = new CustomerCreate(
             $name,
@@ -49,8 +47,7 @@ class CustomerHandler extends AbstractHandler
             $documents,
             $address,
             $phone,
-            $bornAt,
-            $gender
+            $bornAt
         );
 
         $response = $this->client->send($request);

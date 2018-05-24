@@ -48,18 +48,12 @@ trait CustomerDataProvider
         return '15071991';
     }
 
-    protected function getCustomerGender()
-    {
-        return 'M';
-    }
-
     protected function getValidCustomerData()
     {
         return [
             'born_at'         => $this->getCustomerBornAt(),
             'document_number' => $this->getCustomerDocumentNumber(),
             'email'           => $this->getCustomerEmail(),
-            'gender'          => $this->getCustomerGender(),
             'name'            => $this->getCustomerName(),
             'address' => [
                 'city'          => 'sao paulo,',

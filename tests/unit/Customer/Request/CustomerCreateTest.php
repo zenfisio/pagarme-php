@@ -17,7 +17,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
     const COUNTRY         = 'br';
     const DOCUMENT_NUMBER = '10586649727';
     const BORN_AT         = '15071991';
-    const GENDER          = 'M';
 
     /**
      * @test
@@ -59,8 +58,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                     'number' =>987523421
                 ]
             ),
-            self::BORN_AT,
-            self::GENDER
+            self::BORN_AT
         );
 
         $this->assertEquals(
@@ -71,7 +69,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                 'type'            => 'individual',
                 'country'         => 'br',
                 'phone_numbers'   => ['+5511912345678'],
-                'gender'          => 'M',
                 'name'            => 'Eduardo Nascimento',
                 'documents' => [[
                     'type' => 'cpf',

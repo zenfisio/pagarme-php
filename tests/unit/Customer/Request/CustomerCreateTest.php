@@ -15,7 +15,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
     const EXTERNAL_ID     = 'x-1234';
     const TYPE            = 'individual';
     const COUNTRY         = 'br';
-    const PHONE_NUMBERS   = ['+5511912345678'];
     const DOCUMENT_NUMBER = '10586649727';
     const BORN_AT         = '15071991';
     const GENDER          = 'M';
@@ -38,14 +37,22 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
+        $documents = [
+            new \PagarMe\Sdk\Customer\Document([
+                'type' => 'cpf',
+                'number' => self::DOCUMENT_NUMBER
+            ])
+        ];
+
         $customerCreate = new CustomerCreate(
             self::NAME,
             self::EMAIL,
             self::EXTERNAL_ID,
             self::TYPE,
             self::COUNTRY,
-            self::PHONE_NUMBERS,
+            ['+5511912345678'],
             self::DOCUMENT_NUMBER,
+            $documents,
             $address,
             new \PagarMe\Sdk\Customer\Phone(
                 [
@@ -68,6 +75,10 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                 'phone_numbers'   => ['+5511912345678'],
                 'gender'          => 'M',
                 'name'            => 'Eduardo Nascimento',
+                'documents' => [[
+                    'type' => 'cpf',
+                    'number' => '10586649727'
+                ]],
                 'address' => [
                     'street'        => 'rua teste',
                     'street_number' => 42,
@@ -98,8 +109,9 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::EXTERNAL_ID,
             self::TYPE,
             self::COUNTRY,
-            self::PHONE_NUMBERS,
+            ['+5511912345678'],
             self::DOCUMENT_NUMBER,
+            $this->getDocumentsMock(),
             $this->getAddressMock(),
             $this->getPhoneMock(),
             null,
@@ -120,8 +132,9 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::EXTERNAL_ID,
             self::TYPE,
             self::COUNTRY,
-            self::PHONE_NUMBERS,
+            ['+5511912345678'],
             self::DOCUMENT_NUMBER,
+            $this->getDocumentsMock(),
             $this->getAddressMock(),
             $this->getPhoneMock(),
             null,
@@ -129,6 +142,15 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(RequestInterface::HTTP_POST, $customerCreate->getMethod());
+    }
+
+    private function getDocumentsMock()
+    {
+        return [
+            $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ];
     }
 
     private function getAddressMock()

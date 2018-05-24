@@ -77,7 +77,8 @@ abstract class SubscriptionCreate implements RequestInterface
                 'phone_numbers'   => $this->customer->getPhoneNumbers(),
                 'document_number' => $this->customer->getDocumentNumber(),
                 'born_at'         => $this->customer->getBornAt(),
-                'gender'          => $this->customer->getGender()
+                'gender'          => $this->customer->getGender(),
+                'documents'       => $this->getDocumentsData()
             ],
             'postback_url' => $this->postbackUrl
         ];
@@ -149,6 +150,27 @@ abstract class SubscriptionCreate implements RequestInterface
         }
 
         return $addressData;
+    }
+
+    /**
+     *  @return array
+     */
+    protected function getDocumentsData()
+    {
+        $documents = $this->customer->getDocuments();
+
+        if (is_null($documents)) {
+            return [];
+        }
+
+        $documentsData = array_map(function ($document) {
+            return [
+                'type' => $document->getType(),
+                'number' => $document->getNumber()
+            ];
+        }, $documents);
+
+        return $documentsData;
     }
 
     /**

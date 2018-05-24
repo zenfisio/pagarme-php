@@ -32,6 +32,11 @@ class Customer
     private $phoneNumbers;
 
     /**
+     * @var array
+     */
+    private $documents;
+
+    /**
      * @var PagarMe\Sdk\Customer\Address
      */
     private $address;
@@ -127,6 +132,15 @@ class Customer
     public function getPhoneNumbers()
     {
         return $this->phoneNumbers;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     * @return string
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
     /**

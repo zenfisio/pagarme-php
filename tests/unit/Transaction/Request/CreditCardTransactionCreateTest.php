@@ -65,6 +65,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]],
                     'address' => [
                         'street'        => 'rua teste',
                         'street_number' => 42,
@@ -127,6 +131,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => null,
                     'born_at'         => null,
                     'document_number' => null,
+                    'documents'       => null,
                     'email'           => null,
                     'sex'             => null
                 ],
@@ -178,6 +183,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'phone_numbers'   => null,
                     'born_at'         => null,
                     'document_number' => null,
+                    'documents'       => null,
                     'email'           => null,
                     'sex'             => null
                 ],
@@ -244,6 +250,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]],
                     'address' => [
                         'street'        => 'rua teste',
                         'street_number' => 42,
@@ -333,6 +343,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]],
                     'address' => [
                         'street'        => 'rua teste',
                         'street_number' => 42,
@@ -441,6 +455,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'document_number' => '10586649727',
                     'email'           => 'eduardo@eduardo.com',
                     'sex'             => 'M',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]],
                     'address' => [
                         'street'        => 'rua teste',
                         'street_number' => 42,
@@ -552,6 +570,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getGender')->willReturn('M');
         $customerMock->method('getName')->willReturn('Eduardo Nascimento');
+        $customerMock->method('getDocuments')->willReturn([[
+            'type' => 'cpf',
+            'number' => '10586649727'
+        ]]);
         $customerMock->method('getAddress')->willReturn(
             [
                 'street'        => 'rua teste',

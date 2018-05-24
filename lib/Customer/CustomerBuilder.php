@@ -16,6 +16,10 @@ trait CustomerBuilder
 
         $customerData->phone = new Phone($customerData->phones[0]);
 
+        $customerData->documents = array_map(function ($document) {
+            return new Document(get_object_vars($document));
+        }, $customerData->documents);
+
         $customerData->date_created = new \DateTime(
             $customerData->date_created
         );

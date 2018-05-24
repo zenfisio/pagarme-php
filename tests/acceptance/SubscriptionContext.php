@@ -11,6 +11,7 @@ use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\Account\Account;
 use PagarMe\Sdk\Customer\Customer;
+use PagarMe\Sdk\Customer\Document;
 use PagarMe\Sdk\Customer\Address;
 use PagarMe\Sdk\Customer\Phone;
 
@@ -29,6 +30,13 @@ class SubscriptionContext extends BasicContext
      */
     public function aValidCustomer()
     {
+        $documents = [
+            new Document([
+                'type' => 'cpf',
+                'number' => '25123317171'
+            ])
+        ];
+
         $this->customer = self::getPagarMe()
             ->customer()
             ->create(
@@ -39,6 +47,7 @@ class SubscriptionContext extends BasicContext
                 'br',
                 ['+5511912345678'],
                 '25123317171',
+                $documents,
                 new Address(
                     [
                         'street'        => 'Rua Teste',

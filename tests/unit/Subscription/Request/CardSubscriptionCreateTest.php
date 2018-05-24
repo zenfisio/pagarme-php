@@ -21,9 +21,9 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_EXTERNAL_ID    = 'x-1234';
     const CUSTOMER_TYPE           = 'individual';
     const CUSTOMER_COUNTRY        = 'br';
-    const CUSTOMER_PHONE_NUMBERS  = ['+5511912345678'];
     const CUSTOMER_EMAIL          = 'john@test.com';
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
+    const CUSTOMER_DOCUMENTTYPE = 'cpf';
     const CUSTOMER_BORN_AT        = '12031990';
     const CUSTOMER_GENDER         = 'm';
 
@@ -67,7 +67,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getCountry')
             ->willReturn(self::CUSTOMER_COUNTRY);
         $customerMock->method('getPhoneNumbers')
-            ->willReturn(self::CUSTOMER_PHONE_NUMBERS);
+            ->willReturn(['+5511912345678']);
         $customerMock->method('getName')
             ->willReturn(self::CUSTOMER_NAME);
         $customerMock->method('getEmail')
@@ -90,6 +90,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn(null);
         $customerMock->method('getPhone')
             ->willReturn(null);
+        $customerMock->method('getDocuments')
+            ->willReturn(null);
 
         return $customerMock;
     }
@@ -98,6 +100,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     {
         $addressMock = $this->getConfiguredAddressMockForPayloadTest();
         $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
+        $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
@@ -105,6 +108,8 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn($addressMock);
         $customerMock->method('getPhone')
             ->willReturn($phoneMock);
+        $customerMock->method('getDocuments')
+            ->willReturn($documentsMock);
 
         return $customerMock;
     }
@@ -175,6 +180,18 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $phoneMock;
     }
 
+    private function getConfiguredDocumentsMockForPayloadTest()
+    {
+        $documentsMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $documentsMock->method('getType')->willReturn(self::CUSTOMER_DOCUMENTTYPE);
+        $documentsMock->method('getNumber')->willReturn(self::CUSTOMER_DOCUMENTNUMBER);
+
+        return [ $documentsMock ];
+    }
+
     private function getDefaultPayloadWithoutCardInfo()
     {
         return [
@@ -187,9 +204,13 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'external_id'     => self::CUSTOMER_EXTERNAL_ID,
                 'type'            => self::CUSTOMER_TYPE,
                 'country'         => self::CUSTOMER_COUNTRY,
-                'phone_numbers'   => self::CUSTOMER_PHONE_NUMBERS,
+                'phone_numbers'   => ['+5511912345678'],
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
+                'documents'       => [[
+                    'type' => self::CUSTOMER_DOCUMENTTYPE,
+                    'number' => self::CUSTOMER_DOCUMENTNUMBER
+                ]],
                 'address'         => [
                     'street'        => self::ADDRESS_STREET,
                     'street_number' => self::ADDRESS_STREETNUMBER,
@@ -210,6 +231,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     private function getExpectedPayloadWithoutAddressAndPhone()
     {
         $payload = $this->getExpectedPayloadWithCardId();
+        $payload['customer']['documents'] = [];
         unset($payload['customer']['address'], $payload['customer']['phone']);
         return $payload;
     }

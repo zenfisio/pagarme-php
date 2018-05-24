@@ -61,6 +61,13 @@ class TransactionContext extends BasicContext
             ]
         );
 
+        $documents = [
+            new \PagarMe\Sdk\Customer\Document([
+                'type' => 'cpf',
+                'number' => $this->getCustomerDocumentNumber()
+            ])
+        ];
+
         $this->customer = self::getPagarMe()
             ->customer()
             ->create(
@@ -71,6 +78,7 @@ class TransactionContext extends BasicContext
                 $this->getCustomerCountry(),
                 $this->getCustomerPhoneNumbers(),
                 $this->getCustomerDocumentNumber(),
+                $documents,
                 $address,
                 new \PagarMe\Sdk\Customer\Phone(
                     [

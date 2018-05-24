@@ -39,6 +39,11 @@ class CustomerCreate implements RequestInterface
     private $email;
 
      /**
+     * @var array | Números de documentos
+     */
+    private $documents;
+
+     /**
      * @var int | Número do CPF ou CNPJ do cliente
      */
     private $documentNumber;
@@ -80,6 +85,7 @@ class CustomerCreate implements RequestInterface
         $country,
         $phoneNumbers,
         $documentNumber,
+        $documents,
         Address $address,
         Phone $phone,
         $bornAt,
@@ -92,6 +98,7 @@ class CustomerCreate implements RequestInterface
         $this->country        = $country;
         $this->phoneNumbers   = $phoneNumbers;
         $this->documentNumber = $documentNumber;
+        $this->documents      = $documents;
         $this->address        = $address;
         $this->phone          = $phone;
         $this->bornAt         = $bornAt;
@@ -111,6 +118,7 @@ class CustomerCreate implements RequestInterface
             'country'         => $this->country,
             'phone_numbers'   => $this->phoneNumbers,
             'document_number' => $this->documentNumber,
+            'documents'       => $this->getDocumentsData(),
             'address'         => $this->getAddresssData(),
             'phone'           => $this->getPhoneData(),
             'born_at'         => $this->bornAt,
@@ -163,6 +171,21 @@ class CustomerCreate implements RequestInterface
         }
 
         return $addressData;
+    }
+
+    /**
+     *  @return array
+     */
+    private function getDocumentsData()
+    {
+        $documentsData = array_map(function ($document) {
+            return [
+                'type' => $document->getType(),
+                'number' => $document->getNumber()
+            ];
+        }, $this->documents);
+
+        return $documentsData;
     }
 
     /**

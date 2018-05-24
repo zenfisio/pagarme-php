@@ -21,8 +21,8 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     const CUSTOMER_EXTERNAL_ID    = 'x-1234';
     const CUSTOMER_TYPE           = 'individual';
     const CUSTOMER_COUNTRY        = 'br';
-    const CUSTOMER_PHONE_NUMBERS  = ['+5511912345678'];
     const CUSTOMER_DOCUMENTNUMBER = '576981209';
+    const CUSTOMER_DOCUMENTTYPE = 'cpf';
     const CUSTOMER_BORN_AT        = '12031990';
     const CUSTOMER_GENDER         = 'm';
 
@@ -53,7 +53,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getCountry')
             ->willReturn(self::CUSTOMER_COUNTRY);
         $customerMock->method('getPhoneNumbers')
-            ->willReturn(self::CUSTOMER_PHONE_NUMBERS);
+            ->willReturn(['+5511912345678']);
         $customerMock->method('getEmail')
             ->willReturn(self::CUSTOMER_EMAIL);
         $customerMock->method('getDocumentNumber')
@@ -74,6 +74,8 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn(null);
         $customerMock->method('getPhone')
             ->willReturn(null);
+        $customerMock->method('getDocuments')
+            ->willReturn(null);
 
         return $customerMock;
     }
@@ -82,15 +84,30 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     {
         $addressMock = $this->getConfiguredAddressMockForPayloadTest();
         $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
+        $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
         $customerMock->method('getAddress')
             ->willReturn($addressMock);
+        $customerMock->method('getDocuments')
+            ->willReturn($documentsMock);
         $customerMock->method('getPhone')
             ->willReturn($phoneMock);
 
         return $customerMock;
+    }
+
+    private function getConfiguredDocumentsMockForPayloadTest()
+    {
+        $documentsMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $documentsMock->method('getType')->willReturn(self::CUSTOMER_DOCUMENTTYPE);
+        $documentsMock->method('getNumber')->willReturn(self::CUSTOMER_DOCUMENTNUMBER);
+
+        return [ $documentsMock ];
     }
 
     private function getConfiguredAddressMockForPayloadTest()
@@ -218,9 +235,13 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'external_id'     => self::CUSTOMER_EXTERNAL_ID,
                 'type'            => self::CUSTOMER_TYPE,
                 'country'         => self::CUSTOMER_COUNTRY,
-                'phone_numbers'   => self::CUSTOMER_PHONE_NUMBERS,
+                'phone_numbers'   => ['+5511912345678'],
                 'email'           => self::CUSTOMER_EMAIL,
                 'document_number' => self::CUSTOMER_DOCUMENTNUMBER,
+                'documents'       => [[
+                    'type' => self::CUSTOMER_DOCUMENTTYPE,
+                    'number' => self::CUSTOMER_DOCUMENTNUMBER
+                ]],
                 'address'         => [
                     'street'        => self::ADDRESS_STREET,
                     'street_number' => self::ADDRESS_STREETNUMBER,
@@ -241,6 +262,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     private function getDefaultPayloadWithoutAddressAndPhone()
     {
         $payload = $this->getDefaultPayload();
+        $payload['customer']['documents'] = [];
         unset($payload['customer']['address'], $payload['customer']['phone']);
         return $payload;
     }

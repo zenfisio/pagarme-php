@@ -36,13 +36,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::TYPE,
             self::COUNTRY,
             ['+5511912345678'],
-            $documents,
-            new \PagarMe\Sdk\Customer\Phone(
-                [
-                    'ddd'    =>15,
-                    'number' =>987523421
-                ]
-            )
+            $documents
         );
 
         $this->assertEquals(
@@ -56,11 +50,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                 'documents' => [[
                     'type' => 'cpf',
                     'number' => '10586649727'
-                ]],
-                'phone' => [
-                    'ddd'    => 15,
-                    'number' => 987523421
-                ]
+                ]]
             ],
             $customerCreate->getPayload()
         );
@@ -79,7 +69,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::COUNTRY,
             ['+5511912345678'],
             $this->getDocumentsMock(),
-            $this->getPhoneMock(),
             null,
             null
         );
@@ -100,7 +89,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::COUNTRY,
             ['+5511912345678'],
             $this->getDocumentsMock(),
-            $this->getPhoneMock(),
             null,
             null
         );
@@ -115,12 +103,5 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock()
         ];
-    }
-
-    private function getPhoneMock()
-    {
-        return $this->getMockBuilder('PagarMe\Sdk\Customer\Phone')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

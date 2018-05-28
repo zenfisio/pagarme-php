@@ -65,12 +65,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'metadata'        => null,
                 'soft_descriptor' => $softDescriptor,
@@ -84,7 +79,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
      * @dataProvider installmentsProvider
      * @test
      */
-    public function mustNotContainDocumentsAndPhoneDataOnPayload(
+    public function mustNotContainDocumentsDataOnPayload(
         $installments,
         $capture,
         $postbackUrl
@@ -234,12 +229,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'split_rules' => [
                     0 => [
@@ -317,12 +307,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'split_rules' => [
                     0 => [
@@ -419,12 +404,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'metadata'        => null,
                 'soft_descriptor' => null,
@@ -526,13 +506,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             'type' => 'cpf',
             'number' => '10586649727'
         ]]);
-        $customerMock->method('getPhone')->willReturn(
-            [
-                'ddi'    => 55,
-                'ddd'    => 15,
-                'number' => 987523421
-            ]
-        );
 
         return $customerMock;
     }
@@ -549,7 +522,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getDocumentNumber')->willReturn(null);
         $customerMock->method('getEmail')->willReturn(null);
         $customerMock->method('getName')->willReturn(null);
-        $customerMock->method('getPhone')->willReturn(null);
 
         return $customerMock;
     }

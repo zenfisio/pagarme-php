@@ -2,8 +2,6 @@
 
 namespace PagarMe\Acceptance\Helper;
 
-use PagarMe\Sdk\Customer\Phone;
-
 trait CustomerDataProvider
 {
 
@@ -47,12 +45,7 @@ trait CustomerDataProvider
         return [
             'document_number' => $this->getCustomerDocumentNumber(),
             'email'           => $this->getCustomerEmail(),
-            'name'            => $this->getCustomerName(),
-            'phone' => [
-                'ddd'    => 11,
-                'ddi'    => 55,
-                'number' => 999887766,
-            ]
+            'name'            => $this->getCustomerName()
         ];
     }
 }

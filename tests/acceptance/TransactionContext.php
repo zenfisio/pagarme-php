@@ -68,13 +68,7 @@ class TransactionContext extends BasicContext
                 $this->getCustomerType(),
                 $this->getCustomerCountry(),
                 $this->getCustomerPhoneNumbers(),
-                $documents,
-                new \PagarMe\Sdk\Customer\Phone(
-                    [
-                        'ddd' =>11,
-                        'number' =>987654321
-                    ]
-                )
+                $documents
             );
 
         $this->customer = self::getPagarMe()

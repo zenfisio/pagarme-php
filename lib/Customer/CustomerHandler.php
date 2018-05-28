@@ -7,7 +7,6 @@ use PagarMe\Sdk\Client;
 use PagarMe\Sdk\Customer\Request\CustomerCreate;
 use PagarMe\Sdk\Customer\Request\CustomerGet;
 use PagarMe\Sdk\Customer\Request\CustomerList;
-use PagarMe\Sdk\Customer\Phone;
 
 class CustomerHandler extends AbstractHandler
 {
@@ -20,7 +19,6 @@ class CustomerHandler extends AbstractHandler
      * @param string $type
      * @param array $phoneNumbers
      * @param array $documents
-     * @param Phone $phone
      */
     public function create(
         $name,
@@ -29,8 +27,7 @@ class CustomerHandler extends AbstractHandler
         $type,
         $country,
         $phoneNumbers,
-        $documents,
-        Phone $phone
+        $documents
     ) {
         $request = new CustomerCreate(
             $name,
@@ -39,8 +36,7 @@ class CustomerHandler extends AbstractHandler
             $type,
             $country,
             $phoneNumbers,
-            $documents,
-            $phone
+            $documents
         );
 
         $response = $this->client->send($request);

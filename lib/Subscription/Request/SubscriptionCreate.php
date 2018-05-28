@@ -84,10 +84,6 @@ abstract class SubscriptionCreate implements RequestInterface
             $payload['customer']['id'] = $this->customer->getId();
         }
 
-        if (!is_null($this->customer->getPhone())) {
-            $payload['customer']['phone'] = $this->getPhoneData();
-        }
-
         if (array_key_exists('split_rules', $this->extraAttributes)
             && $this->extraAttributes['split_rules'] instanceof SplitRuleCollection) {
             $payload['split_rules'] = $this->getSplitRulesInfo();
@@ -131,25 +127,6 @@ abstract class SubscriptionCreate implements RequestInterface
         }, $documents);
 
         return $documentsData;
-    }
-
-    /**
-     *  @return array
-     */
-    protected function getPhoneData()
-    {
-        $phone = $this->customer->getPhone();
-
-        $phoneData = [
-            'ddd'    => $phone->getDdd(),
-            'number' => $phone->getNumber()
-        ];
-
-        if (!is_null($phone->getDdi())) {
-            $phoneData['ddi'] = $phone->getDdi();
-        }
-
-        return $phoneData;
     }
 
     /**

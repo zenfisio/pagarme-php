@@ -60,12 +60,10 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $customerMock;
     }
 
-    private function getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest()
+    private function getConfiguredCustomerWithoutDocumentsMockForPayloadTest()
     {
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getPhone')
-            ->willReturn(null);
         $customerMock->method('getDocuments')
             ->willReturn(null);
 
@@ -74,15 +72,12 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredCustomerMockForPayloadTest()
     {
-        $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
         $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
         $customerMock->method('getDocuments')
             ->willReturn($documentsMock);
-        $customerMock->method('getPhone')
-            ->willReturn($phoneMock);
 
         return $customerMock;
     }
@@ -133,18 +128,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $rules[] = $this->getConfiguredSplitRuleMockForPayloadTest(self::SPLIT_RULE_RECIPIENT_ID_2, $percentage);
 
         return $rules;
-    }
-
-    private function getConfiguredPhoneMockForPayloadTest()
-    {
-        $phoneMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Phone')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $phoneMock->method('getDdd')->willReturn(self::PHONE_DDD);
-        $phoneMock->method('getNumber')->willReturn(self::PHONE_NUMBER);
-
-        return $phoneMock;
     }
 
     private function getExpectedPayloadWithSplitRulesAmount()
@@ -211,21 +194,16 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'documents'       => [[
                     'type' => self::CUSTOMER_DOCUMENTTYPE,
                     'number' => self::CUSTOMER_DOCUMENTNUMBER
-                ]],
-                'phone'           => [
-                    'ddd'    => self::PHONE_DDD,
-                    'number' => self::PHONE_NUMBER
-                ]
+                ]]
             ],
             'postback_url' => self::POSTBACK_URL
         ];
     }
 
-    private function getDefaultPayloadWithoutDocumentsAndPhone()
+    private function getDefaultPayloadWithoutDocuments()
     {
         $payload = $this->getDefaultPayload();
         $payload['customer']['documents'] = [];
-        unset($payload['customer']['phone']);
         return $payload;
     }
 
@@ -312,7 +290,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function mustPayloadWithoutDocumentsAndPhoneBeCorrect()
+    public function mustPayloadWithoutDocumentsBeCorrect()
     {
         $planMock = $this->getMockBuilder('PagarMe\Sdk\Plan\Plan')
             ->disableOriginalConstructor()
@@ -320,7 +298,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $planMock->method('getId')->willReturn(self::PLAN_ID);
 
 
-        $customerMock = $this->getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest();
+        $customerMock = $this->getConfiguredCustomerWithoutDocumentsMockForPayloadTest();
 
         $boletoSubscriptionCreateRequest = new BoletoSubscriptionCreate(
             $planMock,
@@ -333,7 +311,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $boletoSubscriptionCreateRequest->getPayload(),
-            $this->getDefaultPayloadWithoutDocumentsAndPhone()
+            $this->getDefaultPayloadWithoutDocuments()
         );
     }
 

@@ -3,7 +3,6 @@
 namespace PagarMe\Sdk\Customer\Request;
 
 use PagarMe\Sdk\RequestInterface;
-use PagarMe\Sdk\Customer\Phone;
 
 class CustomerCreate implements RequestInterface
 {
@@ -42,15 +41,9 @@ class CustomerCreate implements RequestInterface
      */
     private $documents;
 
-     /**
-     * @var Phone | Telefone do comprador
-     */
-    private $phone;
-
     /**
      * @param string $name
      * @param string $email
-     * @param Phone $phone
      */
     public function __construct(
         $name,
@@ -59,8 +52,7 @@ class CustomerCreate implements RequestInterface
         $type,
         $country,
         $phoneNumbers,
-        $documents,
-        Phone $phone
+        $documents
     ) {
         $this->name           = $name;
         $this->email          = $email;
@@ -69,7 +61,6 @@ class CustomerCreate implements RequestInterface
         $this->country        = $country;
         $this->phoneNumbers   = $phoneNumbers;
         $this->documents      = $documents;
-        $this->phone          = $phone;
     }
 
     /**
@@ -84,8 +75,7 @@ class CustomerCreate implements RequestInterface
             'type'            => $this->type,
             'country'         => $this->country,
             'phone_numbers'   => $this->phoneNumbers,
-            'documents'       => $this->getDocumentsData(),
-            'phone'           => $this->getPhoneData()
+            'documents'       => $this->getDocumentsData()
         ];
     }
 
@@ -118,22 +108,5 @@ class CustomerCreate implements RequestInterface
         }, $this->documents);
 
         return $documentsData;
-    }
-
-    /**
-     *  @return array
-     */
-    private function getPhoneData()
-    {
-        $phoneData = [
-            'ddd'    => $this->phone->getDdd(),
-            'number' => $this->phone->getNumber()
-        ];
-
-        if (!is_null($this->phone->getDdi())) {
-            $phoneData['ddi'] = $this->phone->getDdi();
-        }
-
-        return $phoneData;
     }
 }

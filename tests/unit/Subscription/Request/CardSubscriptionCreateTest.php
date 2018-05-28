@@ -76,12 +76,10 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $customerMock;
     }
 
-    private function getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest()
+    private function getConfiguredCustomerWithoutDocumentsMockForPayloadTest()
     {
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getPhone')
-            ->willReturn(null);
         $customerMock->method('getDocuments')
             ->willReturn(null);
 
@@ -90,13 +88,10 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredCustomerMockForPayloadTest()
     {
-        $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
         $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getPhone')
-            ->willReturn($phoneMock);
         $customerMock->method('getDocuments')
             ->willReturn($documentsMock);
 
@@ -139,18 +134,6 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $rules;
     }
 
-    private function getConfiguredPhoneMockForPayloadTest()
-    {
-        $phoneMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Phone')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $phoneMock->method('getDdd')->willReturn(self::PHONE_DDD);
-        $phoneMock->method('getNumber')->willReturn(self::PHONE_NUMBER);
-
-        return $phoneMock;
-    }
-
     private function getConfiguredDocumentsMockForPayloadTest()
     {
         $documentsMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
@@ -180,21 +163,16 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                 'documents'       => [[
                     'type' => self::CUSTOMER_DOCUMENTTYPE,
                     'number' => self::CUSTOMER_DOCUMENTNUMBER
-                ]],
-                'phone'           => [
-                    'ddd'    => self::PHONE_DDD,
-                    'number' => self::PHONE_NUMBER
-                ]
+                ]]
             ],
             'postback_url' => self::POSTBACK_URL
         ];
     }
 
-    private function getExpectedPayloadWithoutDocumentsAndPhone()
+    private function getExpectedPayloadWithoutDocuments()
     {
         $payload = $this->getExpectedPayloadWithCardId();
         $payload['customer']['documents'] = [];
-        unset($payload['customer']['phone']);
         return $payload;
     }
 
@@ -356,7 +334,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function mustPayloadBeCorrectWithoutDocumentsAndPhone()
+    public function mustPayloadBeCorrectWithoutDocuments()
     {
         $planMock = $this->getConfiguredPlanMockForPayloadTest();
 
@@ -365,7 +343,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $cardMock->method('getId')->willReturn(self::CARD_ID);
 
-        $customerMock = $this->getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest();
+        $customerMock = $this->getConfiguredCustomerWithoutDocumentsMockForPayloadTest();
 
         $cardSubscriptionCreateRequest = new CardSubscriptionCreate(
             $planMock,
@@ -378,7 +356,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $cardSubscriptionCreateRequest->getPayload(),
-            $this->getExpectedPayloadWithoutDocumentsAndPhone()
+            $this->getExpectedPayloadWithoutDocuments()
         );
     }
 

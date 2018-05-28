@@ -32,8 +32,7 @@ trait TransactionBuilder
 
         if (isset($transactionData->customer)) {
             $transactionData->customer = $this->buildCustomerFromResponse(
-                (object) $transactionData->customer,
-                (object) $transactionData->phone
+                (object) $transactionData->customer
             );
         }
 

@@ -51,12 +51,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'metadata' => null,
                 'async' => null,
@@ -123,12 +118,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'split_rules' => [
                     0 => [
@@ -214,13 +204,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
             'type' => 'cpf',
             'number' => '10586649727'
         ]]);
-        $customerMock->method('getPhone')->willReturn(
-            [
-                'ddi'    => 55,
-                'ddd'    => 15,
-                'number' => 987523421
-            ]
-        );
 
         return $customerMock;
     }
@@ -262,12 +245,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => [[
                         'type' => 'cpf',
                         'number' => '10586649727'
-                    ]],
-                    'phone' => [
-                        'ddi'    => 55,
-                        'ddd'    => 15,
-                        'number' => 987523421
-                    ]
+                    ]]
                 ],
                 'metadata' => null,
                 'async' => null,

@@ -52,11 +52,6 @@ class Customer
     private $name;
 
     /**
-     * @var PagarMe\Sdk\Customer\Phone
-     */
-    private $phone;
-
-    /**
      * @param array $arrayData
      */
     public function __construct($arrayData)
@@ -134,15 +129,6 @@ class Customer
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return object
-     */
-    public function getPhone()
-    {
-        return $this->phone;
     }
 
     /**

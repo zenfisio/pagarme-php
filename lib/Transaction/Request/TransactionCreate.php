@@ -5,7 +5,6 @@ namespace PagarMe\Sdk\Transaction\Request;
 use PagarMe\Sdk\RequestInterface;
 use PagarMe\Sdk\Transaction\Transaction;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
-use PagarMe\Sdk\Customer\Phone;
 use PagarMe\Sdk\Customer\Customer;
 
 class TransactionCreate implements RequestInterface
@@ -53,11 +52,6 @@ class TransactionCreate implements RequestInterface
             $customerData['id'] = $customer->getId();
         }
 
-        $customerData = array_merge(
-            $customerData,
-            $this->getCustomerPhoneData($customer)
-        );
-
         $transactionData['customer'] = $customerData;
 
         if ($this->transaction->getSplitRules() instanceof SplitRuleCollection) {
@@ -83,30 +77,5 @@ class TransactionCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     * @param \PagarMe\Sdk\Customer\Customer $customer
-     * @return array
-     */
-    public function getCustomerPhoneData(Customer $customer)
-    {
-        $phone = $customer->getPhone();
-
-        if (is_null($phone)) {
-            return [];
-        }
-
-        if (is_array($phone)) {
-            $phone = new \PagarMe\Sdk\Customer\Phone($phone);
-        }
-
-        return [
-            'phone' => [
-                'number' => (string) $phone->getNumber(),
-                'ddd'    => (string) $phone->getDdd(),
-                'ddi'    => (string) $phone->getDdi()
-            ]
-        ];
     }
 }

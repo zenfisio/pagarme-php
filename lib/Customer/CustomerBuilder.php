@@ -10,8 +10,6 @@ trait CustomerBuilder
      */
     private function buildCustomer($customerData)
     {
-        $customerData->phone = new Phone($customerData->phones[0]);
-
         $customerData->documents = array_map(function ($document) {
             return new Document(get_object_vars($document));
         }, $customerData->documents);
@@ -27,14 +25,10 @@ trait CustomerBuilder
      * @param array $customerData
      * @return Customer
      */
-    private function buildCustomerFromResponse($customerData, $phoneData)
+    private function buildCustomerFromResponse($customerData)
     {
         if (is_null($customerData) || $customerData == new \stdClass()) {
             return null;
-        }
-
-        if (!is_null($phoneData)) {
-            $customerData->phone = new Phone($phoneData);
         }
 
         $customerData->date_created = new \DateTime(

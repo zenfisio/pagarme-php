@@ -19,7 +19,7 @@ abstract class BasicContext implements Context, SnippetAcceptingContext
     protected static function getPagarMe()
     {
         if (static::$pagarMe === null) {
-            $companyData = self::createCompany();
+            $companyData = self::createCompany('2017-08-28');
             echo sprintf("Key: %s\n", $companyData->api_key->test);
             self::$pagarMe = new PagarMe(
                 $companyData->api_key->test
@@ -29,7 +29,7 @@ abstract class BasicContext implements Context, SnippetAcceptingContext
         return self::$pagarMe;
     }
 
-    private static function createCompany()
+    private static function createCompany($apiVersion)
     {
 
         $ch = curl_init();
@@ -43,10 +43,16 @@ abstract class BasicContext implements Context, SnippetAcceptingContext
         date_default_timezone_set('America/Sao_Paulo');
 
         $params = sprintf(
-            'name=acceptance_test_company&email=%s@sdksuitetest.com&password=password',
+            'name=acceptance_test_company&email=%s@sdksuitetest.com&password=password&%s',
             date(
                 'YmdHis'
-            )
+            ),
+            http_build_query([
+                'api_version' => [
+                    'live' => $apiVersion,
+                    'test' => $apiVersion
+                ]
+            ])
         );
 
         curl_setopt($ch, CURLOPT_POST, 1);

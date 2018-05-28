@@ -31,15 +31,6 @@ class CustomerContext extends BasicContext
      */
     public function registerThisData()
     {
-        $address = new \PagarMe\Sdk\Customer\Address(
-            [
-                'street' => 'rua teste',
-                'street_number' => 42,
-                'neighborhood' => 'centro',
-                'zipcode' => '01227200'
-            ]
-        );
-
         $documents = [
             new \PagarMe\Sdk\Customer\Document([
                 'type' => 'cpf',
@@ -57,7 +48,6 @@ class CustomerContext extends BasicContext
                 $this->getCustomerCountry(),
                 $this->getCustomerPhoneNumbers(),
                 $documents,
-                $address,
                 new \PagarMe\Sdk\Customer\Phone(
                     [
                         'ddd' =>11,

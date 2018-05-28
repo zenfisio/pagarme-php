@@ -66,13 +66,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -91,7 +84,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
      * @dataProvider installmentsProvider
      * @test
      */
-    public function mustNotContainAdressAndPhoneDataOnPayload(
+    public function mustNotContainDocumentsAndPhoneDataOnPayload(
         $installments,
         $capture,
         $postbackUrl
@@ -242,13 +235,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -332,13 +318,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -441,13 +420,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -554,14 +526,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             'type' => 'cpf',
             'number' => '10586649727'
         ]]);
-        $customerMock->method('getAddress')->willReturn(
-            [
-                'street'        => 'rua teste',
-                'street_number' => 42,
-                'neighborhood'  => 'centro',
-                'zipcode'       => '01227200'
-            ]
-        );
         $customerMock->method('getPhone')->willReturn(
             [
                 'ddi'    => 55,
@@ -585,7 +549,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getDocumentNumber')->willReturn(null);
         $customerMock->method('getEmail')->willReturn(null);
         $customerMock->method('getName')->willReturn(null);
-        $customerMock->method('getAddress')->willReturn(null);
         $customerMock->method('getPhone')->willReturn(null);
 
         return $customerMock;

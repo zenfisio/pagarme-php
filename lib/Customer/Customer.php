@@ -37,11 +37,6 @@ class Customer
     private $documents;
 
     /**
-     * @var PagarMe\Sdk\Customer\Address
-     */
-    private $address;
-
-    /**
      * @var \DateTime
      */
     private $dateCreated;
@@ -139,15 +134,6 @@ class Customer
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
     }
 
     /**

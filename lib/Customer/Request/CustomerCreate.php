@@ -3,7 +3,6 @@
 namespace PagarMe\Sdk\Customer\Request;
 
 use PagarMe\Sdk\RequestInterface;
-use PagarMe\Sdk\Customer\Address;
 use PagarMe\Sdk\Customer\Phone;
 
 class CustomerCreate implements RequestInterface
@@ -44,11 +43,6 @@ class CustomerCreate implements RequestInterface
     private $documents;
 
      /**
-     * @var Address | Endereço do comprador
-     */
-    private $address;
-
-     /**
      * @var Phone | Telefone do comprador
      */
     private $phone;
@@ -56,7 +50,6 @@ class CustomerCreate implements RequestInterface
     /**
      * @param string $name
      * @param string $email
-     * @param Address $address
      * @param Phone $phone
      */
     public function __construct(
@@ -67,7 +60,6 @@ class CustomerCreate implements RequestInterface
         $country,
         $phoneNumbers,
         $documents,
-        Address $address,
         Phone $phone
     ) {
         $this->name           = $name;
@@ -77,7 +69,6 @@ class CustomerCreate implements RequestInterface
         $this->country        = $country;
         $this->phoneNumbers   = $phoneNumbers;
         $this->documents      = $documents;
-        $this->address        = $address;
         $this->phone          = $phone;
     }
 
@@ -94,7 +85,6 @@ class CustomerCreate implements RequestInterface
             'country'         => $this->country,
             'phone_numbers'   => $this->phoneNumbers,
             'documents'       => $this->getDocumentsData(),
-            'address'         => $this->getAddresssData(),
             'phone'           => $this->getPhoneData()
         ];
     }
@@ -113,37 +103,6 @@ class CustomerCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     *  @return array
-     */
-    private function getAddresssData()
-    {
-        $addressData = [
-            'street'        => $this->address->getStreet(),
-            'street_number' => $this->address->getStreetNumber(),
-            'neighborhood'  => $this->address->getNeighborhood(),
-            'zipcode'       => $this->address->getZipcode()
-        ];
-
-        if (!is_null($this->address->getComplementary())) {
-            $addressData['complementary'] = $this->address->getComplementary();
-        }
-
-        if (!is_null($this->address->getCity())) {
-            $addressData['city'] = $this->address->getCity();
-        }
-
-        if (!is_null($this->address->getState())) {
-            $addressData['state'] = $this->address->getState();
-        }
-
-        if (!is_null($this->address->getCountry())) {
-            $addressData['country'] = $this->address->getCountry();
-        }
-
-        return $addressData;
     }
 
     /**

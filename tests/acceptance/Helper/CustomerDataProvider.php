@@ -2,7 +2,6 @@
 
 namespace PagarMe\Acceptance\Helper;
 
-use PagarMe\Sdk\Customer\Address;
 use PagarMe\Sdk\Customer\Phone;
 
 trait CustomerDataProvider
@@ -49,16 +48,6 @@ trait CustomerDataProvider
             'document_number' => $this->getCustomerDocumentNumber(),
             'email'           => $this->getCustomerEmail(),
             'name'            => $this->getCustomerName(),
-            'address' => [
-                'city'          => 'sao paulo,',
-                'complementary' => 'apto,',
-                'country'       => 'Brasil,',
-                'neighborhood'  => 'pinheiros,',
-                'state'         => 'SP,',
-                'street'        => 'rua qualquer,',
-                'street_number' => '13,',
-                'zipcode'       => '05444040,',
-            ],
             'phone' => [
                 'ddd'    => 11,
                 'ddi'    => 55,

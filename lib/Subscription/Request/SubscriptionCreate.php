@@ -84,10 +84,6 @@ abstract class SubscriptionCreate implements RequestInterface
             $payload['customer']['id'] = $this->customer->getId();
         }
 
-        if (!is_null($this->customer->getAddress())) {
-            $payload['customer']['address'] = $this->getAddresssData();
-        }
-
         if (!is_null($this->customer->getPhone())) {
             $payload['customer']['phone'] = $this->getPhoneData();
         }
@@ -114,39 +110,6 @@ abstract class SubscriptionCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     *  @return array
-     */
-    protected function getAddresssData()
-    {
-        $address = $this->customer->getAddress();
-
-        $addressData = [
-            'street'        => $address->getStreet(),
-            'street_number' => $address->getStreetNumber(),
-            'neighborhood'  => $address->getNeighborhood(),
-            'zipcode'       => $address->getZipcode()
-        ];
-
-        if (!is_null($address->getComplementary())) {
-            $addressData['complementary'] = $address->getComplementary();
-        }
-
-        if (!is_null($address->getCity())) {
-            $addressData['city'] = $address->getCity();
-        }
-
-        if (!is_null($address->getState())) {
-            $addressData['state'] = $address->getState();
-        }
-
-        if (!is_null($address->getCountry())) {
-            $addressData['country'] = $address->getCountry();
-        }
-
-        return $addressData;
     }
 
     /**

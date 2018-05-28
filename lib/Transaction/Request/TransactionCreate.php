@@ -5,7 +5,6 @@ namespace PagarMe\Sdk\Transaction\Request;
 use PagarMe\Sdk\RequestInterface;
 use PagarMe\Sdk\Transaction\Transaction;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
-use PagarMe\Sdk\Customer\Address;
 use PagarMe\Sdk\Customer\Phone;
 use PagarMe\Sdk\Customer\Customer;
 
@@ -56,7 +55,6 @@ class TransactionCreate implements RequestInterface
 
         $customerData = array_merge(
             $customerData,
-            $this->getCustomerAddressData($customer),
             $this->getCustomerPhoneData($customer)
         );
 
@@ -85,33 +83,6 @@ class TransactionCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     * @param \PagarMe\Sdk\Customer\Customer $customer
-     * @return array
-     */
-    public function getCustomerAddressData(Customer $customer)
-    {
-        $address = $customer->getAddress();
-
-        if (is_null($address)) {
-            return [];
-        }
-
-        if (is_array($address)) {
-            $address = new \PagarMe\Sdk\Customer\Address($address);
-        }
-
-        return [
-            'address' => [
-                'street'        => $address->getStreet(),
-                'street_number' => $address->getStreetNumber(),
-                'complementary' => $address->getComplementary(),
-                'neighborhood'  => $address->getNeighborhood(),
-                'zipcode'       => $address->getZipcode()
-            ]
-        ];
     }
 
     /**

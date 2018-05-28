@@ -10,10 +10,6 @@ trait CustomerBuilder
      */
     private function buildCustomer($customerData)
     {
-        $customerData->address = new Address(
-            get_object_vars($customerData->addresses[0])
-        );
-
         $customerData->phone = new Phone($customerData->phones[0]);
 
         $customerData->documents = array_map(function ($document) {
@@ -31,16 +27,10 @@ trait CustomerBuilder
      * @param array $customerData
      * @return Customer
      */
-    private function buildCustomerFromResponse($customerData, $addressData, $phoneData)
+    private function buildCustomerFromResponse($customerData, $phoneData)
     {
         if (is_null($customerData) || $customerData == new \stdClass()) {
             return null;
-        }
-
-        if (!is_null($addressData)) {
-            $customerData->address = new Address(
-                get_object_vars($addressData)
-            );
         }
 
         if (!is_null($phoneData)) {

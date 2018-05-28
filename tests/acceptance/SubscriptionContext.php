@@ -12,7 +12,6 @@ use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\Account\Account;
 use PagarMe\Sdk\Customer\Customer;
 use PagarMe\Sdk\Customer\Document;
-use PagarMe\Sdk\Customer\Address;
 use PagarMe\Sdk\Customer\Phone;
 
 class SubscriptionContext extends BasicContext
@@ -47,14 +46,6 @@ class SubscriptionContext extends BasicContext
                 'br',
                 ['+5511912345678'],
                 $documents,
-                new Address(
-                    [
-                        'street'        => 'Rua Teste',
-                        'street_number' => 123,
-                        'neighborhood'  => 'Centro',
-                        'zipcode'       => '01034020'
-                    ]
-                ),
                 new Phone(
                     [
                         'ddd'    => '11',

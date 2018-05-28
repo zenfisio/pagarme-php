@@ -76,12 +76,10 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $customerMock;
     }
 
-    private function getConfiguredCustomerWithoutAddressAndPhoneMockForPayloadTest()
+    private function getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest()
     {
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getAddress')
-            ->willReturn(null);
         $customerMock->method('getPhone')
             ->willReturn(null);
         $customerMock->method('getDocuments')
@@ -92,38 +90,17 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredCustomerMockForPayloadTest()
     {
-        $addressMock = $this->getConfiguredAddressMockForPayloadTest();
         $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
         $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getAddress')
-            ->willReturn($addressMock);
         $customerMock->method('getPhone')
             ->willReturn($phoneMock);
         $customerMock->method('getDocuments')
             ->willReturn($documentsMock);
 
         return $customerMock;
-    }
-
-    private function getConfiguredAddressMockForPayloadTest()
-    {
-        $addressMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Address')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $addressMock->method('getStreet')
-            ->willReturn(self::ADDRESS_STREET);
-        $addressMock->method('getStreetNumber')
-            ->willReturn(self::ADDRESS_STREETNUMBER);
-        $addressMock->method('getNeighborhood')
-            ->willReturn(self::ADDRESS_NEIGHBORHOOD);
-        $addressMock->method('getZipcode')
-            ->willReturn(self::ADDRESS_ZIPCODE);
-
-        return $addressMock;
     }
 
     private function getConfiguredSplitRuleMockForPayloadTest($recipientId, $percentage)
@@ -204,12 +181,6 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                     'type' => self::CUSTOMER_DOCUMENTTYPE,
                     'number' => self::CUSTOMER_DOCUMENTNUMBER
                 ]],
-                'address'         => [
-                    'street'        => self::ADDRESS_STREET,
-                    'street_number' => self::ADDRESS_STREETNUMBER,
-                    'neighborhood'  => self::ADDRESS_NEIGHBORHOOD,
-                    'zipcode'       => self::ADDRESS_ZIPCODE
-                ],
                 'phone'           => [
                     'ddd'    => self::PHONE_DDD,
                     'number' => self::PHONE_NUMBER
@@ -219,11 +190,11 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    private function getExpectedPayloadWithoutAddressAndPhone()
+    private function getExpectedPayloadWithoutDocumentsAndPhone()
     {
         $payload = $this->getExpectedPayloadWithCardId();
         $payload['customer']['documents'] = [];
-        unset($payload['customer']['address'], $payload['customer']['phone']);
+        unset($payload['customer']['phone']);
         return $payload;
     }
 
@@ -385,7 +356,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function mustPayloadBeCorrectWithoutAddressAndPhone()
+    public function mustPayloadBeCorrectWithoutDocumentsAndPhone()
     {
         $planMock = $this->getConfiguredPlanMockForPayloadTest();
 
@@ -394,7 +365,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $cardMock->method('getId')->willReturn(self::CARD_ID);
 
-        $customerMock = $this->getConfiguredCustomerWithoutAddressAndPhoneMockForPayloadTest();
+        $customerMock = $this->getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest();
 
         $cardSubscriptionCreateRequest = new CardSubscriptionCreate(
             $planMock,
@@ -407,7 +378,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $cardSubscriptionCreateRequest->getPayload(),
-            $this->getExpectedPayloadWithoutAddressAndPhone()
+            $this->getExpectedPayloadWithoutDocumentsAndPhone()
         );
     }
 

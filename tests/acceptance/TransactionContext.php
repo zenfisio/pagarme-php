@@ -52,15 +52,6 @@ class TransactionContext extends BasicContext
      */
     public function anExistentCustomer()
     {
-        $address = new \PagarMe\Sdk\Customer\Address(
-            [
-                'street' => 'rua teste',
-                'street_number' => 42,
-                'neighborhood' => 'centro',
-                'zipcode' => '01227200'
-            ]
-        );
-
         $documents = [
             new \PagarMe\Sdk\Customer\Document([
                 'type' => 'cpf',
@@ -78,7 +69,6 @@ class TransactionContext extends BasicContext
                 $this->getCustomerCountry(),
                 $this->getCustomerPhoneNumbers(),
                 $documents,
-                $address,
                 new \PagarMe\Sdk\Customer\Phone(
                     [
                         'ddd' =>11,

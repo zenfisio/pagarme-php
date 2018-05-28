@@ -22,19 +22,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
      */
     public function mustPayloadBeCorrect()
     {
-        $address = new \PagarMe\Sdk\Customer\Address(
-            [
-                'street'        => 'rua teste',
-                'street_number' => 42,
-                'neighborhood'  => 'centro',
-                'zipcode'       => '01227200',
-                'complementary' => 'Apto 42',
-                'city'          => 'São Paulo',
-                'state'         => 'SP',
-                'country'       => 'Brasil'
-            ]
-        );
-
         $documents = [
             new \PagarMe\Sdk\Customer\Document([
                 'type' => 'cpf',
@@ -50,7 +37,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::COUNTRY,
             ['+5511912345678'],
             $documents,
-            $address,
             new \PagarMe\Sdk\Customer\Phone(
                 [
                     'ddd'    =>15,
@@ -71,16 +57,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
                     'type' => 'cpf',
                     'number' => '10586649727'
                 ]],
-                'address' => [
-                    'street'        => 'rua teste',
-                    'street_number' => 42,
-                    'neighborhood'  => 'centro',
-                    'zipcode'       => '01227200',
-                    'complementary' => 'Apto 42',
-                    'city'          => 'São Paulo',
-                    'state'         => 'SP',
-                    'country'       => 'Brasil'
-                ],
                 'phone' => [
                     'ddd'    => 15,
                     'number' => 987523421
@@ -103,7 +79,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::COUNTRY,
             ['+5511912345678'],
             $this->getDocumentsMock(),
-            $this->getAddressMock(),
             $this->getPhoneMock(),
             null,
             null
@@ -125,7 +100,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::COUNTRY,
             ['+5511912345678'],
             $this->getDocumentsMock(),
-            $this->getAddressMock(),
             $this->getPhoneMock(),
             null,
             null
@@ -141,13 +115,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock()
         ];
-    }
-
-    private function getAddressMock()
-    {
-        return $this->getMockBuilder('PagarMe\Sdk\Customer\Address')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     private function getPhoneMock()

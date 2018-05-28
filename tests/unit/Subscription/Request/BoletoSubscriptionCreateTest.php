@@ -60,12 +60,10 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         return $customerMock;
     }
 
-    private function getConfiguredCustomerWithoutAddressAndPhoneMockForPayloadTest()
+    private function getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest()
     {
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getAddress')
-            ->willReturn(null);
         $customerMock->method('getPhone')
             ->willReturn(null);
         $customerMock->method('getDocuments')
@@ -76,14 +74,11 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredCustomerMockForPayloadTest()
     {
-        $addressMock = $this->getConfiguredAddressMockForPayloadTest();
         $phoneMock = $this->getConfiguredPhoneMockForPayloadTest();
         $documentsMock = $this->getConfiguredDocumentsMockForPayloadTest();
 
         $customerMock = $this->getConfiguredCustomerGenericMockForPayloadTest();
 
-        $customerMock->method('getAddress')
-            ->willReturn($addressMock);
         $customerMock->method('getDocuments')
             ->willReturn($documentsMock);
         $customerMock->method('getPhone')
@@ -102,24 +97,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $documentsMock->method('getNumber')->willReturn(self::CUSTOMER_DOCUMENTNUMBER);
 
         return [ $documentsMock ];
-    }
-
-    private function getConfiguredAddressMockForPayloadTest()
-    {
-        $addressMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Address')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $addressMock->method('getStreet')
-            ->willReturn(self::ADDRESS_STREET);
-        $addressMock->method('getStreetNumber')
-            ->willReturn(self::ADDRESS_STREETNUMBER);
-        $addressMock->method('getNeighborhood')
-            ->willReturn(self::ADDRESS_NEIGHBORHOOD);
-        $addressMock->method('getZipcode')
-            ->willReturn(self::ADDRESS_ZIPCODE);
-
-        return $addressMock;
     }
 
     private function getConfiguredSplitRuleMockForPayloadTest($recipientId, $percentage)
@@ -235,12 +212,6 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
                     'type' => self::CUSTOMER_DOCUMENTTYPE,
                     'number' => self::CUSTOMER_DOCUMENTNUMBER
                 ]],
-                'address'         => [
-                    'street'        => self::ADDRESS_STREET,
-                    'street_number' => self::ADDRESS_STREETNUMBER,
-                    'neighborhood'  => self::ADDRESS_NEIGHBORHOOD,
-                    'zipcode'       => self::ADDRESS_ZIPCODE
-                ],
                 'phone'           => [
                     'ddd'    => self::PHONE_DDD,
                     'number' => self::PHONE_NUMBER
@@ -250,11 +221,11 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    private function getDefaultPayloadWithoutAddressAndPhone()
+    private function getDefaultPayloadWithoutDocumentsAndPhone()
     {
         $payload = $this->getDefaultPayload();
         $payload['customer']['documents'] = [];
-        unset($payload['customer']['address'], $payload['customer']['phone']);
+        unset($payload['customer']['phone']);
         return $payload;
     }
 
@@ -341,7 +312,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function mustPayloadWithoutAddressAndPhoneBeCorrect()
+    public function mustPayloadWithoutDocumentsAndPhoneBeCorrect()
     {
         $planMock = $this->getMockBuilder('PagarMe\Sdk\Plan\Plan')
             ->disableOriginalConstructor()
@@ -349,7 +320,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
         $planMock->method('getId')->willReturn(self::PLAN_ID);
 
 
-        $customerMock = $this->getConfiguredCustomerWithoutAddressAndPhoneMockForPayloadTest();
+        $customerMock = $this->getConfiguredCustomerWithoutDocumentsAndPhoneMockForPayloadTest();
 
         $boletoSubscriptionCreateRequest = new BoletoSubscriptionCreate(
             $planMock,
@@ -362,7 +333,7 @@ class BoletoSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $boletoSubscriptionCreateRequest->getPayload(),
-            $this->getDefaultPayloadWithoutAddressAndPhone()
+            $this->getDefaultPayloadWithoutDocumentsAndPhone()
         );
     }
 

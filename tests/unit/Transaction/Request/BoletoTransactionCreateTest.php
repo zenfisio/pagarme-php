@@ -52,13 +52,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -131,13 +124,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,
@@ -228,14 +214,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
             'type' => 'cpf',
             'number' => '10586649727'
         ]]);
-        $customerMock->method('getAddress')->willReturn(
-            [
-                'street'        => 'rua teste',
-                'street_number' => 42,
-                'neighborhood'  => 'centro',
-                'zipcode'       => '01227200'
-            ]
-        );
         $customerMock->method('getPhone')->willReturn(
             [
                 'ddi'    => 55,
@@ -285,13 +263,6 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'type' => 'cpf',
                         'number' => '10586649727'
                     ]],
-                    'address' => [
-                        'street'        => 'rua teste',
-                        'street_number' => 42,
-                        'neighborhood'  => 'centro',
-                        'zipcode'       => '01227200',
-                        'complementary' => null
-                    ],
                     'phone' => [
                         'ddi'    => 55,
                         'ddd'    => 15,

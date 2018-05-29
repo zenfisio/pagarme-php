@@ -18,6 +18,7 @@ use PagarMe\Sdk\Transaction\Request\TransactionPay;
 use PagarMe\Sdk\BankAccount\BankAccount;
 use PagarMe\Sdk\Card\Card;
 use PagarMe\Sdk\Customer\Customer;
+use PagarMe\Sdk\Billing\Billing;
 use PagarMe\Sdk\Recipient\Recipient;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 
@@ -31,6 +32,7 @@ class TransactionHandler extends AbstractHandler
      * @param int $amount
      * @param \PagarMe\Sdk\Card\Card $card
      * @param \PagarMe\Sdk\Customer\Customer $customer
+     * @param \PagarMe\Sdk\Billing\Billing $billing
      * @param int $installments
      * @param boolean $capture
      * @param string $postBackUrl
@@ -42,6 +44,7 @@ class TransactionHandler extends AbstractHandler
         $amount,
         Card $card,
         Customer $customer,
+        Billing $billing,
         $installments = 1,
         $capture = true,
         $postBackUrl = null,
@@ -53,6 +56,7 @@ class TransactionHandler extends AbstractHandler
                 'amount'       => $amount,
                 'card'         => $card,
                 'customer'     => $customer,
+                'billing'      => $billing,
                 'installments' => $installments,
                 'capture'      => $capture,
                 'postbackUrl'  => $postBackUrl,
@@ -71,6 +75,7 @@ class TransactionHandler extends AbstractHandler
     /**
      * @param int $amount
      * @param \PagarMe\Sdk\Customer\Customer $customer
+     * @param \PagarMe\Sdk\Billing\Billing $billing
      * @param string $postBackUrl
      * @param mixed $metadata
      * @param array $extraAttributes
@@ -79,6 +84,7 @@ class TransactionHandler extends AbstractHandler
     public function boletoTransaction(
         $amount,
         Customer $customer,
+        Billing $billing = null,
         $postBackUrl,
         $metadata = null,
         $extraAttributes = []
@@ -87,6 +93,7 @@ class TransactionHandler extends AbstractHandler
             [
                 'amount'      => $amount,
                 'customer'    => $customer,
+                'billing'     => $billing,
                 'postbackUrl' => $postBackUrl,
                 'metadata'    => $metadata
             ],

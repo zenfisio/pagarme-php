@@ -67,6 +67,18 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'number' => '10586649727'
                     ]]
                 ],
+                'billing' => [
+                    'name' => 'Trinity Moss',
+                    'address' => [
+                        "country" => "br",
+                        "state" => "sp",
+                        "city" => "Cotia",
+                        "neighborhood" => "Rio Cotia",
+                        "street" => "Rua Matrix",
+                        "street_number" => "9999",
+                        "zipcode" => "06714360"
+                    ]
+                ],
                 'metadata'        => null,
                 'soft_descriptor' => $softDescriptor,
                 'async'           => $async
@@ -250,6 +262,64 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'async'           => null
             ],
             $transactionCreate->getPayload()
+        );
+    }
+
+    public function mustPayloadContainBilling()
+    {
+        $customerMock = $this->getFullCustomerMock();
+        $cardMock     = $this->getCardMock();
+        $billing      = $this->getBillingMock();
+
+        $transaction =  new CreditCardTransaction([
+            'amount'       => 1337,
+            'card'         => $cardMock,
+            'customer'     => $customerMock,
+            'billing'      => $billing,
+            'installments' => 1,
+            'capture'      => false,
+            'postback_url' => null,
+        ]);
+
+        $transactionCreate = new CreditCardTransactionCreate($transaction);
+
+        $this->assertEquals(
+            [
+                'amount'         => 1337,
+                'card_id'        => self::CARD_ID,
+                'installments'   => $installments,
+                'payment_method' => 'credit_card',
+                'capture'        => $capture,
+                'postback_url'   => $postbackUrl,
+                'customer' => [
+                    'external_id'     => 'x-1234',
+                    'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['+5511912345678'],
+                    'name'            => 'Eduardo Nascimento',
+                    'email'           => 'eduardo@eduardo.com',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]]
+                ],
+                'billing' => [
+                    'name' => 'Trinity Moss',
+                    'address' => [
+                        "country" => "br",
+                        "state" => "sp",
+                        "city" => "Cotia",
+                        "neighborhood" => "Rio Cotia",
+                        "street" => "Rua Matrix",
+                        "street_number" => "9999",
+                        "zipcode" => "06714360"
+                    ]
+                ],
+                'metadata'        => null,
+                'soft_descriptor' => null,
+                'async'           => null
+            ],
+            $transaction->getPayload()
         );
     }
 
@@ -459,12 +529,14 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
     ) {
         $customerMock = $this->getFullCustomerMock();
         $cardMock     = $this->getCardMock();
+        $billingMock  = $this->getBillingMock();
 
         $transaction =  new CreditCardTransaction(
             [
                 'amount'         => 1337,
                 'card'           => $cardMock,
                 'customer'       => $customerMock,
+                'billing'        => $billingMock,
                 'installments'   => $installments,
                 'capture'        => $capture,
                 'postbackUrl'    => $postbackUrl,
@@ -486,6 +558,35 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             ->willReturn(self::CARD_ID);
 
         return $cardMock;
+    }
+
+    public function getAddressMock()
+    {
+        $addressMock = $this->getMockBuilder('PagarMe\Sdk\Address\Address')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $addressMock->method('getCountry')->willReturn('br');
+        $addressMock->method('getState')->willReturn('sp');
+        $addressMock->method('getCity')->willReturn('Cotia');
+        $addressMock->method('getNeighborhood')->willReturn('Rio Cotia');
+        $addressMock->method('getStreet')->willReturn('Rua Matrix');
+        $addressMock->method('getStreetNumber')->willReturn('9999');
+        $addressMock->method('getZipcode')->willReturn('06714360');
+
+        return $addressMock;
+    }
+
+    public function getBillingMock()
+    {
+        $billingMock = $this->getMockBuilder('PagarMe\Sdk\Billing\Billing')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $billingMock->method('getName')->willReturn('Trinity Moss');
+        $billingMock->method('getAddress')->willReturn($this->getAddressMock());
+
+        return $billingMock;
     }
 
 

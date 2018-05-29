@@ -82,12 +82,28 @@ class TransactionContext extends BasicContext
      */
     public function makeACreditCardTransactionWithAnd($amount, $installments)
     {
+        $address = new \PagarMe\Sdk\Billing\Address([
+            'country'       => 'br',
+            'state'         => 'sp',
+            'city'          => 'Cotia',
+            'neighborhood'  => 'Rio Cotia',
+            'street'        => 'Rua Matrix',
+            'street_number' => '9999',
+            'zipcode'       => '06714360'
+        ]);
+
+        $billing = new \PagarMe\Sdk\Billing\Billing([
+            'name'    => 'Trinity Moss',
+            'address' => $address
+        ]);
+
         $this->transaction = self::getPagarMe()
             ->transaction()
             ->creditCardTransaction(
                 $amount,
                 $this->creditCard,
                 $this->customer,
+                $billing,
                 $installments,
                 true,
                 null,

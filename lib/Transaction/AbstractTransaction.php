@@ -158,6 +158,11 @@ abstract class AbstractTransaction
     protected $token;
 
     /**
+     * @var \PagarMe\Sdk\Billing\Billing
+     */
+    protected $billing;
+
+    /**
      * @param array $transactionData
      */
     public function __construct($transactionData)
@@ -488,5 +493,14 @@ abstract class AbstractTransaction
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * @return \PagarMe\Sdk\Billing\Billing
+     * @codeCoverageIgnore
+     */
+    public function getBilling()
+    {
+        return $this->billing;
     }
 }

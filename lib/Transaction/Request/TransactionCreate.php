@@ -30,6 +30,7 @@ class TransactionCreate implements RequestInterface
     public function getPayload()
     {
         $customer = $this->transaction->getCustomer();
+        $billing  = $this->transaction->getBilling();
 
         $transactionData = [
             'amount'         => $this->transaction->getAmount(),
@@ -48,8 +49,28 @@ class TransactionCreate implements RequestInterface
             'email'           => $customer->getEmail()
         ];
 
+
         if (!is_null($customer->getId())) {
             $customerData['id'] = $customer->getId();
+        }
+
+        if (!is_null($billing)) {
+            $address = $billing->getAddress();
+
+            $billingData = [
+                'name'    => $billing->getName(),
+                'address' => [
+                    'country'       => $address->getCountry(),
+                    'state'         => $address->getState(),
+                    'city'          => $address->getCity(),
+                    'neighborhood'  => $address->getNeighborhood(),
+                    'street'        => $address->getStreet(),
+                    'street_number' => $address->getStreetNumber(),
+                    'zipcode'       => $address->getZipcode()
+                ]
+            ];
+
+            $transactionData['billing']  = $billingData;
         }
 
         $transactionData['customer'] = $customerData;

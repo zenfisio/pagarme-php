@@ -31,6 +31,7 @@ class TransactionCreate implements RequestInterface
     {
         $customer = $this->transaction->getCustomer();
         $billing  = $this->transaction->getBilling();
+        $shipping  = $this->transaction->getShipping();
 
         $transactionData = [
             'amount'         => $this->transaction->getAmount(),
@@ -71,6 +72,28 @@ class TransactionCreate implements RequestInterface
             ];
 
             $transactionData['billing']  = $billingData;
+        }
+
+        if (!is_null($shipping)) {
+            $address = $shipping->getAddress();
+
+            $shippingData = [
+                'name'    => $shipping->getName(),
+                'fee'    => $shipping->getFee(),
+                'delivery_date'    => $shipping->getDeliveryDate(),
+                'expedited'    => $shipping->getExpedited(),
+                'address' => [
+                    'country'       => $address->getCountry(),
+                    'state'         => $address->getState(),
+                    'city'          => $address->getCity(),
+                    'neighborhood'  => $address->getNeighborhood(),
+                    'street'        => $address->getStreet(),
+                    'street_number' => $address->getStreetNumber(),
+                    'zipcode'       => $address->getZipcode()
+                ]
+            ];
+
+            $transactionData['shipping']  = $shippingData;
         }
 
         $transactionData['customer'] = $customerData;

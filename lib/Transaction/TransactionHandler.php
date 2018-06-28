@@ -19,6 +19,7 @@ use PagarMe\Sdk\BankAccount\BankAccount;
 use PagarMe\Sdk\Card\Card;
 use PagarMe\Sdk\Customer\Customer;
 use PagarMe\Sdk\Billing\Billing;
+use PagarMe\Sdk\Shipping\Shipping;
 use PagarMe\Sdk\Recipient\Recipient;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 
@@ -33,6 +34,7 @@ class TransactionHandler extends AbstractHandler
      * @param \PagarMe\Sdk\Card\Card $card
      * @param \PagarMe\Sdk\Customer\Customer $customer
      * @param \PagarMe\Sdk\Billing\Billing $billing
+     * @param \PagarMe\Sdk\Shipping\Shipping $shipping
      * @param int $installments
      * @param boolean $capture
      * @param string $postBackUrl
@@ -45,6 +47,7 @@ class TransactionHandler extends AbstractHandler
         Card $card,
         Customer $customer,
         Billing $billing,
+        Shipping $shipping,
         $installments = 1,
         $capture = true,
         $postBackUrl = null,
@@ -57,6 +60,7 @@ class TransactionHandler extends AbstractHandler
                 'card'         => $card,
                 'customer'     => $customer,
                 'billing'      => $billing,
+                'shipping'     => $shipping,
                 'installments' => $installments,
                 'capture'      => $capture,
                 'postbackUrl'  => $postBackUrl,
@@ -76,6 +80,7 @@ class TransactionHandler extends AbstractHandler
      * @param int $amount
      * @param \PagarMe\Sdk\Customer\Customer $customer
      * @param \PagarMe\Sdk\Billing\Billing $billing
+     * @param \PagarMe\Sdk\Shipping\Shipping $shipping
      * @param string $postBackUrl
      * @param mixed $metadata
      * @param array $extraAttributes
@@ -85,6 +90,7 @@ class TransactionHandler extends AbstractHandler
         $amount,
         Customer $customer,
         Billing $billing = null,
+        Shipping $shipping = null,
         $postBackUrl,
         $metadata = null,
         $extraAttributes = []
@@ -94,6 +100,7 @@ class TransactionHandler extends AbstractHandler
                 'amount'      => $amount,
                 'customer'    => $customer,
                 'billing'     => $billing,
+                'shipping'    => $shipping,
                 'postbackUrl' => $postBackUrl,
                 'metadata'    => $metadata
             ],

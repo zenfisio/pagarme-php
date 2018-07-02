@@ -4,12 +4,14 @@ namespace PagarMe\Sdk\Transaction\Request;
 
 use PagarMe\Sdk\RequestInterface;
 use PagarMe\Sdk\Transaction\Transaction;
+use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\Customer\Customer;
 
 class TransactionCreate implements RequestInterface
 {
     use \PagarMe\Sdk\SplitRuleSerializer;
+    use \PagarMe\Sdk\ItemSerializer;
 
     /**
      * @var \PagarMe\Sdk\Transaction\Transaction
@@ -101,6 +103,12 @@ class TransactionCreate implements RequestInterface
         if ($this->transaction->getSplitRules() instanceof SplitRuleCollection) {
             $transactionData['split_rules'] = $this->getSplitRulesInfo(
                 $this->transaction->getSplitRules()
+            );
+        }
+
+        if ($this->transaction->getItems() instanceof ItemCollection) {
+            $transactionData['items'] = $this->getItemsInfo(
+                $this->transaction->getItems()
             );
         }
 

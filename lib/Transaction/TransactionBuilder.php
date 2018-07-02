@@ -4,6 +4,7 @@ namespace PagarMe\Sdk\Transaction;
 
 trait TransactionBuilder
 {
+    use \PagarMe\Sdk\Item\ItemBuilder;
     use \PagarMe\Sdk\SplitRule\SplitRuleBuilder;
     use \PagarMe\Sdk\Customer\CustomerBuilder;
     use \PagarMe\Sdk\Card\CardBuilder;
@@ -17,6 +18,12 @@ trait TransactionBuilder
         if (isset($transactionData->split_rules)) {
             $transactionData->split_rules = $this->buildSplitRules(
                 $transactionData->split_rules
+            );
+        }
+
+        if (isset($transactionData->items)) {
+            $transactionData->items = $this->buildItems(
+                $transactionData->items
             );
         }
 

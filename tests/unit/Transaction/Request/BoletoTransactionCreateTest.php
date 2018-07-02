@@ -53,6 +53,22 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'number' => '10586649727'
                     ]]
                 ],
+                'items' => [
+                    [
+                        'id' => "r123",
+                        'title' => 'Red pill',
+                        'unit_price' => 10000,
+                        'quantity' => 1,
+                        'tangible'=> true
+                    ],
+                    [
+                        'id' => "b123",
+                        'title' => 'Blue pill',
+                        'unit_price' => 10000,
+                        'quantity' => 1,
+                        'tangible' => true
+                    ]
+                ],
                 'metadata' => null,
                 'async' => null,
                 'boleto_instructions' => null,
@@ -134,6 +150,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'charge_processing_fee' => false
                     ]
                 ],
+                'items' => null,
                 'metadata' => null,
                 'async' => null,
                 'boleto_instructions' => null,
@@ -247,6 +264,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'number' => '10586649727'
                     ]]
                 ],
+                'items' => null,
                 'metadata' => null,
                 'async' => null,
                 'boleto_instructions' => null,

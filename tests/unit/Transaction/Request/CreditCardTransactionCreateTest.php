@@ -79,6 +79,22 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         "zipcode" => "06714360"
                     ]
                 ],
+                'items' => [
+                    [
+                        'id' => "r123",
+                        'title' => 'Red pill',
+                        'unit_price' => 10000,
+                        'quantity' => 1,
+                        'tangible' => true
+                    ],
+                    [
+                        'id' => "b123",
+                        'title' => 'Blue pill',
+                        'unit_price' => 10000,
+                        'quantity' => 1,
+                        'tangible' => true
+                    ]
+                ],
                 'metadata'        => null,
                 'soft_descriptor' => $softDescriptor,
                 'async'           => $async
@@ -129,6 +145,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => null,
                     'email'           => null,
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -178,6 +195,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => null,
                     'email'           => null
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -257,6 +275,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'charge_processing_fee' => false
                     ]
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -315,6 +334,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         "zipcode" => "06714360"
                     ]
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -393,6 +413,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'charge_processing_fee' => false
                     ]
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -476,6 +497,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'number' => '10586649727'
                     ]]
                 ],
+                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null

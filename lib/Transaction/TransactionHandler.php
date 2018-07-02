@@ -19,6 +19,7 @@ use PagarMe\Sdk\BankAccount\BankAccount;
 use PagarMe\Sdk\Card\Card;
 use PagarMe\Sdk\Customer\Customer;
 use PagarMe\Sdk\Billing\Billing;
+use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\Shipping\Shipping;
 use PagarMe\Sdk\Recipient\Recipient;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
@@ -35,6 +36,7 @@ class TransactionHandler extends AbstractHandler
      * @param \PagarMe\Sdk\Customer\Customer $customer
      * @param \PagarMe\Sdk\Billing\Billing $billing
      * @param \PagarMe\Sdk\Shipping\Shipping $shipping
+     * @param \PagarMe\Sdk\Item\ItemCollection $items
      * @param int $installments
      * @param boolean $capture
      * @param string $postBackUrl
@@ -46,8 +48,9 @@ class TransactionHandler extends AbstractHandler
         $amount,
         Card $card,
         Customer $customer,
-        Billing $billing,
-        Shipping $shipping,
+        Billing $billing = null,
+        Shipping $shipping = null,
+        ItemCollection $items = null,
         $installments = 1,
         $capture = true,
         $postBackUrl = null,
@@ -61,6 +64,7 @@ class TransactionHandler extends AbstractHandler
                 'customer'     => $customer,
                 'billing'      => $billing,
                 'shipping'     => $shipping,
+                'items'        => $items,
                 'installments' => $installments,
                 'capture'      => $capture,
                 'postbackUrl'  => $postBackUrl,
@@ -81,6 +85,7 @@ class TransactionHandler extends AbstractHandler
      * @param \PagarMe\Sdk\Customer\Customer $customer
      * @param \PagarMe\Sdk\Billing\Billing $billing
      * @param \PagarMe\Sdk\Shipping\Shipping $shipping
+     * @param \PagarMe\Sdk\Item\ItemCollection $items
      * @param string $postBackUrl
      * @param mixed $metadata
      * @param array $extraAttributes
@@ -91,6 +96,7 @@ class TransactionHandler extends AbstractHandler
         Customer $customer,
         Billing $billing = null,
         Shipping $shipping = null,
+        ItemCollection $items = null,
         $postBackUrl,
         $metadata = null,
         $extraAttributes = []
@@ -101,6 +107,7 @@ class TransactionHandler extends AbstractHandler
                 'customer'    => $customer,
                 'billing'     => $billing,
                 'shipping'    => $shipping,
+                'items'       => $items,
                 'postbackUrl' => $postBackUrl,
                 'metadata'    => $metadata
             ],

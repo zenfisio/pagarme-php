@@ -165,8 +165,12 @@ abstract class AbstractTransaction
     /**
      * @var \PagarMe\Sdk\Shipping\Shipping
      */
-
     protected $shipping;
+
+    /**
+     * @var \PagarMe\Sdk\Item\ItemCollection
+     */
+    protected $items;
 
     /**
      * @param array $transactionData
@@ -517,5 +521,14 @@ abstract class AbstractTransaction
     public function getShipping()
     {
         return $this->shipping;
+    }
+
+    /**
+    * @return \PagarMe\Sdk\Item\ItemCollection
+    * @codeCoverageIgnore
+    */
+    public function getItems()
+    {
+        return $this->items;
     }
 }

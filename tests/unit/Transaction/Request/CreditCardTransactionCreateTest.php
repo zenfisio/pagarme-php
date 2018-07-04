@@ -4,6 +4,8 @@ namespace PagarMe\SdkTest\Transaction\Request;
 
 use PagarMe\Sdk\Transaction\Request\CreditCardTransactionCreate;
 use PagarMe\Sdk\Transaction\CreditCardTransaction;
+use PagarMe\Sdk\Item\ItemCollection;
+use PagarMe\Sdk\Item\Item;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\SplitRule\SplitRule;
 use PagarMe\Sdk\Recipient\Recipient;
@@ -79,20 +81,19 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         "zipcode" => "06714360"
                     ]
                 ],
-                'items' => [
-                    [
-                        'id' => "r123",
-                        'title' => 'Red pill',
-                        'unit_price' => 10000,
-                        'quantity' => 1,
-                        'tangible' => true
-                    ],
-                    [
-                        'id' => "b123",
-                        'title' => 'Blue pill',
-                        'unit_price' => 10000,
-                        'quantity' => 1,
-                        'tangible' => true
+                'shipping' => [
+                    'name' => 'Joanas Vagn',
+                    'fee' => 500,
+                    'delivery_date' => '2017-10-30',
+                    'expedited' => false,
+                    'address' => [
+                        "country" => "br",
+                        "state" => "sp",
+                        "city" => "Cotia",
+                        "neighborhood" => "Rio Cotia",
+                        "street" => "Rua Matrix",
+                        "street_number" => "9999",
+                        "zipcode" => "06714360"
                     ]
                 ],
                 'metadata'        => null,
@@ -145,7 +146,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => null,
                     'email'           => null,
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -195,7 +195,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'documents'       => null,
                     'email'           => null
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -275,7 +274,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'charge_processing_fee' => false
                     ]
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -284,6 +282,9 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @test
+     */
     public function mustPayloadContainBilling()
     {
         $customerMock = $this->getFullCustomerMock();
@@ -296,7 +297,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             'customer'     => $customerMock,
             'billing'      => $billing,
             'installments' => 1,
-            'capture'      => false,
+            'capture'      => true,
             'postback_url' => null,
         ]);
 
@@ -306,10 +307,10 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             [
                 'amount'         => 1337,
                 'card_id'        => self::CARD_ID,
-                'installments'   => $installments,
+                'installments'   => 1,
                 'payment_method' => 'credit_card',
-                'capture'        => $capture,
-                'postback_url'   => $postbackUrl,
+                'capture'        => true,
+                'postback_url'   => null,
                 'customer' => [
                     'external_id'     => 'x-1234',
                     'type'            => 'individual',
@@ -334,12 +335,159 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         "zipcode" => "06714360"
                     ]
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
             ],
-            $transaction->getPayload()
+            $transactionCreate->getPayload()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function mustPayloadContainShipping()
+    {
+        $customerMock = $this->getFullCustomerMock();
+        $cardMock     = $this->getCardMock();
+        $shipping     = $this->getShippingMock();
+
+        $transaction =  new CreditCardTransaction([
+            'amount'       => 1337,
+            'card'         => $cardMock,
+            'customer'     => $customerMock,
+            'shipping'     => $shipping,
+            'installments' => 1,
+            'capture'      => true,
+            'postback_url' => null,
+        ]);
+
+        $transactionCreate = new CreditCardTransactionCreate($transaction);
+
+        $this->assertEquals(
+            [
+                'amount'         => 1337,
+                'card_id'        => self::CARD_ID,
+                'installments'   => 1,
+                'payment_method' => 'credit_card',
+                'capture'        => true,
+                'postback_url'   => null,
+                'customer' => [
+                    'external_id'     => 'x-1234',
+                    'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['+5511912345678'],
+                    'name'            => 'Eduardo Nascimento',
+                    'email'           => 'eduardo@eduardo.com',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]]
+                ],
+                'shipping' => [
+                    'name' => 'Joanas Vagn',
+                    'fee' => 500,
+                    'delivery_date' => '2017-10-30',
+                    'expedited' => false,
+                    'address' => [
+                        "country" => "br",
+                        "state" => "sp",
+                        "city" => "Cotia",
+                        "neighborhood" => "Rio Cotia",
+                        "street" => "Rua Matrix",
+                        "street_number" => "9999",
+                        "zipcode" => "06714360"
+                    ]
+                ],
+                'metadata'        => null,
+                'soft_descriptor' => null,
+                'async'           => null
+            ],
+            $transactionCreate->getPayload()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function mustPayloadContainItems()
+    {
+        $customerMock = $this->getFullCustomerMock();
+        $cardMock     = $this->getCardMock();
+
+        $items = new ItemCollection();
+        $items[]= new Item([
+            "id"         => "r123",
+            "title"      => "Red pill",
+            "unit_price" => 500,
+            "quantity"   => 2,
+            "tangible"   => true
+        ]);
+        $items[]= new Item([
+            "id"         => "b123",
+            "title"      => "Blue pill",
+            "unit_price" => 337,
+            "quantity"   => 1,
+            "tangible"   => true
+        ]);
+
+        $transaction =  new CreditCardTransaction(
+            [
+                'amount'       => 1337,
+                'card'         => $cardMock,
+                'customer'     => $customerMock,
+                'billing'      => null,
+                'shipping'     => null,
+                'items'        => $items,
+                'installments' => 1,
+                'capture'      => true,
+                'postback_url' => null
+            ]
+        );
+
+        $transactionCreate = new CreditCardTransactionCreate($transaction);
+
+        $this->assertEquals(
+            [
+                'amount'         => 1337,
+                'card_id'        => self::CARD_ID,
+                'installments'   => 1,
+                'payment_method' => 'credit_card',
+                'capture'        => true,
+                'postback_url'   => null,
+                'customer' => [
+                    'name'            => 'Eduardo Nascimento',
+                    'external_id'     => 'x-1234',
+                    'type'            => 'individual',
+                    'country'         => 'br',
+                    'phone_numbers'   => ['+5511912345678'],
+                    'email'           => 'eduardo@eduardo.com',
+                    'documents'       => [[
+                        'type' => 'cpf',
+                        'number' => '10586649727'
+                    ]]
+                ],
+                'items' => [
+                    0 => [
+                        "id"         => "r123",
+                        "title"      => "Red pill",
+                        "unit_price" => 500,
+                        "quantity"   => 2,
+                        "tangible"   => true
+                    ],
+                    1 => [
+                        "id"         => "b123",
+                        "title"      => "Blue pill",
+                        "unit_price" => 337,
+                        "quantity"   => 1,
+                        "tangible"   => true
+                    ]
+                ],
+                'metadata'        => null,
+                'soft_descriptor' => null,
+                'async'           => null
+            ],
+            $transactionCreate->getPayload()
         );
     }
 
@@ -413,7 +561,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'charge_processing_fee' => false
                     ]
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -497,7 +644,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                         'number' => '10586649727'
                     ]]
                 ],
-                'items'           => null,
                 'metadata'        => null,
                 'soft_descriptor' => null,
                 'async'           => null
@@ -552,6 +698,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock = $this->getFullCustomerMock();
         $cardMock     = $this->getCardMock();
         $billingMock  = $this->getBillingMock();
+        $shippingMock  = $this->getShippingMock();
 
         $transaction =  new CreditCardTransaction(
             [
@@ -559,6 +706,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                 'card'           => $cardMock,
                 'customer'       => $customerMock,
                 'billing'        => $billingMock,
+                'shipping'       => $shippingMock,
                 'installments'   => $installments,
                 'capture'        => $capture,
                 'postbackUrl'    => $postbackUrl,
@@ -611,6 +759,20 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         return $billingMock;
     }
 
+    public function getShippingMock()
+    {
+        $shippingMock = $this->getMockBuilder('PagarMe\Sdk\Shipping\Shipping')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $shippingMock->method('getName')->willReturn('Joanas Vagn');
+        $shippingMock->method('getFee')->willReturn(500);
+        $shippingMock->method('getExpedited')->willReturn(false);
+        $shippingMock->method('getDeliveryDate')->willReturn("2017-10-30");
+        $shippingMock->method('getAddress')->willReturn($this->getAddressMock());
+
+        return $shippingMock;
+    }
 
     public function getFullCustomerMock()
     {

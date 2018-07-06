@@ -10,6 +10,10 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 use PagarMe\Sdk\BankAccount\BankAccount;
 use PagarMe\Sdk\Customer\Customer;
+use PagarMe\Sdk\Customer\Document\Document;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
+use PagarMe\Sdk\Item\Item;
+use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\Recipient\Recipient;
 use PagarMe\Sdk\SplitRule\SplitRule;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
@@ -18,11 +22,13 @@ class TransactionContext extends BasicContext
 {
     use Helper\CustomerDataProvider;
     use Helper\RecipientData;
+    use \PagarMe\Sdk\Shipping\ShippingBuilder;
 
     const POSTBACK_URL = 'example.com/postback';
 
     private $creditCard;
     private $customer;
+    private $billing;
     private $transaction;
     private $transactionList = [];
     private $events;
@@ -44,7 +50,101 @@ class TransactionContext extends BasicContext
     public function aValidCustomer()
     {
         $customerData = $this->getValidCustomerData();
+
+        $documents = new DocumentCollection();
+
+        $document = new Document([
+            'type' => 'cpf',
+            'number' => '25123317171'
+        ]);
+
+        $documents[] = $document;
+
+        $customerData['documents'] = $documents;
+
+        $extraData = [
+            'external_id' => "123",
+            'phone_numbers' => $this->getCustomerPhoneNumbers(),
+            'type' => 'individual'
+        ];
+
+        $customerData = array_merge($customerData, $extraData);
+
         $this->customer = new Customer($customerData);
+    }
+
+    /**
+     * @Given a valid billing
+     */
+    public function aValidBilling()
+    {
+        $address = new \PagarMe\Sdk\Address\Address([
+            'country'       => 'br',
+            'state'         => 'sp',
+            'city'          => 'Cotia',
+            'neighborhood'  => 'Rio Cotia',
+            'street'        => 'Rua Matrix',
+            'street_number' => '9999',
+            'zipcode'       => '06714360'
+        ]);
+
+        $this->billing = new \PagarMe\Sdk\Billing\Billing([
+            'name'    => 'Trinity Moss',
+            'address' => $address
+        ]);
+    }
+
+
+    /**
+     * @Given a valid shipping
+     */
+    public function aValidShipping()
+    {
+        $address = new \PagarMe\Sdk\Address\Address([
+            'country'       => 'br',
+            'state'         => 'sp',
+            'city'          => 'Cotia',
+            'neighborhood'  => 'Rio Cotia',
+            'street'        => 'Rua Matrix',
+            'street_number' => '9999',
+            'zipcode'       => '06714360'
+        ]);
+
+        $shipping = new \PagarMe\Sdk\Shipping\Shipping([
+            'name'    => 'Joanas Vagn',
+            'fee'     => 500,
+            'delivery_date' => '2017-08-30',
+            'expedited' => true,
+            'address' => $address
+        ]);
+
+
+        $this->shipping = $shipping;
+    }
+
+    /**
+     * @Given valid items
+     */
+    public function validItems()
+    {
+
+        $items = new ItemCollection();
+        $items[]= new Item([
+            "id"         => "r123",
+            "title"      => "Red pill",
+            "unit_price" => 500,
+            "quantity"   => 2,
+            "tangible"   => true
+        ]);
+        $items[]= new Item([
+            "id"         => "b123",
+            "title"      => "Blue pill",
+            "unit_price" => 337,
+            "quantity"   => 1,
+            "tangible"   => true
+        ]);
+
+        $this->items = $items;
     }
 
     /**
@@ -52,12 +152,12 @@ class TransactionContext extends BasicContext
      */
     public function anExistentCustomer()
     {
-        $documents = [
-            new \PagarMe\Sdk\Customer\Document([
-                'type' => 'cpf',
-                'number' => $this->getCustomerDocumentNumber()
-            ])
-        ];
+        $documents = new \PagarMe\Sdk\Customer\Document\DocumentCollection();
+        $document = new \PagarMe\Sdk\Customer\Document\Document([
+            'type' => 'cpf',
+            'number' => $this->getCustomerDocumentNumber()
+        ]);
+        $documents[] = $document;
 
         $this->customer = self::getPagarMe()
             ->customer()
@@ -71,6 +171,7 @@ class TransactionContext extends BasicContext
                 $documents
             );
 
+
         $this->customer = self::getPagarMe()
             ->customer()
             ->get($this->customer->getId());
@@ -82,20 +183,6 @@ class TransactionContext extends BasicContext
      */
     public function makeACreditCardTransactionWithAnd($amount, $installments)
     {
-        $address = new \PagarMe\Sdk\Billing\Address([
-            'country'       => 'br',
-            'state'         => 'sp',
-            'city'          => 'Cotia',
-            'neighborhood'  => 'Rio Cotia',
-            'street'        => 'Rua Matrix',
-            'street_number' => '9999',
-            'zipcode'       => '06714360'
-        ]);
-
-        $billing = new \PagarMe\Sdk\Billing\Billing([
-            'name'    => 'Trinity Moss',
-            'address' => $address
-        ]);
 
         $this->transaction = self::getPagarMe()
             ->transaction()
@@ -103,7 +190,7 @@ class TransactionContext extends BasicContext
                 $amount,
                 $this->creditCard,
                 $this->customer,
-                $billing,
+                $this->billing,
                 $installments,
                 true,
                 null,
@@ -119,7 +206,7 @@ class TransactionContext extends BasicContext
     {
         $this->transaction = self::getPagarMe()
             ->transaction()
-            ->boletoTransaction($amount, $this->customer, self::POSTBACK_URL);
+            ->boletoTransaction($amount, $this->customer, $this->billing, $this->shipping, $this->items, self::POSTBACK_URL, null, ['async' => false]);
     }
 
     /**
@@ -346,6 +433,9 @@ class TransactionContext extends BasicContext
     public function iHadATransactionsRegistered()
     {
         $this->aValidCustomer();
+        $this->aValidBilling();
+        $this->aValidShipping();
+        $this->validItems();
         $this->aValidBoletoTransaction();
     }
 
@@ -374,6 +464,9 @@ class TransactionContext extends BasicContext
     public function makeACreditCardTransactionWithRandomAmountAndMetadata()
     {
         $this->getRandomMetadata();
+        $this->aValidBilling();
+        $this->aValidShipping();
+        $this->validItems();
 
         $this->transaction = self::getPagarMe()
             ->transaction()
@@ -381,8 +474,11 @@ class TransactionContext extends BasicContext
                 rand(5000, 10000),
                 $this->creditCard,
                 $this->customer,
+                $this->billing,
+                $this->shipping,
+                $this->items,
                 null,
-                null,
+                true,
                 self::POSTBACK_URL,
                 $this->metadata
             );
@@ -408,6 +504,9 @@ class TransactionContext extends BasicContext
             ->boletoTransaction(
                 rand(5000, 10000),
                 $this->customer,
+                null,
+                null,
+                null,
                 self::POSTBACK_URL,
                 $this->metadata
             );
@@ -576,12 +675,18 @@ class TransactionContext extends BasicContext
      */
     public function authorizeACreditCardTransaction()
     {
+        $this->aValidBilling();
+        $this->validItems();
+
         $this->transaction = self::getPagarMe()
             ->transaction()
             ->creditCardTransaction(
                 1000,
                 $this->creditCard,
                 $this->customer,
+                $this->billing,
+                null,
+                $this->items,
                 1,
                 false
             );

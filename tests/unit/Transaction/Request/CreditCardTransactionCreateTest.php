@@ -4,6 +4,8 @@ namespace PagarMe\SdkTest\Transaction\Request;
 
 use PagarMe\Sdk\Transaction\Request\CreditCardTransactionCreate;
 use PagarMe\Sdk\Transaction\CreditCardTransaction;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
+use PagarMe\Sdk\Customer\Document\Document;
 use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\Item\Item;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
@@ -143,7 +145,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'type'            => null,
                     'country'         => null,
                     'phone_numbers'   => null,
-                    'documents'       => null,
                     'email'           => null,
                 ],
                 'metadata'        => null,
@@ -192,7 +193,6 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
                     'type'            => null,
                     'country'         => null,
                     'phone_numbers'   => null,
-                    'documents'       => null,
                     'email'           => null
                 ],
                 'metadata'        => null,
@@ -780,6 +780,13 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $documents = new DocumentCollection();
+        $document = new Document([
+            'type' => 'cpf',
+            'number' => '10586649727'
+        ]);
+        $documents[] = $document;
+
         $customerMock->method('getExternalId')->willReturn('x-1234');
         $customerMock->method('getType')->willReturn('individual');
         $customerMock->method('getCountry')->willReturn('br');
@@ -787,10 +794,7 @@ class CreditCardTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getName')->willReturn('Eduardo Nascimento');
-        $customerMock->method('getDocuments')->willReturn([[
-            'type' => 'cpf',
-            'number' => '10586649727'
-        ]]);
+        $customerMock->method('getDocuments')->willReturn($documents);
 
         return $customerMock;
     }

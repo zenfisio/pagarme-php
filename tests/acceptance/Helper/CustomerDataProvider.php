@@ -30,9 +30,19 @@ trait CustomerDataProvider
         return 'br';
     }
 
+    protected function getCustomerPhoneDdd()
+    {
+        return '11';
+    }
+
+    protected function getCustomerPhoneNumber()
+    {
+        return '912345678';
+    }
+
     protected function getCustomerPhoneNumbers()
     {
-        return ['+5511912345678'];
+        return ['+55' . $this->getCustomerPhoneDdd() . $this->getCustomerPhoneNumber()];
     }
 
     protected function getCustomerDocumentNumber()
@@ -43,9 +53,9 @@ trait CustomerDataProvider
     protected function getValidCustomerData()
     {
         return [
-            'document_number' => $this->getCustomerDocumentNumber(),
-            'email'           => $this->getCustomerEmail(),
-            'name'            => $this->getCustomerName()
+            'email'   => $this->getCustomerEmail(),
+            'name'    => $this->getCustomerName(),
+            'country' => $this->getCustomerCountry()
         ];
     }
 }

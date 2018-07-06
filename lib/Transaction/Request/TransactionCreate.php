@@ -6,12 +6,14 @@ use PagarMe\Sdk\RequestInterface;
 use PagarMe\Sdk\Transaction\Transaction;
 use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
+use PagarMe\Sdk\Customer\DocumentCollection;
 use PagarMe\Sdk\Customer\Customer;
 
 class TransactionCreate implements RequestInterface
 {
     use \PagarMe\Sdk\SplitRuleSerializer;
     use \PagarMe\Sdk\ItemSerializer;
+    use \PagarMe\Sdk\DocumentSerializer;
 
     /**
      * @var \PagarMe\Sdk\Transaction\Transaction
@@ -43,15 +45,20 @@ class TransactionCreate implements RequestInterface
         ];
 
         $customerData = [
-            'name'            => $customer->getName(),
-            'external_id'     => $customer->getExternalId(),
-            'type'            => $customer->getType(),
-            'country'         => $customer->getCountry(),
-            'phone_numbers'   => $customer->getPhoneNumbers(),
-            'documents'       => $customer->getDocuments(),
-            'email'           => $customer->getEmail()
+            'name'          => $customer->getName(),
+            'external_id'   => $customer->getExternalId(),
+            'type'          => $customer->getType(),
+            'country'       => $customer->getCountry(),
+            'phone_numbers' => $customer->getPhoneNumbers(),
+            'email'         => $customer->getEmail(),
         ];
 
+
+        if (!is_null($customer->getDocuments())) {
+            $customerData['documents'] = $this->getDocumentsInfo(
+                $customer->getDocuments()
+            );
+        }
 
         if (!is_null($customer->getId())) {
             $customerData['id'] = $customer->getId();

@@ -1,6 +1,6 @@
 <?php
 
-namespace PagarMe\Sdk\Customer;
+namespace PagarMe\Sdk\Customer\Document;
 
 class Document
 {

@@ -3,41 +3,43 @@
 namespace PagarMe\Sdk\Customer\Request;
 
 use PagarMe\Sdk\RequestInterface;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
 
 class CustomerCreate implements RequestInterface
 {
-     /**
+    use \PagarMe\Sdk\DocumentSerializer;
+    /**
      * @var string | Nome ou razão social do comprador
      */
     private $name;
 
-     /**
+    /**
      * @var string | Tipo de documento PF ou PJ
      */
     private $type;
 
-     /**
+    /**
      * @var string | Identificador do cliente na loja
      */
     private $externalId;
 
-     /**
+    /**
      * @var string | País
      */
     private $country;
 
-     /**
+    /**
      * @var array | Números de telefone
      */
     private $phoneNumbers;
 
-     /**
+    /**
      * @var string | E-mail do comprador
      */
     private $email;
 
-     /**
-     * @var array | Números de documentos
+    /**
+     * @var DocumentCollection | Números de documentos
      */
     private $documents;
 
@@ -52,15 +54,15 @@ class CustomerCreate implements RequestInterface
         $type,
         $country,
         $phoneNumbers,
-        $documents
+        DocumentCollection $documents = null
     ) {
-        $this->name           = $name;
-        $this->email          = $email;
-        $this->externalId     = $externalId;
-        $this->type           = $type;
-        $this->country        = $country;
-        $this->phoneNumbers   = $phoneNumbers;
-        $this->documents      = $documents;
+        $this->name         = $name;
+        $this->email        = $email;
+        $this->externalId   = $externalId;
+        $this->type         = $type;
+        $this->country      = $country;
+        $this->phoneNumbers = $phoneNumbers;
+        $this->documents    = $documents;
     }
 
     /**
@@ -68,15 +70,22 @@ class CustomerCreate implements RequestInterface
      */
     public function getPayload()
     {
-        return [
+        $customerData = [
             'name'            => $this->name,
             'email'           => $this->email,
             'external_id'     => $this->externalId,
             'type'            => $this->type,
             'country'         => $this->country,
             'phone_numbers'   => $this->phoneNumbers,
-            'documents'       => $this->getDocumentsData()
         ];
+
+        if ($this->documents instanceof DocumentCollection) {
+            $customerData['documents'] = $this->getDocumentsInfo(
+                $this->documents
+            );
+        }
+
+        return $customerData;
     }
 
     /**
@@ -93,20 +102,5 @@ class CustomerCreate implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_POST;
-    }
-
-    /**
-     *  @return array
-     */
-    private function getDocumentsData()
-    {
-        $documentsData = array_map(function ($document) {
-            return [
-                'type' => $document->getType(),
-                'number' => $document->getNumber()
-            ];
-        }, $this->documents);
-
-        return $documentsData;
     }
 }

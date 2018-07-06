@@ -136,7 +136,7 @@ class CardSubscriptionCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getConfiguredDocumentsMockForPayloadTest()
     {
-        $documentsMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
+        $documentsMock = $this->getMockBuilder('PagarMe\Sdk\Customer\Document\Document')
             ->disableOriginalConstructor()
             ->getMock();
 

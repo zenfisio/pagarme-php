@@ -4,15 +4,18 @@ namespace PagarMe\Sdk\Customer;
 
 trait CustomerBuilder
 {
+    use \PagarMe\Sdk\Customer\Document\DocumentBuilder;
     /**
      * @param array $customerData
      * @return Customer
      */
     private function buildCustomer($customerData)
     {
-        $customerData->documents = array_map(function ($document) {
-            return new Document(get_object_vars($document));
-        }, $customerData->documents);
+        if (isset($customerData->documents)) {
+            $customerData->documents = $this->buildDocuments(
+                $customerData->documents
+            );
+        }
 
         $customerData->date_created = new \DateTime(
             $customerData->date_created
@@ -29,6 +32,12 @@ trait CustomerBuilder
     {
         if (is_null($customerData) || $customerData == new \stdClass()) {
             return null;
+        }
+
+        if (isset($customerData->documents)) {
+            $customerData->documents = $this->buildDocuments(
+                $customerData->documents
+            );
         }
 
         $customerData->date_created = new \DateTime(

@@ -6,6 +6,8 @@ use PagarMe\Sdk\Transaction\Request\BoletoTransactionCreate;
 use PagarMe\Sdk\Transaction\BoletoTransaction;
 use PagarMe\Sdk\Item\ItemCollection;
 use PagarMe\Sdk\Item\Item;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
+use PagarMe\Sdk\Customer\Document\Document;
 use PagarMe\Sdk\SplitRule\SplitRuleCollection;
 use PagarMe\Sdk\SplitRule\SplitRule;
 use PagarMe\Sdk\Recipient\Recipient;
@@ -195,6 +197,12 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $documents = new DocumentCollection();
+        $document = new Document([                    'type' => 'cpf',
+            'number' => '10586649727'
+        ]);
+        $documents[] = $document;
+
         $customerMock->method('getExternalId')->willReturn('x-1234');
         $customerMock->method('getType')->willReturn('individual');
         $customerMock->method('getCountry')->willReturn('br');
@@ -202,10 +210,7 @@ class BoletoTransactionCreateTest extends \PHPUnit_Framework_TestCase
         $customerMock->method('getDocumentNumber')->willReturn('10586649727');
         $customerMock->method('getEmail')->willReturn('eduardo@eduardo.com');
         $customerMock->method('getName')->willReturn('Eduardo Nascimento');
-        $customerMock->method('getDocuments')->willReturn([[
-            'type' => 'cpf',
-            'number' => '10586649727'
-        ]]);
+        $customerMock->method('getDocuments')->willReturn($documents);
 
         return $customerMock;
     }

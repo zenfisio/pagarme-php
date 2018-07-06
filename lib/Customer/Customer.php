@@ -32,7 +32,7 @@ class Customer
     private $phoneNumbers;
 
     /**
-     * @var array
+     * @var \PagarMe\Sdk\Customer\Document\DocumentCollection
      */
     private $documents;
 
@@ -106,7 +106,7 @@ class Customer
 
     /**
      * @codeCoverageIgnore
-     * @return string
+     * @return \PagarMe\Sdk\Customer\Document\DocumentCollection
      */
     public function getDocuments()
     {

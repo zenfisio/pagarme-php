@@ -4,6 +4,8 @@ namespace PagarMe\SdkTest\Customer\Request;
 
 use PagarMe\Sdk\Customer\Request\CustomerCreate;
 use PagarMe\Sdk\Customer\Customer;
+use PagarMe\Sdk\Customer\Document\Document;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
 use PagarMe\Sdk\RequestInterface;
 
 class CustomerCreateTest extends \PHPUnit_Framework_TestCase
@@ -22,13 +24,6 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
      */
     public function mustPayloadBeCorrect()
     {
-        $documents = [
-            new \PagarMe\Sdk\Customer\Document([
-                'type' => 'cpf',
-                'number' => self::DOCUMENT_NUMBER
-            ])
-        ];
-
         $customerCreate = new CustomerCreate(
             self::NAME,
             self::EMAIL,
@@ -36,7 +31,7 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
             self::TYPE,
             self::COUNTRY,
             ['+5511912345678'],
-            $documents
+            $this->getDocumentsMock()
         );
 
         $this->assertEquals(
@@ -98,10 +93,15 @@ class CustomerCreateTest extends \PHPUnit_Framework_TestCase
 
     private function getDocumentsMock()
     {
-        return [
-            $this->getMockBuilder('PagarMe\Sdk\Customer\Document')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ];
+        $documents = new DocumentCollection();
+
+        $document = new Document([
+            'type' => 'cpf',
+            'number' => self::DOCUMENT_NUMBER
+        ]);
+
+        $documents[] = $document;
+
+        return $documents;
     }
 }

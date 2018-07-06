@@ -4,6 +4,7 @@ namespace PagarMe\Sdk\Customer;
 
 use PagarMe\Sdk\AbstractHandler;
 use PagarMe\Sdk\Client;
+use PagarMe\Sdk\Customer\Document\DocumentCollection;
 use PagarMe\Sdk\Customer\Request\CustomerCreate;
 use PagarMe\Sdk\Customer\Request\CustomerGet;
 use PagarMe\Sdk\Customer\Request\CustomerList;
@@ -18,7 +19,7 @@ class CustomerHandler extends AbstractHandler
      * @param string $externalId
      * @param string $type
      * @param array $phoneNumbers
-     * @param array $documents
+     * @param DocumentCollection $documents
      */
     public function create(
         $name,
@@ -27,7 +28,7 @@ class CustomerHandler extends AbstractHandler
         $type,
         $country,
         $phoneNumbers,
-        $documents
+        DocumentCollection $documents
     ) {
         $request = new CustomerCreate(
             $name,

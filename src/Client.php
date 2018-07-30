@@ -8,10 +8,20 @@ class Client
 {
     private $baseUrl = 'https://api.pagar.me:443/1';
 
-    private $apiKey;
-
     public function __construct($apiKey) {
+        if (!validateAuthentication($apiKey)) {
+            throw Exception('You must supply a valid Api Key');
+        }
+
         $this->apiKey = $apiKey;
+    }
+
+    private function validateAuthentication($apiKey) {
+        if (empty($apiKey)) {
+            return false;
+        }
+
+        return true;
     }
 }
 

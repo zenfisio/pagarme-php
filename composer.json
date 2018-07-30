@@ -23,7 +23,7 @@
   "scripts": {
     "test": [
       "@composer install",
-      "vendor/bin/phpunit"
+      "vendor/bin/phpunit tests/"
     ],
     "coverage": [
       "@composer install",

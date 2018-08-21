@@ -28,4 +28,19 @@ class Routes
 
         return $anonymous;
     }
+
+    public static function customers()
+    {
+        $anonymous = new Anonymous();
+
+        $anonymous->base = static function () {
+            return 'customers';
+        };
+
+        $anonymous->details = static function ($id) {
+            return "customers/$id";
+        };
+
+        return $anonymous;
+    }
 }

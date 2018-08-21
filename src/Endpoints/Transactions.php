@@ -5,22 +5,10 @@ namespace PagarMe\Endpoints;
 use PagarMe\Client;
 use PagarMe\Routes;
 use PagarMe\Endpoints\EndpointInterface;
+use PagarMe\Endpoints\Endpoint;
 
-class Transactions
+class Transactions extends Endpoint
 {
-    /**
-     * @var \PagarMe\Client
-     */
-    private $client;
-
-    /**
-     * @param \Pagarme\Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * @param array $payload
      *
@@ -29,7 +17,7 @@ class Transactions
     public function create(array $payload)
     {
         return $this->client->request(
-            EndpointInterface::POST,
+            self::POST,
             Routes::transactions()->base(),
             ['json' => $payload]
         );
@@ -41,7 +29,7 @@ class Transactions
     public function getList()
     {
         return $this->client->request(
-            EndpointInterface::GET,
+            self::GET,
             Routes::transactions()->base()
         );
     }
@@ -54,7 +42,7 @@ class Transactions
     public function get(array $payload)
     {
         return $this->client->request(
-            EndpointInterface::GET,
+            self::GET,
             Routes::transactions()->details($payload['id'])
         );
     }
@@ -67,7 +55,7 @@ class Transactions
     public function capture(array $payload)
     {
         return $this->client->request(
-            EndpointInterface::POST,
+            self::POST,
             Routes::transactions()->capture($payload['id']),
             ['json' => $payload]
         );
@@ -81,7 +69,7 @@ class Transactions
     public function refund(array $payload)
     {
         return $this->client->request(
-            EndpointInterface::POST,
+            self::POST,
             Routes::transactions()->refund($payload['id']),
             ['json' => $payload]
         );

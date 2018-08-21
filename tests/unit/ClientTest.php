@@ -4,8 +4,9 @@ namespace PagarMe\Test;
 
 use PagarMe\Client;
 use PagarMe\Exceptions\PagarMeException;
-use PagarMe\Endpoints\EndpointInterface;
+use PagarMe\Endpoints\Endpoint;
 use PagarMe\Endpoints\Transactions;
+use PagarMe\Endpoints\Customers;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -22,7 +23,7 @@ final class ClientTest extends TestCase
 
         $client = new Client('apiKey', ['handler' => $handler]);
 
-        $response = $client->request(EndpointInterface::POST, 'transactions');
+        $response = $client->request(Endpoint::POST, 'transactions');
 
         $this->assertEquals($response->status, "Ok!");
     }
@@ -49,7 +50,7 @@ final class ClientTest extends TestCase
         $client = new Client('apiKey', ['handler' => $handler]);
 
         try {
-            $response = $client->request(EndpointInterface::POST, 'transactions');
+            $response = $client->request(Endpoint::POST, 'transactions');
         } catch (\PagarMe\Exceptions\PagarMeException $exception) {
             $this->assertEquals('api_key está faltando', $exception->getMessage());
             $this->assertEquals('api_key', $exception->getParameterName());
@@ -72,7 +73,7 @@ final class ClientTest extends TestCase
 
         $client = new Client('apiKey', ['handler' => $handler]);
 
-        $response = $client->request(EndpointInterface::POST, 'transactions');
+        $response = $client->request(Endpoint::POST, 'transactions');
     }
 
     public function testTransactions()
@@ -82,5 +83,14 @@ final class ClientTest extends TestCase
         $transactions = $client->transactions();
 
         $this->assertInstanceOf(Transactions::class, $transactions);
+    }
+
+    public function testCustomers()
+    {
+        $client = new Client('apiKey');
+
+        $customers = $client->customers();
+
+        $this->assertInstanceOf(Customers::class, $customers);
     }
 }

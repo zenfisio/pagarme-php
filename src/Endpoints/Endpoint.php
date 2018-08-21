@@ -2,7 +2,9 @@
 
 namespace PagarMe\Endpoints;
 
-interface EndpointInterface
+use PagarMe\Client;
+
+abstract class Endpoint
 {
     /**
      * @var string
@@ -20,4 +22,17 @@ interface EndpointInterface
      * @var string
      */
     const DELETE = 'DELETE';
+
+    /**
+     * @var \PagarMe\Client
+     */
+    protected $client;
+
+    /**
+     * @param \Pagarme\Client $client
+     */
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
 }

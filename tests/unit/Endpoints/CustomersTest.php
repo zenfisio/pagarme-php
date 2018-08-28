@@ -1,11 +1,12 @@
 <?php
 
-namespace PagarMe\Test;
+namespace PagarMe\Test\Endpoints;
 
 use PagarMe\Client;
+use PagarMe\Endpoints\Customers;
+use PagarMe\Test\Endpoints\PagarMeTestCase;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
-use PagarMe\Endpoints\Customers;
 
 final class CustomerTest extends PagarMeTestCase
 {

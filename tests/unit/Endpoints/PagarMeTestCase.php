@@ -1,6 +1,6 @@
 <?php
 
-namespace PagarMe\Test;
+namespace PagarMe\Test\Endpoints;
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\HandlerStack;
@@ -21,7 +21,7 @@ abstract class PagarMeTestCase extends TestCase
      */
     protected static function jsonMock($mockName)
     {
-        return file_get_contents(__DIR__."/Mocks/$mockName.json");
+        return file_get_contents(__DIR__."/../Mocks/$mockName.json");
     }
 
     /**
@@ -45,7 +45,7 @@ abstract class PagarMeTestCase extends TestCase
     }
 
     /**
-     * @param array @container
+     * @param array $container
      * @param GuzzleHttp\Handler\MockHandler $mock
      *
      * @return PagarMe\Client

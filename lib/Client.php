@@ -83,7 +83,10 @@ class Client
         if (class_exists('\\GuzzleHttp\\Message\\Request')) {
             $options = array_merge(
                 $this->requestOptions,
-                ['json' => $this->buildBody($apiRequest)]
+                [
+                    'json' => $this->buildBody($apiRequest),
+                    'query' => $this->buildQuery($apiRequest),
+                ]
             );
             return $this->client->createRequest(
                 $apiRequest->getMethod(),
@@ -115,6 +118,19 @@ class Client
             [
                 'api_key' => $this->apiKey
             ]
+        );
+    }
+
+    /**
+     * @param RequestQueryableInterface $request
+     * @return array
+     */
+    private function buildQuery(RequestQueryableInterface $request)
+    {
+        return array_merge(
+            [],
+            $request->getQuery(),
+            $this->requestOptions
         );
     }
 

@@ -3,8 +3,9 @@
 namespace PagarMe\Sdk\Payable\Request;
 
 use PagarMe\Sdk\RequestInterface;
+use PagarMe\Sdk\RequestQueryableInterface;
 
-class PayableList implements RequestInterface
+class PayableList implements RequestInterface, RequestQueryableInterface
 {
     /**
      * @var int
@@ -15,6 +16,11 @@ class PayableList implements RequestInterface
      * @var int
      */
     private $count;
+
+    /**
+     * @var array
+     */
+    private $query;
 
     /**
      * @param int $page
@@ -51,5 +57,21 @@ class PayableList implements RequestInterface
     public function getMethod()
     {
         return self::HTTP_GET;
+    }
+
+    /**
+     * @param array $query
+     */
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 }

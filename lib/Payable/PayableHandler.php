@@ -27,9 +27,10 @@ class PayableHandler extends AbstractHandler
      * @param int $page
      * @param int $count
      */
-    public function getList($page = null, $count = null)
+    public function getList($page = null, $count = null, $additionalFilters = [])
     {
         $request = new PayableList($page, $count);
+        $request->setQuery($additionalFilters);
 
         $response = $this->client->send($request);
 

@@ -21,14 +21,28 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->pagarMeRequestMock = $this->getMockBuilder('PagarMe\Sdk\RequestInterface')
+        $this->pagarMeRequestMock = $this
+            ->getMockBuilder([
+                'PagarMe\Sdk\RequestQueryableInterface',
+                'PagarMe\Sdk\RequestInterface',
+                ])
+            ->enableArgumentCloning()
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->pagarMeRequestMock->method('getMethod')->willReturn(RequestInterface::HTTP_POST);
-        $this->pagarMeRequestMock->method('getPath')->willReturn(self::REQUEST_PATH);
-        $this->pagarMeRequestMock->method('getPayload')->willReturn(
-            ['content' => self::CONTENT]
+        $this->pagarMeRequestMock
+            ->expects($this->any())
+            ->method('getMethod')
+            ->willReturn(RequestInterface::HTTP_POST);
+        
+        $this->pagarMeRequestMock
+            ->expects($this->any())
+            ->method('getPath')
+            ->willReturn(self::REQUEST_PATH);
+
+
+        $this->pagarMeRequestMock->method('getQuery')->willReturn(
+            ['foo' => 'bar']
         );
     }
 
@@ -87,6 +101,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
 
         $client->send($this->pagarMeRequestMock);
+    }
+
+    public function mustSendRequestWithQueryString()
+    {
+        $responseMock = $this->getResponseMock();
+        
+        $client = new Client($this->guzzleClientMock, self::API_KEY);
     }
 
     /**

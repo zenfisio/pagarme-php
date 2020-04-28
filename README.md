@@ -87,6 +87,8 @@ Você pode acessar a documentação oficial do Pagar.me acessando esse [link](ht
   - [Retornando links de pagamento](#retornando-links-de-pagamento)
   - [Retornando um link de pagamento](#retornando-um-link-de-pagamento)
   - [Cancelando um link de pagamento](#cancelando-um-link-de-pagamento)
+- [Buscas avançadas (Elasticsearch)](#buscas-avançadas-elasticsearch)
+  - [Realizando uma busca](#realizando-uma-busca)
 
 ## Instalação
 
@@ -1152,5 +1154,23 @@ $paymentLink = $pagarme->paymentLinks()->get([
 <?php
 $canceledPaymentLink = $pagarme->paymentLinks()->cancel([
     'id' => 'ID_DO_LINK_DE_PAGAMENTO'
+]);
+```
+
+## Buscas avançadas (Elasticsearch)
+
+### Realizando uma busca
+
+```php
+<?php
+$search = $pagarme->search()->get([                
+    "type" => "transaction",
+    "query" => [
+        "query" => [
+            "terms" => [
+                "items.id" => [8, 9] // Busca transações com itens de ID 8 e 9
+            ]
+        ]
+    ]
 ]);
 ```

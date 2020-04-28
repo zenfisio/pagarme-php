@@ -213,4 +213,12 @@ class RoutesTest extends TestCase
         $this->assertObjectHasAttribute('base', $routes);
         $this->assertIsCallable($routes->base);
     }
+
+    public function testSearchRoute()
+    {
+        $routes = Routes::search();
+
+        $this->assertObjectHasAttribute('base', $routes);
+        $this->assertIsCallable($routes->base);
+    }
 }

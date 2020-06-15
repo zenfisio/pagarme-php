@@ -150,7 +150,8 @@ class Client
             $options['headers']['User-Agent'] :
             '';
 
-        $options['headers'] = $this->addUserAgentHeaders($userAgent);
+        $options['headers']['User-Agent'] = $this->addUserAgentHeaders($userAgent);
+        $options['headers']['X-PagarMe-User-Agent'] = $this->addUserAgentHeaders($userAgent);
 
         $this->http = new HttpClient($options);
 
@@ -233,16 +234,11 @@ class Client
      * Append new keys (the default and pagarme) related to user-agent
      *
      * @param string $customUserAgent
-     * @return array
+     * @return string
      */
     private function addUserAgentHeaders($customUserAgent = '')
     {
-        return [
-            'User-Agent' => $this->buildUserAgent($customUserAgent),
-            self::PAGARME_USER_AGENT_HEADER => $this->buildUserAgent(
-                $customUserAgent
-            )
-        ];
+        return $this->buildUserAgent($customUserAgent);
     }
 
     /**

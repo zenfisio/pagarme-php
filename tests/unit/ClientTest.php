@@ -108,7 +108,11 @@ final class ClientTest extends TestCase
             'apiKey',
             [
                 'handler' => $handler,
-                'headers' => ['User-Agent' => 'MyCustomApplication/10.2.2']
+                'headers' => [
+                  'User-Agent' => 'MyCustomApplication/10.2.2',
+                  'X-PagarMe-Version' => '2017-07-17',
+                  'Custom-Header' => 'header',
+                ]
             ]
         );
 
@@ -124,6 +128,17 @@ final class ClientTest extends TestCase
             'MyCustomApplication/10.2.2 PHP/%s',
             phpversion()
         );
+
+        $this->assertEquals(
+            '2017-07-17',
+            $container[0]['request']->getHeaderLine('X-PagarMe-Version')
+        );
+
+        $this->assertEquals(
+            'header',
+            $container[0]['request']->getHeaderLine('Custom-Header')
+        );
+
         $this->assertEquals(
             $expectedUserAgent,
             $container[0]['request']->getHeaderLine('User-Agent')

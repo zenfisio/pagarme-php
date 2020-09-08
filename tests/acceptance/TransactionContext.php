@@ -244,6 +244,8 @@ class TransactionContext extends BasicContext
      */
     public function thenTransactionPayablesMustBeRetriavable()
     {
+        sleep(10);
+
         $payables = self::getPagarMe()
             ->transaction()
             ->payables($this->transaction->getId());

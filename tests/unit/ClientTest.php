@@ -2,6 +2,7 @@
 
 namespace PagarMe\Test;
 
+use PagarMe\PagarMe;
 use PagarMe\Client;
 use PagarMe\Exceptions\PagarMeException;
 use PagarMe\Endpoints\Endpoint;
@@ -125,7 +126,8 @@ final class ClientTest extends TestCase
         );
 
         $expectedUserAgent = sprintf(
-            'MyCustomApplication/10.2.2 PHP/%s',
+            'MyCustomApplication/10.2.2 pagarme-php/%s php/%s',
+            PagarMe::VERSION,
             phpversion()
         );
 

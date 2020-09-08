@@ -2,6 +2,7 @@
 
 namespace PagarMe;
 
+use PagarMe\PagarMe;
 use PagarMe\RequestHandler;
 use PagarMe\ResponseHandler;
 use PagarMe\Endpoints\BankAccounts;
@@ -224,8 +225,9 @@ class Client
     private function buildUserAgent($customUserAgent = '')
     {
         return trim(sprintf(
-            '%s PHP/%s',
+            '%s pagarme-php/%s php/%s',
             $customUserAgent,
+            PagarMe::VERSION,
             phpversion()
         ));
     }

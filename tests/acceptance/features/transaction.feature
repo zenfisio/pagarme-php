@@ -10,9 +10,9 @@ Feature: Transaction
     Then a paid transaction must be created
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  |
-      |  4556425889100276   |  João Silva   |    0623    |  20000   |       1       |
+      |  4556425889100276   |  João Silva   |    0623    |  20000   |       3       |
       |  5435375979338399   |  Maria Silva  |    0623    |  9900    |       7       |
-      |  30171632321686     |  Pedro Silva  |    0623    |  250     |       3       |
+      |  30171632321686     |  Pedro Silva  |    0623    |  250     |       1       |
       |  341611978581611    |  Cesar Silva  |    0623    |  1337    |       12      |
       |  6062825718246608   |  Carla Silva  |    0623    |  123456  |       10      |
       |  6363685469431429   |  Marta Silva  |    0623    |  1000001 |       1       |
@@ -25,9 +25,9 @@ Feature: Transaction
     And the transaction must be refunded
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  |
-      |  4539225249511077   |  João Silva   |    0623    |  1000    |       1       |
+      |  4539225249511077   |  João Silva   |    0623    |  1000    |       3       |
       |  5326284789092430   |  Maria Silva  |    0623    |  1300    |       7       |
-      |  36016500807288     |  Pedro Silva  |    0623    |  1500    |       3       |
+      |  36016500807288     |  Pedro Silva  |    0623    |  1500    |       1       |
       |  377255656605321    |  Cesar Silva  |    0623    |  2100    |       12      |
       |  6062820984030620   |  Carla Silva  |    0623    |  4000    |       10      |
       |  5041754009357643   |  Marta Silva  |    0623    |  5000    |       1       |
@@ -40,9 +40,9 @@ Feature: Transaction
     And the transaction must be refunded with "<value>"
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  | value |
-      |  4539225249511077   |  João Silva   |    0623    |  1000    |       1       |   500  |
+      |  4539225249511077   |  João Silva   |    0623    |  1000    |       3       |   500  |
       |  5326284789092430   |  Maria Silva  |    0623    |  1300    |       7       |   700  |
-      |  36016500807288     |  Pedro Silva  |    0623    |  1500    |       3       |   1300 |
+      |  36016500807288     |  Pedro Silva  |    0623    |  1500    |       1       |   1300 |
       |  377255656605321    |  Cesar Silva  |    0623    |  2100    |       12      |   2000 |
       |  6062820984030620   |  Carla Silva  |    0623    |  4000    |       10      |   1337 |
       |  5041754009357643   |  Marta Silva  |    0623    |  5000    |       1       |   2500 |
@@ -54,9 +54,9 @@ Feature: Transaction
     Then a authorized transaction must be created
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  |
-      |  4556655568781331   |  João Silva   |    0623    |  20000   |       1       |
+      |  4556655568781331   |  João Silva   |    0623    |  20000   |       3       |
       |  5312843659611045   |  Maria Silva  |    0623    |  9900    |       7       |
-      |  38207356445228     |  Pedro Silva  |    0623    |  250     |       3       |
+      |  38207356445228     |  Pedro Silva  |    0623    |  250     |       1       |
       |  371604330597394    |  Cesar Silva  |    0623    |  1337    |       12      |
       |  6062824410079680   |  Carla Silva  |    0623    |  123456  |       10      |
       |  5041754485700738   |  Marta Silva  |    0623    |  1000001 |       1       |
@@ -69,9 +69,9 @@ Feature: Transaction
     Then a paid transaction must be created
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  |
-      |  4539927448873758   |  João Silva   |    0623    |  20000   |       1       |
+      |  4539927448873758   |  João Silva   |    0623    |  20000   |       3       |
       |  5475972816746627   |  Maria Silva  |    0623    |  9900    |       7       |
-      |  30323500265699     |  Pedro Silva  |    0623    |  250     |       3       |
+      |  30323500265699     |  Pedro Silva  |    0623    |  250     |       1       |
       |  371733354333913    |  Cesar Silva  |    0623    |  1337    |       12      |
       |  6062822300852208   |  Carla Silva  |    0623    |  123456  |       10      |
       |  4514161325131598   |  Marta Silva  |    0623    |  1000001 |       1       |
@@ -84,9 +84,9 @@ Feature: Transaction
     Then a paid transaction must be created with "<capture>" paid amount
     Examples:
       |       number        |     holder    | expiration |  amount  | installments  | capture |
-      |  4556111382970890   |  João Silva   |    0623    |  20000   |       1       |  14900  |
+      |  4556111382970890   |  João Silva   |    0623    |  20000   |       3       |  14900  |
       |  5157798910157725   |  Maria Silva  |    0623    |  9900    |       7       |  9899   |
-      |  30257387840192     |  Pedro Silva  |    0623    |  250     |       3       |  230    |
+      |  30257387840192     |  Pedro Silva  |    0623    |  250     |       1       |  230    |
       |  345066740083873    |  Cesar Silva  |    0623    |  1337    |       12      |  509    |
       |  6062827431932910   |  Carla Silva  |    0623    |  123456  |       10      |  78910  |
       |  4514164981119485   |  Marta Silva  |    0623    |  1000001 |       1       |  10001  |

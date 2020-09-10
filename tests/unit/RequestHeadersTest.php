@@ -15,8 +15,9 @@ class RequestHeadersTest extends \PHPUnit_Framework_TestCase
         $requestHeaders = new RequestHeaders();
         $defaultHeaders = $requestHeaders->getSdkHeaders([]);
         $expectedUserAgent = sprintf(
-            'pagarme-php/%s',
-            PagarMe::VERSION
+            'pagarme-php/%s php/%s',
+            PagarMe::VERSION,
+            phpversion()
         );
         $expectedHeaders = [
             'X-PagarMe-User-Agent' => $expectedUserAgent,
@@ -33,8 +34,9 @@ class RequestHeadersTest extends \PHPUnit_Framework_TestCase
         $sdkHeadersFilled = $requestHeaders->getSdkHeaders($filledHeaders);
 
         $expectedUserAgent = sprintf(
-            'Magento/1.9.1.0 pagarme-php/%s',
-            PagarMe::VERSION
+            'Magento/1.9.1.0 pagarme-php/%s php/%s',
+            PagarMe::VERSION,
+            phpversion()
         );
         $expectedHeaders = [
             'X-PagarMe-User-Agent' => $expectedUserAgent,

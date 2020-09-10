@@ -60,6 +60,6 @@ class RequestHeaders
      */
     private function getDefaultHeaders()
     {
-        return 'pagarme-php/' . PagarMe::VERSION;
+        return 'pagarme-php/' . PagarMe::VERSION . ' php/' . phpversion();
     }
 }

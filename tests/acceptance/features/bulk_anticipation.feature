@@ -11,8 +11,8 @@ Feature: Bulk Anticipation
     And must anticipation contain same data
     Examples:
     | payment_date  | timeframe | requested_amount | build |
-    | +5 days       | start     | 1000             | true  |
-    | +6 days       | start     | 1000             | false |
+    | +7 days       | start     | 1000             | true  |
+    | +7 days       | start     | 1000             | false |
 
   Scenario Outline: Deleting Bulk Anticipation
     Given a recipient with anticipatable volume
@@ -23,4 +23,4 @@ Feature: Bulk Anticipation
     Then the Anticipation should no longer exist
     Examples:
     | payment_date  | timeframe | requested_amount | build |
-    | +5 days       | start     | 1000             | true  |
+    | +7 days       | start     | 1000             | true  |

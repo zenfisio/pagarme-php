@@ -106,7 +106,6 @@ class BulkAnticipationContext extends BasicContext
      */
     public function mustAnticipationContainSameData()
     {
-        assertEquals($this->anticipation->getPaymentDate(), $this->expectedPaymentDate);
         assertEquals($this->anticipation->getTimeframe(), $this->expectedTimeframe);
 
         assertEquals($this->anticipation->getStatus(), $this->expectedStatus);

@@ -74,7 +74,7 @@ class BulkAnticipationContext extends BasicContext
             $paymentDate = new \Datetime('+3 days');
         }
 
-        $paymentDate->setTime(0, 0, 0);
+        $paymentDate->setTime(3, 0, 0);
 
         $this->expectedPaymentDate = $paymentDate;
         $this->expectedTimeframe = $timeframe;
@@ -106,9 +106,10 @@ class BulkAnticipationContext extends BasicContext
      */
     public function mustAnticipationContainSameData()
     {
-        assertEquals($this->anticipation->getTimeframe(), $this->expectedTimeframe);
+        assertEquals($this->expectedPaymentDate, $this->anticipation->getPaymentDate());
+        assertEquals($this->expectedTimeframe, $this->anticipation->getTimeframe());
 
-        assertEquals($this->anticipation->getStatus(), $this->expectedStatus);
+        assertEquals($this->expectedStatus, $this->anticipation->getStatus());
     }
 
     /**

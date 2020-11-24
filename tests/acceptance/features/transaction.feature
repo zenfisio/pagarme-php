@@ -39,7 +39,7 @@ Feature: Transaction
     Then refund given "<value>" the transaction
     And the transaction must be refunded with "<value>"
     Examples:
-      |       number        |     holder    | expiration |  amount  | installments  | value |
+      |       number        |     holder    | expiration |  amount  | installments  | value  |
       |  4539225249511077   |  João Silva   |    0623    |  1000    |       3       |   500  |
       |  5326284789092430   |  Maria Silva  |    0623    |  1300    |       7       |   700  |
       |  36016500807288     |  Pedro Silva  |    0623    |  1500    |       1       |   1300 |

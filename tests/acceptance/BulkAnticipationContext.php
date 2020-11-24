@@ -66,12 +66,12 @@ class BulkAnticipationContext extends BasicContext
     {
         $build = filter_var($build, FILTER_VALIDATE_BOOLEAN);
 
-        $paymentDate = new \Datetime($paymentDate);
+        $paymentDate = new \Datetime($paymentDate, new \DateTimeZone('UTC'));
 
         $weekday = $paymentDate->format('w');
 
         if (in_array($weekday, [0,6])) {
-            $paymentDate = new \Datetime('+3 days');
+            $paymentDate = new \Datetime('+3 days', new \DateTimeZone('UTC'));
         }
 
         $paymentDate->setTime(3, 0, 0);
